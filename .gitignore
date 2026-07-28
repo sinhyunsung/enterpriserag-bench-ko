@@ -1,0 +1,19 @@
+.env
+__pycache__/
+*.pyc
+.DS_Store
+*.tmp
+*.bak_*
+export_data/
+export_dsids.txt
+answer_evaluation/**/*.json
+answer_evaluation/**/*.jsonl
+aggregate_statistics.json
+CLAUDE.md
+.claude/
+generation_cache/
+tmp_workspace/
+generated_data/
+# 로컬 실행 산출물
+*.log
+generated_data_en_original/
