@@ -144,6 +144,88 @@ def generate_for(repo_dir: str, company_overview: str, initiatives: str,
     )
 
 
+SOURCE_AGENTS_PROMPT = """
+Rewrite the {agents_file} for the source directory `sources/{source}`.
+
+This file states the rules that apply to **every** repository under it. Each
+repository already has its own {agents_file} pinning its technology, its people and
+its permissions, so this one must not contradict them and must not restate them.
+
+What it must say:
+- what this source is and what one file represents,
+- the file name format,
+- the export shape every document follows (below), stated once,
+- that people are referenced only by `github_login`, never by display name,
+- that each repository directory carries `_repository.json`, whose `private` and
+  `collaborators` decide who may read the documents in it,
+- that repository-level {agents_file} files are the authority for technology, file
+  paths, cast and dates — this file does not guess at them.
+
+The export shape, which the ingestion connector reads by fixed field paths:
+
+```json
+{{"kind": "pull_request",
+  "issue": {{"number": 0, "title": "", "body": "", "state": "", "html_url": "",
+            "user": {{"login": ""}}, "assignees": [{{"login": ""}}],
+            "requested_reviewers": [{{"login": ""}}],
+            "created_at": "", "updated_at": ""}},
+  "comments": [{{"user": {{"login": ""}}, "body": "",
+                "created_at": "", "updated_at": ""}}],
+  "review_comments": [{{"user": {{"login": ""}}, "body": "", "path": "", "line": 0,
+                       "created_at": "", "updated_at": ""}}]}}
+```
+
+Review discussion is an array of objects, each with its own author and timestamp.
+Never a single blob of prose that names people inline — the connector cannot split
+that back into participants, and every permission implied by them is lost.
+
+Here is the current file, which describes an older flat shape and must be replaced:
+
+```
+{current}
+```
+
+Write the file to `{source}/{agents_file}` with the {write_tool} tool, in Korean,
+keeping the existing section headings (Directory / Target number of files /
+File name format / Content rules / Metadata rules). Then call {finish_tool}.
+""".strip()
+
+
+def refresh_source_agents(source: str) -> None:
+    """
+    Rewrite the source-level agents.md so it stops contradicting the repository ones.
+
+    The file generated before this contract existed describes a flat, invented shape
+    (``author``, ``review_comments_raw``).  Left in place it is injected alongside the
+    per-repository rules, and the generator is handed two different schemas for the
+    same document.
+    """
+    path = os.path.join(SOURCES_DIR, source, AGENTS_MD_FILE)
+    current = load_file(path) if os.path.exists(path) else "(없음)"
+
+    write_tool = WriteTool(base_dir=SOURCES_DIR, allow_create_dirs=False)
+    finish_tool = FinishTool()
+    llm = get_llm(tools=[write_tool.schema, finish_tool.schema])
+    runner = ToolRunner()
+    runner.register(write_tool)
+    runner.register(finish_tool)
+
+    conversation = Conversation(llm=llm, tool_runner=runner)
+    conversation.add_system_message(
+        SOURCE_AGENTS_PROMPT.format(
+            source=source,
+            agents_file=AGENTS_MD_FILE,
+            current=current,
+            write_tool=write_tool.schema.get("name", "write"),
+            finish_tool=FINISH_TOOL,
+        )
+    )
+    conversation.run_turn(
+        f"sources/{source}/{AGENTS_MD_FILE} 를 다시 써라.",
+        exit_on_tools=[FINISH_TOOL],
+    )
+
+
 CONTRACT_MARKER = "## 커넥터 계약 (자동 생성 — 손으로 고치지 않는다)"
 
 
@@ -241,6 +323,8 @@ def main() -> None:
     parser.add_argument("--source", default="github",
                         help="sources/ 아래 소스 이름 (기본 github)")
     parser.add_argument("--yes", action="store_true", help="확인 없이 진행")
+    parser.add_argument("--refresh-source-agents", action="store_true",
+                        help=f"소스 상위 {AGENTS_MD_FILE} 도 새 계약으로 다시 쓴다")
     args = parser.parse_args()
 
     repositories = find_repositories(args.source)
@@ -265,6 +349,10 @@ def main() -> None:
     print(f"대상 {len(repositories)}개: " + ", ".join(repositories))
     if not args.yes:
         input("\nPress Enter to begin...")
+
+    if args.refresh_source_agents:
+        print(f"\n── sources/{args.source}/{AGENTS_MD_FILE} 다시 쓰기")
+        refresh_source_agents(args.source)
 
     for repo_dir in repositories:
         print(f"\n── {repo_dir}")
