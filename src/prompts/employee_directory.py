@@ -22,6 +22,8 @@ departments:
     - name: "Full Name"
       title: "Job Title"
       email: "email@company.com"
+      github_login: "first-last"
+      slack_id: "U01ABCDEF"
       start_date: "YYYY-MM-DD"
       manager: "Manager Name"  # omit for top-level executives
       bio: "Brief bio or background (1 sentence)"
@@ -29,10 +31,23 @@ departments:
     - name: "Full Name"
       title: "Job Title"
       email: "email@company.com"
+      github_login: "first-last"
+      slack_id: "U01ABCDEF"
       start_date: "YYYY-MM-DD"
       manager: "Manager Name"
       bio: "Brief bio or background (1 sentence)"
 ```
+
+## External account identifiers (required)
+Every person MUST have `github_login` and `slack_id`. Source documents reference
+people by these identifiers, not by display name, and an ingestion system links a
+document's participants back to employees through them. A person without these
+identifiers cannot be resolved, so any permission derived from their participation
+is silently lost.
+
+- `github_login`: lowercase ASCII, derived from the email local part with dots
+  replaced by hyphens (`serin.park@acme.com` -> `serin-park`). Must be unique.
+- `slack_id`: `U0` followed by 8 uppercase alphanumerics. Must be unique.
 
 Include a mix of seniority levels (executives, managers, individual contributors) appropriate for each department.
 

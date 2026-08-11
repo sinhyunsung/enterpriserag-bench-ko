@@ -49,10 +49,16 @@ def get_llm(
         return BedrockLLM(
             model=model, tools=tools, quiet=quiet, reasoning_level=reasoning_level
         )
+    elif provider == "deepseek":
+        from src.llm.deepseek_llm import DeepSeekLLM
+
+        return DeepSeekLLM(
+            model=model, tools=tools, quiet=quiet, reasoning_level=reasoning_level
+        )
     else:
         raise ValueError(
             f"Unsupported LLM provider: {provider}. "
-            "Supported providers: openai, anthropic, bedrock"
+            "Supported providers: openai, anthropic, bedrock, deepseek"
         )
 
 
@@ -117,8 +123,20 @@ def get_cheap_llm(
             quiet=quiet,
             reasoning_level=reasoning_level,
         )
+    elif provider == "deepseek":
+        from src.llm.deepseek_llm import (
+            DEEPSEEK_CHEAP_MODEL_NAME as DEEPSEEK_CHEAP_MODEL,
+            DeepSeekLLM,
+        )
+
+        return DeepSeekLLM(
+            model=model or DEEPSEEK_CHEAP_MODEL,
+            tools=tools,
+            quiet=quiet,
+            reasoning_level=reasoning_level,
+        )
     else:
         raise ValueError(
             f"Unsupported LLM provider: {provider}. "
-            "Supported providers: openai, anthropic, bedrock"
+            "Supported providers: openai, anthropic, bedrock, deepseek"
         )
