@@ -63,17 +63,27 @@ JSON 만 출력한다. 설명을 덧붙이지 않는다.
 TOPIC_PROMPT = """
 아래 저장소에서 {count} 건의 서로 다른 작업 주제를 뽑아라.
 같은 기능을 다르게 부른 것이 아니라, 실제로 다른 일이어야 한다.
+저장소 사실의 모듈·파일 경로를 고르게 훑어라 — 한 모듈에 몰리면 안 된다.
 
 {facts}
 
-한 줄에 하나씩, 번호나 기호 없이 한국어로만 출력한다.
+한 줄에 하나씩 아래 형식으로 출력한다. 번호나 기호를 붙이지 않는다.
+
+한국어 주제 | roman-lowercase-slug
+
+슬러그는 파일 이름이 되므로 영문 소문자와 하이픈만 쓰고 서너 낱말로 요약한다.
 """.strip()
 
 
-def slugify(title: str) -> str:
-    """Roman-lowercase-hyphen slug for the file name."""
-    ascii_only = re.sub(r"[^a-zA-Z0-9]+", "-", title).strip("-").lower()
-    return ascii_only[:48] or "untitled"
+def slugify(text: str) -> str:
+    """
+    Roman-lowercase-hyphen slug for the file name.
+
+    Korean text leaves nothing behind once non-ASCII is stripped, so the model is
+    asked for a romanised slug alongside each topic; this only tidies that up.
+    """
+    ascii_only = re.sub(r"[^a-zA-Z0-9]+", "-", text).strip("-").lower()
+    return ascii_only[:48]
 
 
 def load_repository(repo: str) -> tuple[dict, str]:
@@ -101,7 +111,7 @@ def parse_json(raw: str) -> dict:
 
 
 def generate_one(repo: str, agents_md: str, facts: str, overview: str,
-                 topic: str, kind: str) -> tuple[str, dict] | None:
+                 topic: str, slug: str, kind: str) -> tuple[str, dict] | None:
     prompt = DOCUMENT_PROMPT.format(
         kind="풀 리퀘스트" if kind == "pull_request" else "이슈",
         agents_file=AGENTS_MD_FILE,
@@ -119,7 +129,8 @@ def generate_one(repo: str, agents_md: str, facts: str, overview: str,
     issue = document.get("issue") or {}
     number = issue.get("number") or 0
     prefix = "pr" if document.get("kind") == "pull_request" else "issue"
-    name = f"{prefix}-{number}-{slugify(issue.get('title', ''))}.json"
+    tail = slugify(slug) or slugify(issue.get("title", "")) or f"doc-{number}"
+    name = f"{prefix}-{number}-{tail}.json"
     return name, document
 
 
@@ -143,20 +154,21 @@ def main() -> None:
     overview = load_file(COMPANY_OVERVIEW_PATH) + "\n" + load_file(INITIATIVES_PATH)
 
     print(f"저장소 {args.repo} · {args.count}건 생성")
-    topics = [
-        line.strip() for line in
-        ask(TOPIC_PROMPT.format(count=args.count, facts=facts)).splitlines()
-        if line.strip()
-    ][: args.count]
+    topics: list[tuple[str, str]] = []
+    for line in ask(TOPIC_PROMPT.format(count=args.count, facts=facts)).splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        topic, _, slug = line.partition("|")
+        topics.append((topic.strip(), slug.strip()))
+    topics = topics[: args.count]
     print(f"주제 {len(topics)}개")
-    for topic in topics:
-        print(f"  - {topic[:70]}")
 
-    def work(index_topic: tuple[int, str]):
-        index, topic = index_topic
+    def work(item: tuple[int, tuple[str, str]]):
+        index, (topic, slug) = item
         # 이슈도 섞는다 — 저장소에 PR 만 있으면 그것부터가 실제와 다르다
         kind = "issue" if index % 4 == 3 else "pull_request"
-        return generate_one(args.repo, agents_md, facts, overview, topic, kind)
+        return generate_one(args.repo, agents_md, facts, overview, topic, slug, kind)
 
     with ThreadPoolExecutor(max_workers=args.parallelism) as pool:
         results = list(pool.map(work, enumerate(topics)))
