@@ -323,11 +323,16 @@ def main() -> None:
     parser.add_argument("--source", default="github",
                         help="sources/ 아래 소스 이름 (기본 github)")
     parser.add_argument("--yes", action="store_true", help="확인 없이 진행")
+    parser.add_argument("--only", nargs="*", default=None,
+                        help="이 저장소 이름들만 처리 (기본: 전부)")
     parser.add_argument("--refresh-source-agents", action="store_true",
                         help=f"소스 상위 {AGENTS_MD_FILE} 도 새 계약으로 다시 쓴다")
     args = parser.parse_args()
 
     repositories = find_repositories(args.source)
+    if args.only:
+        wanted = set(args.only)
+        repositories = [r for r in repositories if os.path.basename(r) in wanted]
     if not repositories:
         print(f"sources/{args.source} 아래에 저장소 디렉터리가 없습니다.")
         print("먼저 step_4 로 소스 구조를 만드세요.")

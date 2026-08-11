@@ -160,6 +160,11 @@ class DeepSeekLLM(LLMInterface):
             "messages": self._build_messages(messages),
             "stream": True,
             "max_tokens": DEEPSEEK_MAX_TOKENS,
+            # 추론을 끈다. 켜 두면 두 가지가 문제다 — 형식이 정해진 생성인데 예산을
+            # 추론에 다 쓰고 본문을 비우는 응답이 나오고, 대화를 이어갈 때
+            # reasoning_content 를 되돌려 보내라며 400 을 낸다.
+            # OpenAI SDK 가 모르는 필드라 extra_body 로 실어 보낸다
+            "extra_body": {"thinking": {"type": "disabled"}},
         }
         if self.tools:
             kwargs["tools"] = self._chat_tools(self.tools)
