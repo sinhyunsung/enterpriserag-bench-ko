@@ -65,6 +65,40 @@ class DeepSeekLLM(LLMInterface):
             init_tracing()
         self.client = OpenAI(api_key=self.api_key, base_url=DEEPSEEK_BASE_URL)
 
+    @staticmethod
+    def _chat_tools(tools: list[dict]) -> list[dict[str, Any]]:
+        """
+        Convert Responses-style tool schemas to the Chat Completions shape.
+
+        This repository declares tools flat, as the Responses API wants them::
+
+            {"type": "function", "name": ..., "parameters": {...}}
+
+        Chat Completions nests the same fields under ``function`` and rejects the
+        flat form outright::
+
+            missing field `function`
+
+        Schemas that already use the nested form are passed through, so a caller
+        can hand over either shape.
+        """
+        converted: list[dict[str, Any]] = []
+        for tool in tools:
+            if "function" in tool:
+                converted.append(tool)
+                continue
+            converted.append(
+                {
+                    "type": "function",
+                    "function": {
+                        "name": tool.get("name"),
+                        "description": tool.get("description", ""),
+                        "parameters": tool.get("parameters", {}),
+                    },
+                }
+            )
+        return converted
+
     def _build_messages(self, messages: list[Message]) -> list[dict[str, Any]]:
         """
         Convert our Message list to Chat Completions format.
@@ -128,7 +162,7 @@ class DeepSeekLLM(LLMInterface):
             "max_tokens": DEEPSEEK_MAX_TOKENS,
         }
         if self.tools:
-            kwargs["tools"] = self.tools
+            kwargs["tools"] = self._chat_tools(self.tools)
 
         stream = self.client.chat.completions.create(**kwargs)
 
