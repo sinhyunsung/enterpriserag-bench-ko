@@ -108,6 +108,10 @@ def load_employees(session, base, org, departments, people):
                 "departmentId": departments[department],
                 # 조직도에 권한 개념이 없다. 전부 MEMBER 로 넣고 권한은 따로 준다
                 "grade": "MEMBER",
+                # WDO-489 로 늘어난 칸들. 인수자 후보를 줄 세울 때와
+                # 「입사 전 문서에 담당자로 잡힌 것」을 가릴 때 쓴다
+                "position": person.get("title"),
+                "hireDate": person.get("start_date"),
             },
             timeout=30,
         ))
@@ -118,6 +122,40 @@ def load_employees(session, base, org, departments, people):
         issued.append((person["name"], person["email"], data.get("tempPassword")))
         made += 1
     return seen, made, skipped, issued
+
+
+def link_managers(session, base, org, people, emails):
+    """상사를 잇는다.
+
+    조직도에 상사가 **이름**으로 적혀 있어서 사원을 다 만든 뒤에야 사원 번호를 안다.
+    그래서 두 번에 나눠 넣는다 — 만들 때 한 번, 다 만든 뒤 이어 주는 데 한 번.
+
+    이름이 겹치는 조직이면 이 방법이 틀린다. 지금 조직도에는 풀네임 중복이 없어서
+    쓰지만, 겹치기 시작하면 조직도에 상사의 이메일을 적는 쪽으로 바꿔야 한다.
+    """
+    by_name = {}
+    for person, _ in people:
+        by_name.setdefault(person["name"], []).append(emails.get(person["email"]))
+
+    linked, skipped = 0, []
+    for person, _ in people:
+        manager = person.get("manager")
+        if not manager:
+            continue
+        candidates = [i for i in by_name.get(manager, []) if i]
+        if len(candidates) != 1:
+            # 못 찾거나 여럿이면 안 잇는다. 틀리게 잇는 것보다 안 잇는 게 낫다
+            skipped.append(f"{person['name']}→{manager}")
+            continue
+        envelope(session.patch(
+            f"{base}/api/org/employees/{emails[person['email']]}",
+            params={"orgId": org},
+            headers={**csrf(session), "Content-Type": "application/json"},
+            json={"managerId": candidates[0]},
+            timeout=30,
+        ))
+        linked += 1
+    return linked, skipped
 
 
 def link_github(container, org, people, emails):
@@ -188,8 +226,11 @@ def main() -> int:
         credentials.chmod(0o600)
         print(f"  임시 비밀번호 {len(issued)}개를 {credentials} 에 적었음 — 다시 못 받는 값이다")
 
-    linked = link_github(args.pg_container, args.org, people, emails)
-    print(f"  깃허브 로그인 {linked}개 이음")
+    linked, skipped = link_managers(session, args.base, args.org, people, emails)
+    print(f"  상사 {linked}명 이음" + (f" · 못 이은 것 {len(skipped)}건 {skipped}" if skipped else ""))
+
+    github = link_github(args.pg_container, args.org, people, emails)
+    print(f"  깃허브 로그인 {github}개 이음")
     return 0
 
 
