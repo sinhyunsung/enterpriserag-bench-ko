@@ -114,6 +114,55 @@ def shift_doc(doc: dict, offset: dt.timedelta, year: int) -> dict:
     return doc
 
 
+def pull_forward(doc: dict, at: dt.datetime) -> tuple[dict, int]:
+    """문서 시각은 문턱 안인데 본문이 문턱 밖을 가리키는 경우를 당긴다.
+
+    「버킷에 2025년 2월 것부터 있네요」 같은 회고 문장이다. 문서 자체는 최근인데 추출기가
+    그 옛 시점을 근거 시점으로 뽑아 노후로 잡힌다.
+
+    문서를 통째로 밀 수는 없다 — 시각은 이미 제자리다. 본문에 적힌 날짜 중 문턱보다 이른
+    것만 문턱 안으로 당기고, <b>문서 시각과의 앞뒤 관계는 지킨다</b>. 회고가 미래를 가리키면
+    글이 말이 안 된다.
+    """
+    limit = min(THRESHOLD + dt.timedelta(days=10), at - dt.timedelta(days=1))
+    moved = 0
+
+    def fix_iso(match: re.Match) -> str:
+        nonlocal moved
+        try:
+            date = dt.date(int(match[1]), int(match[2]), int(match[3]))
+        except ValueError:
+            return match[0]
+        if date >= limit.date():
+            return match[0]
+        moved += 1
+        return limit.date().isoformat()
+
+    def fix_year_month(match: re.Match) -> str:
+        nonlocal moved
+        date = dt.date(int(match[1]), int(match[2]), 1)
+        if date >= limit.date():
+            return match[0]
+        moved += 1
+        return f"{limit.year}년 {limit.month}월"
+
+    def walk(text: str) -> str:
+        return YEAR_MONTH.sub(fix_year_month, ISO_DATE.sub(fix_iso, text))
+
+    if doc.get("kind") == "slack_thread":
+        for message in doc["messages"]:
+            message["text"] = walk(message["text"])
+    else:
+        issue = doc["issue"]
+        for field in ("title", "body"):
+            if issue.get(field):
+                issue[field] = walk(issue[field])
+        for bucket in ("comments", "review_comments"):
+            for item in doc.get(bucket, []):
+                item["body"] = walk(item["body"])
+    return doc, moved
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default="new_data/sources")
@@ -137,8 +186,7 @@ def main() -> None:
         print(f"    그대로  {path.name:24} {at:%Y-%m-%d}")
 
     if not move:
-        print("  옮길 것이 없습니다.")
-        return
+        print("  옮길 것이 없습니다. 본문의 옛 시점만 봅니다.")
 
     span = (TARGET_TO - TARGET_FROM).total_seconds()
     for index, (path, doc, at) in enumerate(move):
@@ -157,6 +205,23 @@ def main() -> None:
     if not args.dry_run:
         print(f"  {len(move)}건 옮겼습니다 "
               f"({TARGET_FROM:%Y-%m-%d} ~ {TARGET_TO:%Y-%m-%d})")
+
+    # 옮기고 난 뒤 다시 읽는다. 방금 민 문서도 본문에 옛 시점이 남아 있을 수 있다
+    pulled = 0
+    for path in sorted(root.rglob("*.json")):
+        if KEEP.match(path.name):
+            continue
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        fixed, moved = pull_forward(doc, doc_time(doc))
+        if not moved:
+            continue
+        pulled += moved
+        if args.dry_run:
+            print(f"    당김    {path.name:24} 옛 시점 {moved}곳")
+            continue
+        path.write_text(json.dumps(fixed, ensure_ascii=False, indent=2), encoding="utf-8")
+    if pulled:
+        print(f"  본문의 옛 시점 {pulled}곳을 문턱 안으로 당겼습니다")
 
 
 if __name__ == "__main__":
