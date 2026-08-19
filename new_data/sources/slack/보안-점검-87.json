@@ -46,7 +46,7 @@
       "type": "message",
       "user": "UF46A1E3E",
       "user_name": "오건우",
-      "text": "ㅇㅋ vault 경로는 /secret/monitoring/prod로 맞춰둘게. 이따 키 순환 끝나고 갱신된 값이랑 취약점 점검 결과는 이 스레드에 요약해서 올릴게.",
+      "text": "ㅇㅋ vault 경로는 /secret/monitoring/prod로 맞춰둘게. 이따 키 순환 끝나고 갱신된 값은 이 스레드에 요약해서 올릴게.",
       "ts": "1778737025.000005"
     },
     {
