@@ -34,8 +34,14 @@ TARGET_FROM = THRESHOLD + dt.timedelta(days=10)
 TARGET_TO = BASIS - dt.timedelta(days=9)
 
 KEEP = re.compile(r"^stale-")           # 심은 노후는 옛날이어야 한다
+
 ISO_DATE = re.compile(r"(\d{4})-(\d{2})-(\d{2})")
-KOREAN_DATE = re.compile(r"(\d{1,2})월\s*(\d{1,2})일")
+YEAR_MONTH = re.compile(r"(\d{4})년\s*(\d{1,2})월")
+MONTH_DAY = re.compile(r"(\d{1,2})월\s*(\d{1,2})일")
+# 「10/6~10/12」 처럼 범위로 적힌 것만 날짜로 본다. 단독 「10/16」 은 손대지 않는다 —
+# 이 데이터의 슬래시 숫자는 거의 다 CIDR 대역(10.30.0.0/16)이고 SEV-1/2 나 최소/최대 2/6 도 있다.
+# 하나라도 밀면 네트워크 구성이 조용히 망가진다
+SLASH_RANGE = re.compile(r"(\d{1,2})/(\d{1,2})\s*~\s*(\d{1,2})/(\d{1,2})")
 
 
 def doc_time(doc: dict) -> dt.datetime:
@@ -44,32 +50,54 @@ def doc_time(doc: dict) -> dt.datetime:
     return dt.datetime.fromisoformat(doc["issue"]["created_at"].replace("Z", "+00:00"))
 
 
-def shift_text(text: str, offset: dt.timedelta) -> str:
-    """글 안에 적힌 날짜를 같은 폭만큼 민다."""
+def shift_text(text: str, offset: dt.timedelta, year: int) -> str:
+    """글 안에 적힌 날짜를 같은 폭만큼 민다.
+
+    `year` 는 밀기 전 문서가 쓰인 해다. 「10/6」 이나 「11월 24일」 처럼 연도가 없는 표기는
+    그 해의 날짜로 읽어야 몇 월로 밀지 정할 수 있다.
+    """
     def iso(match: re.Match) -> str:
         try:
-            moved = dt.date(int(match[1]), int(match[2]), int(match[3])) + offset
+            return (dt.date(int(match[1]), int(match[2]), int(match[3])) + offset).isoformat()
         except ValueError:
             return match[0]
-        return moved.isoformat()
 
-    def korean(match: re.Match) -> str:
-        # 연도가 없다. 밀기 전 날짜가 어느 해였는지는 문서 시각으로만 알 수 있어
-        # 며칠 밀리는 정도면 달·일만 다시 쓴다. 해를 넘기면 손대지 않는다
-        base = dt.date(2026, int(match[1]), int(match[2]))
-        moved = base + offset
-        return f"{moved.month}월 {moved.day}일" if moved.year == 2026 else match[0]
+    def year_month(match: re.Match) -> str:
+        # 달만 적힌 것은 그 달 1일로 읽고 민다
+        moved = dt.date(int(match[1]), int(match[2]), 1) + offset
+        return f"{moved.year}년 {moved.month}월"
 
-    return KOREAN_DATE.sub(korean, ISO_DATE.sub(iso, text))
+    def month_day(match: re.Match) -> str:
+        try:
+            moved = dt.date(year, int(match[1]), int(match[2])) + offset
+        except ValueError:
+            return match[0]
+        return f"{moved.month}월 {moved.day}일"
+
+    def slash_range(match: re.Match) -> str:
+        try:
+            start = dt.date(year, int(match[1]), int(match[2])) + offset
+            end = dt.date(year, int(match[3]), int(match[4])) + offset
+        except ValueError:
+            return match[0]
+        # 「10/27~11/2」 처럼 해를 넘는 범위는 끝이 앞서 보이므로 한 해를 더한다
+        if end < start:
+            end = dt.date(year + 1, int(match[3]), int(match[4])) + offset
+        return f"{start.month}/{start.day}~{end.month}/{end.day}"
+
+    text = ISO_DATE.sub(iso, text)
+    text = YEAR_MONTH.sub(year_month, text)
+    text = MONTH_DAY.sub(month_day, text)
+    return SLASH_RANGE.sub(slash_range, text)
 
 
-def shift_doc(doc: dict, offset: dt.timedelta) -> dict:
+def shift_doc(doc: dict, offset: dt.timedelta, year: int) -> dict:
     if doc.get("kind") == "slack_thread":
         for message in doc["messages"]:
             message["ts"] = f"{float(message['ts']) + offset.total_seconds():.6f}"
-            message["text"] = shift_text(message["text"], offset)
+            message["text"] = shift_text(message["text"], offset, year)
         if doc.get("channel_info", {}).get("topic"):
-            doc["channel_info"]["topic"] = shift_text(doc["channel_info"]["topic"], offset)
+            doc["channel_info"]["topic"] = shift_text(doc["channel_info"]["topic"], offset, year)
         return doc
 
     issue = doc["issue"]
@@ -79,10 +107,10 @@ def shift_doc(doc: dict, offset: dt.timedelta) -> dict:
             issue[field] = moved.strftime("%Y-%m-%dT%H:%M:%SZ")
     for field in ("title", "body"):
         if issue.get(field):
-            issue[field] = shift_text(issue[field], offset)
+            issue[field] = shift_text(issue[field], offset, year)
     for bucket in ("comments", "review_comments"):
         for item in doc.get(bucket, []):
-            item["body"] = shift_text(item["body"], offset)
+            item["body"] = shift_text(item["body"], offset, year)
     return doc
 
 
@@ -123,7 +151,7 @@ def main() -> None:
                   f"  ({offset.days:+}일)")
             continue
         path.write_text(
-            json.dumps(shift_doc(doc, offset), ensure_ascii=False, indent=2),
+            json.dumps(shift_doc(doc, offset, at.year), ensure_ascii=False, indent=2),
             encoding="utf-8")
 
     if not args.dry_run:
