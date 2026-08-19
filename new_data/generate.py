@@ -266,7 +266,12 @@ def main() -> None:
         "target": scenario.TARGET,
         "works": [w["key"] for w in scenario.WORKS],
         "planted": [{"id": p["id"], "kind": p["kind"], "work": p["work"], "why": p["why"],
-                     "facts": [d["fact"] for d in p["docs"]]} for p in scenario.PLANTED],
+                     # 문장과 함께 삼단 줄도 남긴다. 린트가 짝을 찾는 열쇠가 주어·속성이라
+                     # 무슨 문장을 넣었는지만으로는 왜 잡히는지 되짚을 수 없다
+                     "facts": [d["fact"] for d in p["docs"]],
+                     "triples": [scenario.triple_line(d["triple"])
+                                 for d in p["docs"] if "triple" in d]}
+                    for p in scenario.PLANTED],
         "documents": done,
         "failed": failed,
     }
