@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3062,
+    "title": "배포 파이프라인 스테이징 검증 단계 추가 및 롤백 스크립트 정리",
+    "body": "## 배경\n스테이징에 올라간 빌드가 운영 배포 전에 제대로 검증되지 않고 넘어가는 케이스가 자주 보임. 어제 저녁에도 결제 모듈 테스트 안 하고 운영으로 나가서 한 시간 동안 버그 잡음. 배포 전에 스테이징에서 기본 스모크 테스트 정도는 돌리고 넘어가야 할 것 같아서 파이프라인에 검증 스테이지를 추가했어.\n\n롤백 절차도 지금은 EC2 AMI로 수동으로 되돌리는 식이라 실수하기 좋음. 이참에 ECS 이전 버전 태스크 정의 기준으로 재배포하는 스크립트 하나 만들어서 운영에서 바로 돌릴 수 있게 정리해둠.\n\n## 변경\n- `.github/workflows/deploy-staging.yml` 수정\n  - staging 배포 완료 후 `smoke-test.sh` 실행 스텝 추가\n  - 컨테이너 상태 unhealthy 시 즉시 실패 처리\n- `scripts/rollback-ecs.sh` 추가\n  - 직전 3개 태스크 정의 중 원하는 리비전 선택해서 재배포\n  - `--dry-run` 플래그로 사전 확인 가능\n- `docs/deploy.md` 롤백 절차 갱신\n  - 한 장짜리로 줄이고 실제 실행 커맨드 위주로 다시 씀",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3062",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-12-23T05:31:00Z",
+    "updated_at": "2025-12-23T05:31:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "오건우님, smoke-test.sh가 스테이징에서만 도는 거죠? 운영 배포 워크플로우에는 영향 없는지 확인 한번만 해주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 지금은 deploy-staging.yml에만 붙어있어요. prod 워크플로우는 기존대로 유지했습니다. 운영에도 넣으려면 별도 PR 열겠습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "rollback 스크립트 dry-run 옵션 있으면 저도 나중에 데이터 파이프라인 배포할 때 쓰고 싶은데, ECS 서비스 클러스터만 파라미터로 받게 되어 있나요? 아니면 하드코딩이에요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "클러스터, 서비스 둘 다 CLI 파라미터로 받아요. 데이터팀 서비스에도 그대로 쓸 수 있을 거에요. 스크립트 주석에 예시 적어뒀습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_e401abec6b989e672d1b3b3e513a6a5d"
+}

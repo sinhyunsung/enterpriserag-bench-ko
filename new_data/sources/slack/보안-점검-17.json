@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "보안 점검 관련해서 오늘부터 IAM 권한 정리하고 있습니다. 일단 prod 계정에서 안 쓰는 정책 4개 발견해서 제거했고, 키 연령 90일 넘은 것 2개 확인했습니다.",
+      "ts": "1779856140.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "수고하세요. 키 연령 넘은 건 누구 계정이에요?",
+      "ts": "1779856141.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "하나가 테라폼용 서비스 계정이고, 나머지 하나는 작년에 쓰던 배포용 계정입니다. 배포용 계정은 지금 사용 안 하는 거 확인해서 바로 비활성화시켰습니다.",
+      "ts": "1779856142.000002"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "서비스 계정 키도 90일 넘었으면 순환하는 게 좋겠네요. 수동으로 돌리지 말고 문서화해주세요.",
+      "ts": "1779856143.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 서비스 계정은 테라폼 스테이트에서 관리 중이라 절차 정리해서 위키에 올리겠습니다. EC2 수동 작업 계정도 권한이 과하게 넓은 게 있어서 정리 중입니다.",
+      "ts": "1779856144.000004"
+    },
+    {
+      "type": "message",
+      "user": "U0733340C",
+      "user_name": "이준영",
+      "text": "EC2 수동 작업 계정은 우리 팀에서 장애 대응할 때 가끔 쓰는데, AdministratorAccess 붙어 있던 거 말하는 건가요?",
+      "ts": "1779856145.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "맞아요. 그 계정에 S3FullAccess랑 CloudWatchFullAccess도 같이 붙어 있어서, EC2 읽기/재시작 정도로 좁히려고 합니다. 바꾸면 말씀드릴게요.",
+      "ts": "1779856146.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_f067afae9bf245ec47e530ca6aeecc6b"
+}

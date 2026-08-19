@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3050,
+    "title": "바로배송 전용 WAF 룰 추가 및 ALB 타겟그룹 분리",
+    "body": "## 배경\n바로배송 트래픽이 기존 택배/정기배송과 같은 ALB를 타고 있어서 장애 전파 위험이 있음.\n이번에 바로배송 전용 인프라 구성하면서 WAF 룰도 별도로 가져가기로 함.\n\n## 변경\n- `dure-infra/waf` 에 바로배송 전용 룰 6개 추가 (SQLi, XSS, path traversal, rate limit 등)\n- 바로배송 ALB 타겟그룹을 `dure-fleet-tg` 에서 `dure-direct-tg` 로 분리\n- 헬스체크 경로 `/direct/health` 로 지정\n- 배포 스크립트에 `ENV=direct` 분기 추가\n\n테라폼 플랜은 로컬에서 확인했고 운영 적용은 주간 배포 때 반영 예정.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3050",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-08-24T05:17:00Z",
+    "updated_at": "2026-08-24T06:42:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "타겟그룹 분리하면 기존 모니터링 대시보드도 같이 봐야 되는 거 아니에요? 알람 타고 있는 쪽 확인 부탁드려요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 그 부분은 내일 중으로 cloudwatch 알람 타겟 변경하고 PR에 링크 남길게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "저희 데이터 파이프라인에서 바로배송 로그 수집할 때 ALB 이름으로 필터 걸고 있었는데, 분리되면 수집 안 될 수 있어요. 태그나 네이밍 규칙만 공유해주시면 반영하겠습니다."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "@haneul-jung 넵, `dure-direct-alb` 로 갑니다. 태그는 `service:direct-delivery` 붙여놨어요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_544522a9ef9443ee0942fff8f8680b99"
+}

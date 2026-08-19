@@ -1,0 +1,47 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3068,
+    "title": "로그 수집 파이프라인에 보존 기간 정책 및 검색 인덱스 기본값 반영",
+    "body": "## 배경\n\n현재 로그 수집 파이프라인이 로그를 쌓고는 있는데, 보존 기간이 정리 안 돼 있어서 스토리지가 계속 늘고 있음.\n특히 dev 환경 로그까지 전부 90일씩 쌓이고 있어서 비용 부담이 커짐.\n그리고 검색 쪽에서 기본 인덱스 패턴이 안 잡혀 있어서 로그 확인할 때마다 인덱스 직접 골라야 하는 불편함이 있었음.\n\n## 변경\n\n- 로그 보존 기간 정책 적용\n  - prod: 30일\n  - staging: 14일\n  - dev: 7일\n- 보존 기간 지나면 자동 삭제되도록 lifecycle policy 추가\n- 검색 기본 인덱스 패턴을 `dure-log-*` 로 지정\n- fluent-bit 설정에서 dev 로그 태그가 잘못 붙던 부분 수정\n\n## 테스트\n\n- dev 환경에 배포해서 로그 들어오는 것 확인\n- 보존 기간 지난 인덱스 삭제되는지 수동으로 policy 테스트\n- 검색 화면에서 기본 인덱스 패턴으로 조회되는 것 확인",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3068",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2026-06-18T08:30:00Z",
+    "updated_at": "2026-06-18T08:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "보존 기간 정책 드디어 들어가네요. dev 7일 확인했습니다. staging이랑 prod는 배포 언제 하실 거에요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "이 PR 머지되면 오늘 중으로 staging 먼저 올리고, prod는 내일 오전에 반영하겠습니다. 혹시 prod 로그 중에 30일 이상 보관 필요한 게 있으면 미리 얘기해 주세요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "로깅 비용 관련해서 운영 쪽에서 지난달에 문의 왔던 건데 잘 진행됐네요. dev 7일은 괜찮고, staging 14일도 문제 없어요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_1194364f652079b075a5d68022d3dec8"
+}

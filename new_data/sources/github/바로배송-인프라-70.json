@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3080,
+    "title": "바로배송 전용 인프라 프로비저닝 코드 추가 및 기존 환경 분리",
+    "body": "## 배경\n바로배송 서비스가 다음 달 1일부터 시범 운영에 들어간다. 기존 두레배송 인프라에 같이 올리면 장애 전파 위험이 있어서, 서비스 전용 VPC와 EKS 클러스터를 새로 분리하기로 했다. 이번 PR은 바로배송 전용 인프라를 테라폼 코드로 추가하고, 기존 dev/prod 워크스페이스와 격리되도록 구성한 것이다.\n\n## 변경\n- `terraform/broad-delivery/` 디렉토리 신규 추가\n  - VPC (10.30.0.0/16)\n  - EKS 클러스터 `broad-delivery-prod` (노드그룹 2대 시작)\n  - RDS (PostgreSQL 16, db.t4g.medium)\n  - ElastiCache (Redis 7, cache.t4g.micro)\n- 기존 `terraform/dure/` 하위 모듈에서 공통으로 쓰던 보안그룹 모듈을 그대로 재사용하되, 태그에 `service=broad-delivery` 추가\n- 배포용 IAM 역할 분리 (`broad-delivery-deploy-role`)\n- 알람은 우선 prod 수준으로 걸지 않고, 인프라 이상 감지만 CloudWatch 경보 2개 생성 (노드 CPU 85% 이상 10분, RDS 커넥션 80% 이상 5분)\n\n## 확인 사항\n- `terraform plan`으로 리소스 41개 생성 확인\n- 기존 두레배송 워크스페이스 영향 없음\n- 신규 서브넷 대역이 사내 VPN 대역(10.20.0.0/16)과 충돌하지 않음",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3080",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-08-21T03:54:00Z",
+    "updated_at": "2026-08-21T06:12:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "RDS는 왜 t4g.medium으로 잡았어? 초기 데이터 들어가는 거 생각하면 small로도 충분하지 않나."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "시범 운영 기간에 배치 돌릴 때 정산용 쿼리 몇 개가 무거워서, 버스트 크레딧 떨어지면 응답 늘어지는 거 피하려고 medium으로 잡았습니다. 비용은 월 3만 원 정도 차이라 우선 두고, 2주 지나고 모니터링해서 내릴게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "RDS 접속 정보는 데이터 파이프라인에서 바로 못 보게 해주세요. 저희 쪽은 읽기 전용 계정만 따로 받을게요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 알겠습니다. 읽기 전용 계정은 클러스터 생성 후 파라미터 그룹 적용하고 따로 발급해드릴게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_ed5dedd9784bc686e8bfe07688d94019"
+}

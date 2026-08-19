@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3014,
+    "title": "ECS 클러스터 용량 공급자 전환 및 오토스케일 정책 재설정",
+    "body": "## 배경\n기존 EC2 기반 ECS 클러스터에서 인스턴스가 수동으로 증설되다 보니, 새벽 시간대에 작업이 몰리면 배포가 늦어지는 문제가 있었습니다. ASG만으로는 컨테이너 수요에 맞춰 인스턴스를 미리 늘리기가 어려워서, 지난주 회의에서 용량 공급자(capacity provider)를 도입하기로 했습니다.\n\n## 변경\n- `dure-prod` 클러스터에 EC2 용량 공급자 추가: `cp-prod-on-demand`\n- ASG `dure-prod-asg`에 용량 공급자 연결, target capacity 100%로 설정\n- 서비스 3종(`api`, `worker`, `scheduler`)의 launch type을 EC2로 변경하고 capacity provider strategy 적용\n- 오토스케일 정책을 ASG 기준에서 ECS service 기준으로 변경: `api`는 평균 CPU 70% 기준, `worker`는 큐 깊이(`ApproximateNumberOfMessages`) 기반 CloudWatch 알람으로 스케일링\n- 최소/최대 태스크 수는 api 4~20, worker 2~30, scheduler 1~4로 조정\n\n## 리뷰 요청\n- capacity provider 전환 후 기존 ASG 스케일 인/아웃 정책이랑 충돌나는지 확인 부탁드립니다.\n- `worker` 큐 깊이 알람 임계값(200)이 적절한지 의견 주세요.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3014",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-02-28T02:39:00Z",
+    "updated_at": "2026-02-28T02:39:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "ASG 쪽 스케일 인 정책이랑 capacity provider랑 같이 돌면 인스턴스가 갑자기 줄어들 수 있으니까, ASG에 있던 기존 CloudWatch 알람은 비활성화해두는 게 안전할 것 같아요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵, `dure-prod-asg`에 붙어 있던 스케일 인/아웃 알람 2개는 disable 처리했습니다. 혹시 몰라서 상세 모니터링은 그대로 켜뒀어요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "worker 큐 깊이 200이면 어제 새벽에 잠깐 몰렸을 때 기준으로는 좀 높아요. 150 정도면 태스크가 1~2개 더 뜨면서 밀림이 없었던 것 같아요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "의견 감사합니다. 임계값 150으로 낮춰서 알람 생성하고, 내일 새벽 배치 돌 때 지표 한 번 볼게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_0aa8c740daa6f5b188da2d078e4d8e99"
+}

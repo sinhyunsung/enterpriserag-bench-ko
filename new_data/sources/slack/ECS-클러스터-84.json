@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "ECS 클러스터 컨테이너 인스턴스가 용량 공급자에서 계속 빠지는 현상 있음. 오토스케일 그룹 desired count는 그대로인데 ECS 쪽 registered container instances 수가 줄어서 배포가 pending에 걸림.",
+      "ts": "1770703020.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "ASG에 등록된 인스턴스들은 정상인 거죠? ECS 에이전트 상태부터 확인해 보세요.",
+      "ts": "1770703021.000001"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "아까 staging 배포 돌렸는데 pending에 걸렸던 게 이거 때문인가 보네요.",
+      "ts": "1770703022.000002"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 인스턴스 두 대가 ECS 클러스터에서 연결 해제 상태로 빠졌고, ASG desired 4인데 ECS에는 2대만 보여요. 에이전트 로그에서 CredentialException 계속 던지고 있습니다.",
+      "ts": "1770703023.000003"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "그 인스턴스들 IAM 역할 확인해 봐야 할 것 같아요. 얼마 전에 인프라 IAM 정리하면서 역할 이름 바꾸지 않았나요?",
+      "ts": "1770703024.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "오. ASG launch template 보니까 이전 역할 이름인 ecsInstanceRole 구버전으로 잡혀 있네요. 신규 역할로 바꿔서 인스턴스 교체했습니다.",
+      "ts": "1770703025.000005"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "이번 장애 정리해서 인프라 변경 시 역할 참조하는 리소스 목록 같이 공유해 주세요. 같은 문제 반복되면 곤란하니까요.",
+      "ts": "1770703026.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_d7f946b1b149c22d775fec6d659ba429"
+}

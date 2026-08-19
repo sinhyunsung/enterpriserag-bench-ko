@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3077,
+    "title": "IAM 권한 최소화 및 키 순환 정책 적용",
+    "body": "## 배경\n정기 보안 점검에서 dure-settlement 관련 IAM Role에 불필요한 s3:* 권한이 확인됐습니다. 지난 주부터 세린님과 이야기하던 키 순환도 같이 정리합니다.\n\n## 변경\n- settlement-worker Role에서 s3:* 제거하고 s3:GetObject, s3:PutObject 만 허용\n- 사용하지 않던 DynamoDB FullAccess 제거\n- 루트 계정 액세스키 비활성화\n- CI/CD용 키가 240일 넘게 안 돌아서 새로 발급 후 기존 키 비활성화 처리\n- 운영 콘솔에서 액세스키 마지막 사용일 보고 안 쓰는 키 3개 정리\n\n## 테스트\n- 정산 내역 s3 업로드/다운로드 로컬에서 확인\n- 스테이징에서 배치 1회 돌려서 Role 변경 반영 확인\n- 키 순환 후 Jenkins 빌드 정상 동작 확인",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3077",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-05-25T02:26:00Z",
+    "updated_at": "2026-05-25T02:26:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "DynamoDB FullAccess는 언제 붙였던 거지? 사용 흔적 없으면 그냥 빼도 되고, 나중에 필요하면 최소 권한으로 다시 붙여요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "작년 3월에 하늘님이 트러블슈팅할 때 임시로 붙였던 거라 기록에 있더라고요. 그 이후로 호출 없어서 뺐습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "아 그때 제가 붙였던 거 맞아요. 정리 감사합니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "이건 머지하시고, 키 순환은 다음 점검 때 자동화 가능한지 한번 보죠. 매번 수동으로 하면 까먹을 듯."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_1b7524f22bcfa14561f8d28974f6d08d"
+}

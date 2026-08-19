@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3092,
+    "title": "배포 파이프라인 개선: 스테이징 검증 단계 추가 및 롤백 스크립트 정리",
+    "body": "## 배경\n정산 쪽은 데이터가 민감해서 스테이징 한번 안 거치고 바로 프로덕션 나가는 게 계속 걸렸어요. 이번에 dure-settlement 서비스가 커지면서 지난주에도 프로덕션 배포 후에 결제 상태 동기화 배치에서 장애가 한 번 있었고요. 팀 내에서도 배포 전에 확인할 수 있는 절차가 있었으면 좋겠다는 얘기가 계속 나와서 정리했습니다.\n\n## 변경\n- GitHub Actions 워크플로우에서 `deploy-staging` 잡을 `deploy-production` 앞에 추가했습니다. 스테이징 배포 후 `settlement-sync` 배치 smoke test 돌리고 통과해야 프로덕션으로 넘어가게 했어요.\n- 롤백 절차 문서에 있던 스크립트를 `scripts/rollback-settlement.sh`로 옮기고, `--service=settlement-api` `--service=settlement-batch` 파라미터 받을 수 있게 조정했습니다. 기존에는 API랑 배치를 한번에 되돌리는 방식이라 배치만 롤백해야 할 때 불편했어요.\n- 배포 브랜치 자동 머지 규칙은 그대로 두되, 프로덕션 배포 태그는 `release/settlement-*` 형식에서 `settlement-prod-*`로 바꿨어요. 헷갈리는 사람이 많아서요.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3092",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-12-27T09:26:00Z",
+    "updated_at": "2025-12-27T10:42:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 스테이징 smoke test에서 배치 쪽 도는 시간이 꽤 길어서 워크플로우 전체가 느려질 것 같은데, 이거 타임아웃은 얼마나 걸어두셨어요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "일단 20분 걸어뒀고, 초과하면 잡 실패로 처리되게 해놨어요. 지난번에 배치가 hang 걸렸던 적이 있어서 무한정 기다리는 것보다는 낫지 않을까 싶어서요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "`settlement-prod-*` 태그 규칙 바뀐 것 공유 문서에도 반영해주실 수 있나요? 오늘 아침에 준영님이 옛날 태그 기준으로 배포 명령어 쓴 거 보고 알았어요."
+    },
+    {
+      "user": {
+        "login": "junyoung-lee"
+      },
+      "body": "저는 이 PR 보고 알았습니다... 스테이징 거치는 건 좋네요. 다음 배포부터는 저도 스테이징에서 배치 로그 한번 보고 넘어가면 될 것 같아요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_5eb8bc7f95167d8d16873aea1d13e319"
+}

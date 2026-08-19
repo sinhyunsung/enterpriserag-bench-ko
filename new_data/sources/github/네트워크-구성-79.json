@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3089,
+    "title": "[인프라] 정산망 VPC, 보안 그룹, 내부 로드밸런서 구성",
+    "body": "## 배경\n정산 시스템이 외부 결제 대행사(PG) 통신 구간이랑 내부 집계 서비스 통신 구간이 섞여 있어서, 이번에 정산망을 별도 VPC로 분리하기로 했습니다.\n외부랑 붙는 구간은 기존대로 두고, 내부 통신만 새 VPC에서 처리하게 하려고요.\n\n## 변경\n- `vpc-dure-settlement-prod` 생성 (10.30.0.0/16)\n  - 퍼블릭 서브넷 2개, 프라이빗 서브넷 2개 (AZ `ap-northeast-2a`, `ap-northeast-2c`)\n- 보안 그룹 `sg-settlement-internal` 추가\n  - 인바운드: 사내 대역(`10.20.0.0/16`)에서 8080만 허용\n  - 아웃바운드: 내부 집계 DB(`sg-aggregation-db`)로 5432 허용\n- 내부용 ALB `alb-settlement-internal` 생성\n  - 리스너: HTTP 8080 -> 정산 API 타깃그룹\n  - 인터넷 페이싱 아님(internal scheme)\n\n## 참고\n- 아직 외부 PG 통신용 ALB는 기존 VPC에 그대로 두고 다음 주에 옮길 예정입니다.\n- 타깃그룹 헬스체크는 `/actuator/health` 기준으로 잡아뒀습니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3089",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-07-25T09:26:00Z",
+    "updated_at": "2026-07-25T09:26:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 내부 ALB를 새 VPC에 두면 기존 집계 쪽에서 정산 API 부를 때 DNS랑 라우팅 정리된 거 맞죠? 이번 주 화요일 배포 전에 한번 확인 부탁드려요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵, Route 53 내부 호스팅에 `settlement-api.internal.duretech.com`으로 등록해뒀고 집계 VPC 피어링도 연결해놨어요. 화요일 전에 테스트 한 번 더 돌려볼게요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이거 머지되면 로컬 개발할 때도 settlement-api 주소 바꿔야 하나요? 지금은 그냥 `localhost:8080` 보고 있는데..."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "로컬은 영향 없어요. VPC 안 도메인은 배포 환경에서만 쓰이고, 로컬은 기존처럼 컨테이너 직접 띄우면 됩니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_ecf5f6c78cd605067b4ba27c1c9a1319"
+}

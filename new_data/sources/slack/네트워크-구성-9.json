@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "VPC 대역이랑 서브넷 구성 초안 올렸습니다. prod / staging 나누는 것까진 했는데 로드밸런서 붙이는 구간에서 L4 쓸지 NLB 쓸지 의견 필요합니다.",
+      "ts": "1784879760.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "건우님, 초안 확인했습니다. 내부 통신은 어차피 사설로 돌거라서 NLB가 낫겠다 싶은데, 세린님 의견은?",
+      "ts": "1784879761.000001"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "성격상 트래픽 패턴이 짧고 많은 요청이라면 NLB가 맞고, 웹소켓 쓸 일 없으면 L4로도 충분합니다. 성능 테스트 전까지는 L4로 두고 바꾸는 것도 방법이에요.",
+      "ts": "1784879762.000002"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "일단 L4 기준으로 보안그룹 열어두고, 웹소켓 여부는 준호님한테 확인하겠습니다.",
+      "ts": "1784879763.000003"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "백엔드 API는 일반 REST 위주라 웹소켓 계획 없음. L4로 진행하시면 됩니다.",
+      "ts": "1784879764.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8AA7DB93",
+      "user_name": "문태호",
+      "text": "보안그룹에서 사내 IP 대역만 SSH 허용 부탁드립니다. 운영팀 쪽 접근 정리되면 안내할게요.",
+      "ts": "1784879765.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 태호님 IP 대역 주시면 반영해두겠습니다. VPC 확정되면 PR 올릴게요.",
+      "ts": "1784879766.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_ebd115e7a6ba055fc597b6417ed7e19f"
+}

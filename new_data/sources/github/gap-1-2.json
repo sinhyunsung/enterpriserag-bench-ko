@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3008,
+    "title": "스테이징 배포 파이프라인 캐시 전략 변경 및 롤백 스크립트 일부 수정",
+    "body": "## 배경\n\n스테이징에 배포 돌릴 때마다 의존성 캐시가 자꾸 풀려서 시간이 너무 오래 걸리는 이슈가 반복됐다. 어제 정하늘님 데이터 파이프라인 테스트 배포도 14분 넘게 걸렸고. 캐시 키가 도커 레이어랑 맞물리는 부분이 문제라서 키 구성 정리를 먼저 했다.\n\n거기에 롤백 스크립트 보니까 태그 롤백 시점에 헬스체크 대기 없이 바로 스왑하는 구조여서, 예전에 전시 배포에서 말썽났던 그 패턴이 스테이징에도 남아 있더라. 이번에 같이 고쳤다.\n\n## 변경\n\n- `docker/build-push-action` 캐시 키 정리 (`dure-logis/staging/**` 기준으로 캐시 경로 세분화)\n- 스테이징 전용 캐시 백엔드로 로컬 빌드킷 캐시 대신 기존 S3 연동 다시 살림\n- `rollback-staging.sh`에서 롤백 태그 교체 전에 `/actuator/health` 폴링 추가, 비정상 응답 시 퍼블리시 안 하도록 함\n- 배포 완료 슬랙 알림이 실패해도 파이프라인이 실패하면 안 되는 것 같아서 알림 스텝 `continue-on-error: true` 명시\n\n이번 배포도 승인 절차를 거쳐 진행했다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/3008",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-06-02T02:15:00Z",
+    "updated_at": "2026-06-02T02:15:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 롤백 스크립트에 헬스체크 폴링 넣으면 무중단 롤백은 좀 늦어지는데 스테이징에서 그 정도는 괜찮아요. 운영(prod)이면 트레이드오프 다시 얘기해야 하고."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "캐시 풀리는 문제 저도 어제 연속으로 겪어서 죽는 줄 알았네요... S3 다시 붙이니까 빌드 시간 4분대로 돌아왔어요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 하늘님, 어제 그 테스트 배포가 제일 오래 걸렸던 거 기준으로 우선 잡았습니다. 승인은 아직 안 붙었는데 세린님 시간 되실 때 봐주시면 바로 머지할게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "밑에 리뷰 남겼는데요. `rollback-staging.sh` 헬스체크 폴링에서 최대 대기 시간이랑 재시도 횟수만 고정값으로 빼주세요. PR 승인은 해뒀으니 그거만 반영하면 됩니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_60acab5b57e39686841a0c22f4445fc5"
+}

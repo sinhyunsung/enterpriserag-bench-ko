@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "IAM 점검 목록 정리해서 오늘부터 돌립니다. prod 계정은 우선 read-only로 싹 뽑아서 권한 큰 애들 위주로 볼게요. 키 90일 넘은 것도 같이 추출해둘게요.",
+      "ts": "1779528660.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "좋아요. prod는 오늘 중으로 사용자별 정책 매트릭스 공유해줘요. 키 순환은 운영이랑 겹치는거 아니죠?",
+      "ts": "1779528661.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "아뇨, 제가 순환 대상 리스트 뽑고 실제 rotate는 담당자한테 태그로 넘길게요. 오늘은 점검과 대상 확정까지입니다.",
+      "ts": "1779528662.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "데이터 파이프라인용 서비스 계정 두 개 키가 120일 넘었을 거예요. 확인 부탁드려요.",
+      "ts": "1779528663.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 방금 목록에 잡혔어요. data-pipeline-prod, redshift-loader 둘 다 예정보다 오래됐네요. 이건 오늘 태그 달아서 내일 오전 중으로 순환 요청할게요.",
+      "ts": "1779528664.000004"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "백엔드 배포 롤에 iam:PassRole이 과하게 열려 있는 것 같은데 이상하면 저한테 알려주세요.",
+      "ts": "1779528665.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, deploy-backend-role에 PassRole 리소스가 arn:*로 잡혀 있네요. 이건 최소화 대상으로 분류해서 PR 올릴게요. 다른 애들도 마저 보고 점검 결과 취합해서 공유하겠습니다.",
+      "ts": "1779528666.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_dcf67d44eecfc2ec6f8de092e696e290"
+}

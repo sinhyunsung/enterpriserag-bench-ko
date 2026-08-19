@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "ECS 클러스터 용량 공급자(capacity provider) 전환 작업 공유드립니다. 기존 EC2 기반 클러스터에서 FARGATE_SPOT 비율 조절하는 방식으로 바꿨어요. 배치 서비스는 스팟, API는 온디맨드 유지했습니다.",
+      "ts": "1772086560.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "오 저희 API 쪽은 온디맨드 유지되는 거죠? 갑자기 스팟 터지면 응답 튀는 거 아닌지...",
+      "ts": "1772086561.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 API 서비스는 capacity provider strategy에서 온디맨드 가중치 1로 고정해뒀습니다. 배치는 스팟 100%로 두고요. 오토스케일은 클러스터 오토스케일링이 아니라 서비스 단위 target tracking으로 잡았어요.",
+      "ts": "1772086562.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "건우님, 스팟 중단 되면 배치 재시도는 어떤 식으로 처리되는지 정리해주실 수 있나요? 운영 쪽에서 한번 확인하고 싶대요.",
+      "ts": "1772086563.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵 세린님, SQS 재드라이브 정책이랑 배치 잡의 retry 설정 연결해뒀습니다. 스팟 중단되면 태스크가 SIGTERM 받고 큐로 메시지 다시 넘어가요. 멱등성은 배치 코드에서 이미 처리하고 있어서 중복 실행 이슈는 없을 겁니다.",
+      "ts": "1772086564.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "데이터 배치도 FARGATE_SPOT으로 도는 거면 가끔 지연 발생할 수 있다는 거죠? airflow가 아니라 ECS 스케줄러 쓰는 배치들 말이에요.",
+      "ts": "1772086565.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 하늘님, ECS scheduled task로 도는 배치는 스팟 중단 시 최대 2분 정도 지연될 수 있어요. 대신 비용이 확 줄어서... 저녁 시간대 배치 위주로는 괜찮을 것 같은데, 민감한 배치 있으면 알려주세요 온디맨드로 빼겠습니다.",
+      "ts": "1772086566.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_ee979ea37468f205a4c5595e8bcc1621"
+}

@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "스테이징에 배포 파이프라인 붙였습니다. develop 브랜치에 push하면 자동으로 스테이징 서버에 올라가요. 실서버는 아직 수동입니다.",
+      "ts": "1764556140.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "오 이제 스테이징은 편해지겠네요. 실서버는 언제쯤 자동으로 바꾸실 계획이에요?",
+      "ts": "1764556141.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "일단 스테이징에서 검증 좀 해보고요. 배포 스크립트에 롤백 태그도 넣어놨어서 문제 생기면 이전 버전으로 바로 되돌릴 수 있게 해뒀습니다.",
+      "ts": "1764556142.000002"
+    },
+    {
+      "type": "message",
+      "user": "U0733340C",
+      "user_name": "이준영",
+      "text": "방금 develop에 push한 거 스테이징에서 이상 없이 떴어요. 디비 마이그레이션도 정상 적용됐고요.",
+      "ts": "1764556143.000003"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "건우님, 배포 자동화하면서 실서버 롤백 절차도 문서로 정리해주세요. 장애 대응용으로요.",
+      "ts": "1764556144.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 알겠습니다. 실서버는 배포 순서랑 롤백 트리거 조건 정리해서 위키에 올릴게요.",
+      "ts": "1764556145.000005"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "정리되면 공유 부탁드려요. 다음 회고 때 이번에 발견된 배포 이슈도 같이 리뷰해요.",
+      "ts": "1764556146.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_cd0cbfa8533ded7e38299e05690f1912"
+}

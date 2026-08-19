@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C4602E7D4",
+  "channel_info": {
+    "id": "C4602E7D4",
+    "name": "프로젝트-바로배송"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "바로배송 쪽 비용 정리 좀 했습니다. 안 쓰는 dev/staging 리소스랑 스팟 전환 가능한 것들 1차로 정리했어요.",
+      "ts": "1776831960.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "오, 수고했어요. 이번 달 바로배송 인프라 비용이 좀 튀던데 얼마나 줄어들 것 같아요?",
+      "ts": "1776831961.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "월 예상으로 한 18% 정도는 줄지 않을까 싶습니다. 특히 dev 환경에 인스턴스 타입이 과하게 잡혀 있던 게 컸어요.",
+      "ts": "1776831962.000002"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "dev는 r5.large가 4대나 돌아가고 있었죠? 저번에 테스트 때문에 잠깐 올린 게 그대로 있었네요.",
+      "ts": "1776831963.000003"
+    },
+    {
+      "type": "message",
+      "user": "U8AA7DB93",
+      "user_name": "문태호",
+      "text": "비용 보고서 보니까 dev/staging 리소스가 프로덕션의 절반 가까이 나오는 것 같던데 정리 감사합니다. 혹시 예약 인스턴스 전환도 바로 가능한가요?",
+      "ts": "1776831964.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, prod에서 6개월 이상 고정으로 돌릴 것들은 RI 구매 리스트 뽑아놨습니다. 내일 중으로 견적이랑 같이 공유드릴게요.",
+      "ts": "1776831965.000005"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "좋습니다. RI는 1년 선결제 기준으로 보고해 주시고, 스팟은 장애 대응 시나리오까지 같이 정리해 두세요.",
+      "ts": "1776831966.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_64b4a771e88a9613df3635f944f59c29"
+}

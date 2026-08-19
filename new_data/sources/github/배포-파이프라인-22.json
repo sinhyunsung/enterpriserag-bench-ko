@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3032,
+    "title": "배포 파이프라인 개선: 스테이징 자동 배포 및 롤백 스크립트 추가",
+    "body": "## 배경\n수동으로 스테이징 배포할 때마다 인스턴스 들어가서 jar 갈아끼우는 게 반복되고 있었음. 실수로 프로덕션 경로 건드릴 뻔한 적도 있고. CI 통과하면 스테이징까진 자동으로 올라가게 하고, 롤백도 버튼 누르듯이 할 수 있게 정리하려고 함.\n\n## 변경\n- GitHub Actions에 `deploy-staging` job 추가. `main` 브랜치 머지되면 빌드 후 스테이징 서버에 scp로 배포.\n- `scripts/rollback.sh` 추가. 배포 직전 jar 백업해두고, 인자로 이전 버전 지정하면 복원하도록 함.\n- `.env.staging`은 기존 값 그대로 유지하되, 경로 명시를 명확하게 바꿈.\n- README에 스테이징 배포/롤백 절차 간단히 적어둠.\n\n## 테스트\n- 스테이징에서 수동으로 롤백 스크립트 두 번 돌려봄. 이전 jar로 정상 복구 확인.\n- CI가 스테이징 배포까지 도는 것 로그로 확인함.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3032",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-12-12T04:32:00Z",
+    "updated_at": "2025-12-12T05:48:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "오건우님, 스테이징 배포가 main 머지에 자동으로 걸리면 테스트하다 말리는 경우 없어요? 머지 전에 수동으로 올려야 할 때도 있지 않나."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "아 네, 그 부분은 `workflow_dispatch`로 수동 실행도 되게 해뒀습니다. 평소엔 자동으로 돌고, 필요하면 Actions 탭에서 수동으로 돌리면 돼요. README에도 적어놨어요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "롤백 스크립트가 프로덕션에도 쓰이는 건가요? 스테이징 전용이에요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "지금은 스테이징 전용입니다. 프로덕션은 다음 주에 배포 파이프라인 정리하면서 같이 붙이려고요. 그때는 서지안 CTO님한테 리뷰 다시 받겠습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_f08872997b7f45acf05577f6dc162f79"
+}

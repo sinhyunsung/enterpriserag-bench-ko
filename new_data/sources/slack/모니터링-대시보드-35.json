@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "프로메테우스 타깃 보는데 차량 관제 서비스(WMS 쪽이 아니라 TMS) exporter가 5분째 scrap 못 하고 있네요. 대시보드도 지표가 끊겨서 보이고.",
+      "ts": "1774166280.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "지금 장애 티켓 들어온 건 없나요? 운영 쪽에서도 인지했는지 확인해볼게요.",
+      "ts": "1774166281.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "문태호님한테 여쭤보니까 TMS 기사님들 앱에서 상태 갱신이 좀 늦는다고 민원 몇 건 들어왔다네요. 지표만 안 잡히는 줄 알았는데 실서비스 영향이 있네요.",
+      "ts": "1774166282.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "그럼 일단 TMS 쪽 모니터링 임계값 조정해두고, exporter부터 살리죠. 누구 볼 수 있어요?",
+      "ts": "1774166283.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "제가 지금 컨테이너 재시작했고요. 잠깐 상태 보니까 node exporter는 정상인데 TMS exporter만 OOM으로 죽은 흔적이 있어서 메모리 리밋 확인 중이에요.",
+      "ts": "1774166284.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "메모리 리밋 256Mi로 잡혀 있던데 최근에 TMS 쪽 지표 수가 늘어서 임계 넘었던 것 같아요. 일단 512Mi로 올리고 scrap 정상화됐는지 보겠습니다.",
+      "ts": "1774166285.000005"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "OOM 킬 로그는 그라파나 쪽에 남겨두시고, TMS exporter 메모리 기준치 변경은 배포 이력으로 남겨주세요. 알림 임계값도 지표 끊김 기준이 아니라 exporter down 기준으로 함께 봐요.",
+      "ts": "1774166286.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_0c603a2df0dffa10dca3f278bd5477a9"
+}

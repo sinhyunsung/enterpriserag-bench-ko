@@ -1,0 +1,62 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3059,
+    "title": "정산 서버 신규 네트워크 구성 반영 (VPC, 보안그룹, ALB)",
+    "body": "## 배경\n정산서버(dure-settlement) 신규 인프라 구성 작업이 있어서 기존 개발계정에 있던 리소스를 분리하고, 운영 환경 대비 네트워크 구조로 변경합니다.\n\n## 변경\n- VPC 신규 생성 (10.40.0.0/16, 퍼블릭/프라이빗 서브넷 분리)\n- 정산 API 서버용 보안그룹 추가 (인바운드: ALB 80/443만 허용, 아웃바운드: RDS 5432 허용)\n- ALB 신규 생성 및 리스너 80 -> 대상그룹 정산 서버 8080 포워딩 설정\n- 테라폼 코드 리팩토링 (variables.tf에 환경별 CIDR 분기 추가)\n\n테라폼 플랜 결과입니다. 리소스 생성 건만 있어서 운영 리소스 영향은 없습니다.\n```\nPlan: 24 to add, 0 to change, 0 to destroy.\n```\n이거 머지되면 개발계 `dure-settle-dev` ALB 주소로 붙는 것까지 확인하겠습니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3059",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "junho-lee"
+      }
+    ],
+    "created_at": "2026-07-21T01:46:00Z",
+    "updated_at": "2026-07-21T01:46:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "보안그룹 인바운드 ALB로만 열어둔 거 확인했어요. 아웃바운드 RDS 5432도 그렇고 필요한 것만 열어서 좋네요. 근데 헬스체크 경로가 `/health`로 되어 있던데 정산 서버에 그 엔드포인트 열려 있는 거 맞나요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 저번에 준호님한테 확인했고 스프링 액추에이터 의존성 이미 들어가 있어서 `/actuator/health`로 쓰는 게 나을 것 같아서 그렇게 바꿨어요. PR 본문에 말씀드린 `/health`는 예전 문구고, 코드에는 `/actuator/health`로 들어가 있습니다."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "아 그러네요. 정산 서버는 actuator 열려 있어요. 보안그룹도 그렇게만 열려 있으면 굳이 별도 `/health` 만들 필요 없어요. `/actuator/health` 반영이면 문제 없습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "저희 데이터 팀에서 정산 내역 배치로 가져갈 때 ALB 거치면 되나요 아니면 내부 IP 직접 쓰나요? 그 부분이랑은 별개인 것 같은데 참고용으로 여쭤봐요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "배치는 내부망이라 ALB 안 거치고 프라이빗 IP 직접 붙는 게 나아요. DNS는 기존 거 그대로 쓰고 보안그룹만 데이터팀 서버 대역 추가해 두겠습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_48c5c9646589c41a392e7f60e44a1746"
+}

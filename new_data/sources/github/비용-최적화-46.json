@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3056,
+    "title": "비용 최적화: 예약 인스턴스 전환 및 미사용 자원 정리",
+    "body": "## 배경\n\n정산 배치가 도는 EC2 인스턴스 fargate 로 옮기고 나서 예전에 쓰던 c5.xlarge 두 대가 계속 떠 있는 상태였습니다.\n이거 포함해서 dev 환경에 물려있는 elastic IP 중에 실제로 안 쓰는 것들, 그리고 지난달 cloudwatch 로그 유실 이슈 때문에 임시로 늘려뒀던 로그 보관 기간 설정도 같이 정리하려고 합니다.\n\n## 변경\n\n- settlement-batch-prd c5.xlarge 2대 → 예약 인스턴스 1년 결제로 전환 (all upfront)\n- settlement-batch-dev 쪽은 평일 09시~18시 외에는 필요 없어서 스팟 인스턴스 + auto scaling schedule 로 변경\n- 미사용 elastic IP 3개 릴리스\n- cloudwatch 로그 보관 기간 731일 → 365일로 조정 (이건 하늘님하고 확인 끝났습니다)\n- terraform 코드에 instance lifecycle 정책 명시 (spot instance 는 중단 가능한 작업만 도는지 확인 필요)\n\n참고로 스팟 전환하면서 중간에 배치가 멈추면 재시작 로직이 있는지 junho 님한테 확인받았습니다. settlement core 랑 retry 로직은 그대로 유지됩니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3056",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-04-25T04:45:00Z",
+    "updated_at": "2026-04-25T04:45:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "로그 보관 기간 365일로 줄이는 거 저는 괜찮습니다. 대신 정산 데이터 관련 로그는 따로 s3로 아카이빙하는 파이프라인 이미 있으니까 그쪽이랑 겹치는지 한 번만 확인해주세요. 아마 dure-settlement 로그 그룹이랑 매핑되어 있을 거예요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "스팟 인스턴스 종료 통지 오면 배치 재시작은 괜찮은데, 혹시 모르니 배치 시작 전에 잡 큐가 비어 있는지 확인하는 precondition 하나 추가하는 게 좋을 것 같아요. 아니면 dev에서 멱등성 보장 안 되는 작업이 돌 수도 있어서... 이건 제가 따로 이슈 파서 올릴게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "예약 인스턴스 결제는 재무팀이랑 얘기된 건가요? all upfront 이면 월 비용은 줄어도 초기 결제 금액이 좀 클 텐데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 태호님한테 미리 결재 라인 확인받았고 재무팀이랑도 공유된 상태입니다. 이번 달 비용 리포트에 반영될 거예요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_558bbe6bd29131d9aa1113b9baf0ba40"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3098,
+    "title": "로그 수집 파이프라인 정리 및 보존/검색 정책 적용",
+    "body": "## 배경\n로그가 쌓이는 속도 대비 ES 디스크가 계속 85% 넘게 왔다갔다 해서 확인해보니\n수집은 되는데 보존 기간이랑 인덱스 라이프사이클이 제대로 안 잡혀 있더라.\n그리고 검색할 때도 인덱스 패턴이 꼬여서 그라파나에서 조회 안 되는 것도 섞여 있었고.\n\n## 변경\n- fluentd 수집 설정에서 태그 빠지는 케이스 정리 (worker, api, batch 전부).\n- ES 인덱스 ILM 정책 추가: hot 3일, warm 14일, delete 30일.\n  - 기존 인덱스 중 날짜별로 안 나뉘어 있던 것들은 수동으로 리인덱스 조치.\n- 검색용 인덱스 패턴 동기화 스크립트 추가 (ship-logs 시 같이 돌도록).\n- 보존 정책 관련 문서 dure-infra/docs/log-policy.md 추가.\n\n운영 중 영향은 없고, ES 디스크는 다음날부터 점진적으로 줄어들 예정.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3098",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2026-06-02T05:28:00Z",
+    "updated_at": "2026-06-02T05:28:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "ILM 정책 이거 로그 양 다시 계산해봤는데 30일 delete면 우선 무난할 것 같아요. 대신 warm에서 force merge 안 도는 건 맞죠? 들어가 있으면 샤드 밀릴 수 있어서."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 warm 단계에서는 read_only만 걸고 force merge는 안 넣었어요. 필요하면 나중에 배치로 빼죠."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "보존이랑 검색 정책 확정된 거면 다음 주 운영회의 때 한 번 공유해줘요. COO님한테 로그 때문에 스토리지 비용 계속 얘기 나와서."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 회의 전에 요약해서 공유드릴게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_3c5cd681f1fc818228c4cf3538884d9a"
+}

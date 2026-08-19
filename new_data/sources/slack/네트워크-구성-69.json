@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "VPC 대역 10.20.0.0/16으로 잡고 퍼블릭 2개, 프라이빗 2개 서브넷 구성해뒀습니다. NAT 게이트웨이는 퍼블릭 한 쪽에만 붙여놨어요.",
+      "ts": "1783913820.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "NAT 한 개로 버티는 건 알겠는데 장애나면 프라이빗 전체가 나가는 구조 아니에요? 운영계 올리기 전에 이중화 구성도 검토해주세요.",
+      "ts": "1783913821.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 일단 개발망이라 단일로 띄웠고, 운영 올릴 때는 반대쪽 AZ에 하나 더 두는 걸로 잡겠습니다.",
+      "ts": "1783913822.000002"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "그러면 개발 API 보안그룹에 443이랑 22만 열어두신 거죠? RDS 쪽은 프라이빗이라 저희 워커에서 붙을 때 문제 없고요.",
+      "ts": "1783913823.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 ALB에는 443만 열었고 인스턴스 22는 사무실 IP 대역으로 제한해뒀습니다. 워커 보안그룹에서 RDS 보안그룹으로 5432 허용해둔 상태예요.",
+      "ts": "1783913824.000004"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "로드밸런서 헬스체크는 `/healthz`로 걸려 있는 거 맞나요? 지난번에 백엔드 올리면서 200 아니고 리다이렉트 반환돼서 타겟이 unhealthy로 계속 빠졌던 적 있어서요.",
+      "ts": "1783913825.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 이번엔 `/healthz` 경로 그대로 반환하도록 nginx 설정까지 확인해놨습니다. 헬스체크 간격 30초, 비정상 임계값 3으로 설정했고요.",
+      "ts": "1783913826.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_f0a23bd8c6a0261aeb1ee59e0c0ebb6d"
+}

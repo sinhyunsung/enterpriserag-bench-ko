@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3044,
+    "title": "ECS 용량 공급자 오토스케일 조건 조정 및 작업 배치 전략 개선",
+    "body": "## 배경\n주문 피크 시간대에 ECS 클러스터의 인스턴스가 늘어나는 속도보다 작업 요청이 몰리는 속도가 빨라서 서비스 지연이 반복적으로 발생함. 특히 11시~13시 사이에 CPU 예약률이 85%를 넘어가면서 새 작업이 PENDING으로 오래 남는 현상 확인.\n\n클러스터 메트릭을 보니까 캐패시티 프로바이더의 타겟 예약률이 90%로 잡혀 있어서 버퍼가 너무 적음. 인스턴스 시작에 3~4분 걸리는 것까지 감안하면 최소 75~80% 선에서 미리 늘려야 할 것 같음.\n\n## 변경\n- `duretech-main` 캐패시티 프로바이더의 target_capacity를 90에서 78로 조정\n- `duretech-batch` 캐패시티 프로바이더는 85에서 70으로 조정 (배치 작업은 기동 시간이 더 오래 걸림)\n- 오토스케일링 그룹의 scale-in cooldown을 300초에서 420초로 변경, scale-out cooldown은 120초로 단축\n- 작업 배치 전략을 `binpack`에서 `spread`로 변경하고, `memory` 기준으로 우선 배치하도록 수정\n- 클러스터 서비스 업데이트 시 `force_new_deployment` 플래그 제거하고 롤링 업데이트가 자연스럽게 동작하도록 수정",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/3044",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-02-09T06:21:00Z",
+    "updated_at": "2026-02-09T06:21:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "78로 낮추면 야간에 낭비되는 인스턴스가 좀 생기지 않을까? 트래픽 적을 때 스케일 인 잘 되는지 확인해주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 어제 test 클러스터에서 밤새 돌려봤는데 새벽 2시쯤부터 예약률 20% 아래로 떨어지면서 스케일 인 잘 되긴 했어요. cooldown 늘렸더니 자주 왔다갔다 하는 것도 줄었고요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "배치 전략 spread로 바꾸면 배치 작업 쪽 메모리 큰 애들이 한 인스턴스에 몰렸을 때랑 비교해서 실행 시간 차이 좀 있을 텐데, 저녁 배치 돌려보고 알려주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "오늘 저녁 8시 배치부터 적용되니까 내일 아침에 메트릭 비교해서 공유하겠습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_103ec889d1bd7c90b903accb07998f4e"
+}

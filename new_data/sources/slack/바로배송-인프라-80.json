@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "바로배송 전용 EKS 노드그룹이랑 ALB 세팅 어제 저녁에 끝냈고, 오늘 아침에 부하 테스트 한 번 돌려봤어요. T3a.large 3대 기준으로 300RPS까지는 latency 30ms 안에서 버텨요.",
+      "ts": "1786675740.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "수고했어요. 바로배송은 주문 몰리는 시간대가 확실하니까 오토스케일링 기준치는 좀 보수적으로 잡아야 할 것 같은데 어떻게 설정했어요?",
+      "ts": "1786675741.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 일단 CPU 65%로 걸어뒀어요. 평상시 3대, 최대 8대까지 늘어나게. 주중 점심 시간대에만 스케일 아웃 벤치마크 한 번 더 해보려고요.",
+      "ts": "1786675742.000002"
+    },
+    {
+      "type": "message",
+      "user": "U0733340C",
+      "user_name": "이준영",
+      "text": "혹시 바로배송 API가 기존 주문 서비스 RDS랑 같은 인스턴스 쓰나요? 커넥션 수 늘어날 것 같아서요.",
+      "ts": "1786675743.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "아니요 그거 때문에 따로 뺐어요. 바로배송 전용 RDS 클러스터 하나 새로 만들었고, 프로덕션 DB는 아직 기존 거 그대로예요. 다음 주에 배치 서버만 먼저 전환하려고요.",
+      "ts": "1786675744.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "WAF는 붙었나요? 바로배송 쪽은 같은 세션에서 호출 빈도가 높아서 rate limit 정책 기존 거랑 다르게 가져가야 할 것 같은데.",
+      "ts": "1786675745.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "WAF는 내일 중으로 붙이고 일반 HTTP flood 룰만 우선 적용하려고요. 하늘이님이 말한 rate limit 값은 바로배송 서버 로그 보고 기준 잡아서 공유할게요.",
+      "ts": "1786675746.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_72c248ac1b2d275b507d55ea90ca210d"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3053,
+    "title": "RDS 인스턴스 등급 조정 및 백업 정책 변경",
+    "body": "## 배경\n정산 배치 돌릴 때 writer CPU가 계속 90% 넘게 찍힘. 지난달부터 주문량 늘어서 db.r6g.xlarge로는 버거움.\n백업도 새벽 2시에 잡혀 있는데 그 시간에 배치랑 겹쳐서 I/O 튀는 것 같아서 시간 옮기려고 함.\n\n## 변경\n- dure-settlement-writer 인스턴스 등급 db.r6g.xlarge -> db.r6g.2xlarge\n- 장애 조치 구성은 그대로 유지. reader는 db.r6g.xlarge 그대로 둠.\n- 백업 시간 02:00 KST -> 04:30 KST. 유지 기간 7일 -> 14일로 변경.\n- terraform 코드 및 janus 스크립트 수정 반영됨.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3053",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-01-20T07:53:00Z",
+    "updated_at": "2026-01-20T09:10:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "백업 시간 옮기는 건 정하늘님한테도 얘기했어? 새벽 배치가 4시에 끝나는 거 아니었나."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 어제 말씀드렸어요. 4시면 배치 다 끝나고 여유 있어서 4시 30분으로 잡았습니다."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "writer 등급 올리면 정산 배치 시간 줄어들 것 같은데 그거 확인해보고 싶네요. 내일 아침 배치 로그 공유해주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 내일 배치 끝나고 로그 정리해서 올릴게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_1c9ab9d0a349720dd0fa5b758440f227"
+}

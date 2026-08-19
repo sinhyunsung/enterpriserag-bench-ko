@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3065,
+    "title": "[정산] Redis 장애 알림 임계값 조정 및 수집 지표 정리",
+    "body": "## 배경\n정산 배치 도는 시간대에 Redis 메모리 사용량이 순간적으로 80%를 넘는 일이 반복되고 있는데, 알림 임계값이 75%라 매일 새벽에 의미 없는 알림이 오고 있다.\n건우 쪽에서 3월 들어 확인된 것만 14건인데 실제 장애로 이어진 건 0건이다.\n\nMONITORING.md에 있는 임계값 기준도 최근에 바꾼 설정이랑 안 맞는 게 있어서 같이 정리한다.\n\n## 변경\n- Redis used_memory 알림 임계값: 75% -> 88% (WARN), 95% (CRIT)\n- 알림 유지 시간 5분 -> 10분 (일시적 스파이크 무시)\n- MONITORING.md에 누락되어 있던 `sentine_master_down` 임계값 문서 추가\n- 수집 지표 중 안 쓰는 `redis_connected_clients_per_sec` 제거\n\n## 리뷰 포인트\n정산 배치가 도는 시간대에 88% 근처까지도 순간적으로 올라간 이력이 있어서, 90%로 하는 게 나을지 88%로 유지할지 의견 부탁드립니다.\nCRIT은 95%로 올렸는데 실제 장애 전조라고 보기엔 95%가 너무 높다는 의견 있으면 말씀해주세요.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3065",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "junho-lee"
+      },
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-03-17T01:50:00Z",
+    "updated_at": "2026-03-17T04:31:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "88%로 가는 거 찬성. 어차피 정산 배치 끝나고 나면 30% 아래로 떨어지던데 알림만 쌓이는 게 더 문제였음. CRIT 95%는 조금 높은 거 아닌가 싶긴 한데, 그 근처 가면 다른 지표에서도 잡힐 테니까 괜찮을 것 같다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "MONITORING.md에 sentinel_master_down 임계값 문서 추가된 거 확인. 저거 원래 없었구나. 문서 작업 감사.\nRedis 메모리 알림은 이번 주에 지켜보고 다음 주 회고 때 잠깐 언급해줘요. 너무 자주 울리면 그때 90%로 올리든지 배치 쪽을 보든지 하죠."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "수집 지표에서 redis_connected_clients_per_sec 빼신 거 데이터 쪽에 영향 없는데요? 저번에 준영님이랑 얘기할 때 안 쓰는 지표는 수집 안 하는 게 낫다고 했던 것 같은데 그거 반영된 거죠?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "@haneul-jung 넵 맞아요. 지난주에 정리한 목록에서 빼기로 한 것만 제거했습니다. 메트릭 에이전트 설정에서도 빼서 배포했고요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_bb11da7376dfc9b0756d617355691716"
+}

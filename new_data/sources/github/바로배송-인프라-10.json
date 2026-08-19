@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3020,
+    "title": "바로배송 전용 인프라 분리 및 증설 준비",
+    "body": "## 배경\n바로배송 서비스가 기존 물류 시스템과 같은 인프라를 쓰고 있어서 트래픽이 몰릴 때 서로 영향을 주는 상황이 생겼습니다. 운영팀 쪽에서도 바로배송 지표만 따로 봐야 한다는 요청이 있었고요.\n\n## 변경\n- VPC 서브넷 분리 (바로배송 전용 public/private 서브넷 추가)\n- ECS 클러스터 분리 작업 1차 반영\n- RDS 읽기 전용 복제본 하나 추가, 바로배송 쪽에서 바라보도록 라우팅 정리\n- CloudWatch 대시보드 초안 추가\n- 배포용 CodePipeline 템플릿은 기존 것을 복사해서 변수만 바꿔 둔 상태입니다. 다음 PR에서 마무리할게요.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3020",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-08-11T02:32:00Z",
+    "updated_at": "2026-08-11T02:32:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, ECS 클러스터 분리까지 이 PR에 들어간 거 맞죠? 서비스 정의는 아직 기존 클러스터를 보고 있는지 확인 한번 부탁드려요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 이 PR에서는 클러스터만 만들고 서비스 정의는 다음 PR에서 옮기려고요. 한 번에 바꾸면 배포 꼬일 것 같아서 나눴습니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "좋아요. 읽기 복제본 라우팅은 확인했고, 운영팀 쪽에 대시보드 URL은 따로 공유해 주세요."
+    },
+    {
+      "user": {
+        "login": "taeho-moon"
+      },
+      "body": "바로배송 지표 분리해 주신 거 운영팀에서도 확인했습니다. 감사합니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_bf52ec70369dcc86412961907799ae2d"
+}

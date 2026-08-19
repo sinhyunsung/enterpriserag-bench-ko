@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3095,
+    "title": "[settlement] 정산 지표 수집 배치 스케줄러 임계값 설정 및 대시보드 지표명 정리",
+    "body": "## 배경\n정산 배치에서 집계하는 지표가 새벽 시간대에 몰려 있어서 API 쪽 부하가 커지는 날이 반복되고 있음. 모니터링 대시보드에서도 정산 지표랑 배치 지표 이름이 섞여 있어서 누가 봐도 헷갈리는 상태.\n\n## 변경\n- 정산 지표 수집 배치(`settlement_metrics_batch`) 실행 시간을 UTC 00시→한국시간 새벽 3시로 조정하고, 수집 실패 시 슬랙 알림 임계값을 `5분 내 재시도 3회 실패`로 바꿈.\n- `settlement_daily_metrics` 테이블 기준으로 집계하던 지표명에서 `batch.` 프리픽스 제거하고 `api.` 프리픽스를 붙여 대시보드에서 구분되게 정리.\n- Grafana 대시보드 JSON에 `settlement_batch_failure_rate` 패널 추가하고 경고 임계값 1%로 설정.\n- 알림 수신 채널을 `#dure-settlement-monitoring` 슬랙 채널로 변경. 기존 `#infra-alert`는 노이즈가 많아서 제외.\n\n이건 정산 모듈에 붙는 변경이라 리뷰 한 번 부탁드립니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3095",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "junho-lee"
+      }
+    ],
+    "created_at": "2026-03-26T08:50:00Z",
+    "updated_at": "2026-03-26T08:50:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "정산 쪽은 새벽 3시 배치 돌 때 관리자 API 호출이랑 겹치는 구간이 있을 수 있는데, 임계값 5분 내 재시도 3회는 너무 타이트하지 않을까요? 어제 로그 보니까 재시도 간격 2분으로 잡혀 있던데 실제로는 5분 넘게 붙는 경우도 있더라고요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "그 부분은 저도 오늘 새벽 로그 확인했습니다. 일단 실패 판정을 `5분 내 연속 3회 실패`가 아니라 `10분 내 3회 실패`로 완화하는 걸로 수정해둘게요. 그리고 알림 채널을 모니터링용으로 분리했으니 노이즈는 줄어들 겁니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "대시보드 지표명에서 `api.` 프리픽스 붙이는 거 좋네요. 대시보드에 이미 `api_latency` 계열 지표가 있어서 네이밍 충돌 없이 보일지 확인 한 번만 해주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 확인했습니다. `api.settlement_daily_metrics` 로 접두어가 아니라 점으로 구분되게 바꿔서 패널에서도 겹치지 않게 했어요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_2716df2ff33167f3f787c3ac3a1ccf0c"
+}

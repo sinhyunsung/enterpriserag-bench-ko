@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "모니터링 대시보드에서 수집할 지표 목록 정리해서 PR 올렸습니다. CPU, 메모리, 디스크 I/O, 응답시간 이렇게 1차로 잡았고요. 리뷰 부탁드립니다.",
+      "ts": "1772777520.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "응답시간은 서버 말고 API 단위로 봐야 하지 않나요? 백엔드 쪽에서 버킷 구분을 좀 나눠야 할 것 같은데.",
+      "ts": "1772777521.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "맞아요. 지금 목록은 인프라 기준이라 API 메트릭은 준호님 쪽 태그 보고 합칠게요. 우선 수집기부터 붙이려고요.",
+      "ts": "1772777522.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "알림 임계값은 어느 정도로 잡으셨어요? 데이터 파이프라인 쪽은 CPU 임계를 낮게 잡아야 할 것 같아요.",
+      "ts": "1772777523.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "일단 CPU 80% 5분, 메모리 85% 5분으로 올렸습니다. 하늘님 말씀대로 파이프라인 전용 임계값은 분리해놓을게요.",
+      "ts": "1772777524.000004"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "대시보드 초기 화면은 팀별로 묶지 말고 전체 현황부터 보여주는 게 낫겠어요. 나중에 팀 탭으로 빼고.",
+      "ts": "1772777525.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 그렇게 수정하겠습니다. PR에 반영해서 다시 올릴게요.",
+      "ts": "1772777526.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_33cc7bdc21c937c8c582ee6173315e0e"
+}

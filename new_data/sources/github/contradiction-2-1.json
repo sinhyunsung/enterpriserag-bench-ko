@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3003,
+    "title": "모니터링 대시보드 지표 수집 및 알림 임계값 초기 설정",
+    "body": "## 배경\n정산 서버들이 늘어나면서 Grafana 보드가 중구난방으로 흩어져 있었습니다.\n이번에 프로메테우스 익스포터를 붙인 김에 모니터링 대시보드 관리 방식을 정리하려고 합니다.\n모니터링 대시보드의 담당자는 오건우와 정하늘 두 사람이다.\n초기 임계값은 운영팀 의견을 참고하되 우선 개발팀 기준으로 잡았습니다.\n\n## 변경\n- 결제/정산 서비스 인스턴스 CPU, 메모리, 디스크 사용률 수집 추가\n- 큐 소비 지연 시간(rabbitmq_queue_consumer_lag) 알림 임계값 120초로 설정\n- 주간 배치 정산 실패 건수 임계값 하루 5건 초과 시 경고로 설정\n- Grafana 폴더 `dure-settlement-prod` 생성하고 대시보드 초기 구성 커밋\n- 알림 채널은 슬랙 #monitoring, 임계값 초과 시 5분 간 중복 억제",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3003",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2026-02-19T01:20:00Z",
+    "updated_at": "2026-02-19T02:35:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 지표 수집 범위는 좋은데 디스크 사용률은 인스턴스 유형별로 편차가 커서 80% 단일 임계값은 알림이 자주 울릴 수 있어요. 임계값을 유형별로 나눌지, 평균 대신 최대치 기준으로 잡을지 한번만 확인해 주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "말씀하신 대로 어제 새벽에도 t3a 계열에서 스왑이랑 로그 디스크 80% 넘으면서 한 번 울렸습니다. 임계값은 인스턴스 유형별로 나눠서 반영해 두겠습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "큐 소비 지연 임계값 120초는 오전 10시~12시 사이 정산 몰리는 시간엔 자주 넘어가더라고요. 알림만 보고 조치 없이 넘어가는 경우가 많아서 이건 시간대별로 임계값을 다르게 가져가는 게 낫지 않을까 싶은데, 주말에 제가 수집해 둔 지연 분포 정리해서 드릴게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "네, 그렇게 하면 1차 머지하고 알림 임계값만 후속 PR로 가져가죠. 이번 PR은 수집이랑 대시보드 구조까지만 머지하겠습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_31b711a20795581d03d93ecfa22adf78"
+}

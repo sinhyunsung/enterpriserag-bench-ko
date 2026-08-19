@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "RDS 서울 리전 prod-mysql-primary 인스턴스 CPU 85% 넘어서 알람 왔습니다. 지금 들어가서 상태 보고 있어요.",
+      "ts": "1768367880.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "넵 원인부터 파악해주세요. 혹시 모르니 백업 스냅샷 하나 떠두시고요.",
+      "ts": "1768367881.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "방금 수동 스냅샷 prod-mysql-manual-20250114-1130 생성해뒀습니다. 슬로우 쿼리 로그 보니까 정하늘님이 오늘 아침에 배포하신 집계 배치가 반복 풀스캔 돌고 있네요.",
+      "ts": "1768367882.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "아이고 죄송합니다. orders_daily_summary 만드는 쿼리에서 인덱스를 안 타고 있어요. 원복하고 쿼리 수정하겠습니다.",
+      "ts": "1768367883.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 일단 장애는 아니고 부하라서 배치 종료하시면 내려갈 거예요. 인스턴스 등급은 다음 주에 r6g.xlarge로 올리는 걸로 잡아두겠습니다.",
+      "ts": "1768367884.000004"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "건우님, 장애 조치 테스트도 이번 주 안에 한 번만 돌려주세요. 리드 리플리카 승격까지 확인 부탁드립니다.",
+      "ts": "1768367885.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵 알겠습니다. 지금 CPU 60%까지 내려왔고 정하늘님이 배치 원복 마무리 중이에요. 조치 끝나면 공유드릴게요.",
+      "ts": "1768367886.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_68f5f7d327eddae2927e3efe050f0f0a"
+}

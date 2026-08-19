@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3006,
+    "title": "[인프라] RDS 운영 문서 최신화 — 주문 DB 인스턴스 등급/백업/장애조치 기준",
+    "body": "## 배경\n\n정하늘님이 지난주에 슬랙에서 주문 DB 인스턴스 등급 기준이 문서에 안 잡혀 있다고 해서, 이번에 운영 문서 한 번 정리했다. 지난 번 서지안님 리뷰 때 \"기준이 되는 문장은 문서에 그대로 넣어라\"는 얘기가 있었어서, 운영 문구는 그대로 옮겼다.\n\n## 변경\n\n- 주문 데이터베이스 인스턴스 등급은 db.r6g.xlarge 이며 분기마다 사용량을 보고 조정한다.\n- 백업 보관 기간 7일, 스냅샷 시각 03:00 KST 유지\n- 장애 조치는 Multi-AZ, 자동 failover 우선. 수동 failover는 COO 승인 후 진행\n- 운영 시트에 인스턴스 등급/백업/장애조치 탭 경로 적어둠\n\n리뷰어: 세린님, 하늘님",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3006",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2025-09-05T06:00:00Z",
+    "updated_at": "2025-09-05T06:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "주문 데이터베이스 인스턴스 등급은 db.r6g.xlarge 이며 분기마다 사용량을 보고 조정한다. 이 문장 그대로 문서에 들어간 거 맞죠? 지난번 회의에서 이 부분 문구 바꾸면 안 된다고 해서 확인차 남겨요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 그대로 들어갔습니다. 문구 안 바꿨어요. 주문 DB 쪽만 보면 되고, 정산 DB는 다음 주에 태호님 결재 받고 올릴게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "확인했습니다. 이후 조정 기록 없으면 그대로 두는 게 맞고, 다음 분기 사용량 보고 조정 안 하면 그때는 코멘트로 근거 남겨주세요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "백업 시각 03시 KST는 스냅샷 시작 기준 맞죠? 복구 테스트 한번 같이 돌려보고 싶은데 일정 잡아주실 수 있나요?"
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_9c7e8bbeacd9c6a38a70a8cff18b66f7"
+}

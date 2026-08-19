@@ -1,0 +1,65 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3047,
+    "title": "IAM 권한 최소화 및 사용하지 않는 액세스 키 정리",
+    "body": "## 배경\n정기 보안 점검 항목 중 IAM 쪽 지적이 계속 나오는 상태라 정리했습니다. 특히 정산 배치에서 쓰는 역할에 s3:*가 붙어 있어서 과하다는 리뷰가 있었고, 오래된 키 두 건이 180일 넘게 순환 안 된 채로 남아 있었습니다.\n\n## 변경\n- settlement-batch-role에 붙어 있던 s3:*를 정산 원장 버킷 dure-settlement-prod에 한정해서 GetObject, PutObject만 허용하도록 변경\n- 사용자 계정 세 개에서 마지막 사용 시각이 180일 지난 액세스 키 비활성화 처리, 새 키는 발급하지 않음\n- 관리 콘솔 접근이 필요 없는 서비스 계정 두 건은 콘솔 로그인 차단\n- 위 변경사항 terraform dure-settlement 리포에 반영, plan 결과 검토 후 apply 완료",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3047",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-05-09T01:49:00Z",
+    "updated_at": "2026-05-09T04:17:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "정산 배치 쪽 키 순환 주기는 어제 회의에서 분기로 잡혔는데, 여기 정리된 내용이랑 맞물리는지 확인해줘요. 우선 PR 자체는 문제없어 보입니다."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 그건 다음 주 주간회의 때 안건 올리려고 PR에선 뺐습니다. 일단 정리부터 해두고 키 순환은 분기 일정으로 별도 티켓 팔게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "이거하면서 정산 배치가 접근하는 버킷이 dure-settlement-prod 하나 맞죠? 데이터 백업 쪽에서 dure-settlement-archive도 쓰고 있어서 영향 있으면 알려주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "백업용 버킷은 데이터 파이프라인 역할을 쓰고 있어서 이번 변경이랑은 영향 없어요. 정산 배치 역할은 원장 버킷만 확인했습니다."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "콘솔 로그인 차단한 서비스 계정 두 건은 목록 공유해주시면 저희 팀도 확인하겠습니다."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "정리해서 슬랙으로 공유하겠습니다. 지금 보안 점검 시트에도 같이 반영해둘게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_3ea1e044a0f979eafc4b9b2767b8a27e"
+}

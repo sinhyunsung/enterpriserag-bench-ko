@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3029,
+    "title": "운영 VPC 신규 구성 및 내부 ALB 연결",
+    "body": "## 배경\n운영 환경 분리를 위해 신규 VPC(10.30.0.0/16)를 구성했습니다. 기존 개발 VPC와 피어링 없이 완전히 독립된 망으로 가져가려고 했는데, 사내에서 쓰는 일부 내부 서비스가 아직 개발 VPC에 있어서 우선은 내부 ALB만 운영 서브넷에 붙여뒀습니다.\n\n## 변경\n- VPC 생성 (10.30.0.0/16, ap-northeast-2)\n- 퍼블릭 서브넷 2개 (/24), 프라이빗 서브넷 2개 (/24)\n- NAT 게이트웨이 1개 (비용 때문에 일단 1개만)\n- 인터넷 게이트웨이 연결\n- 보안 그룹 생성\n  - internal-alb-sg: 80/443 오픈, 소스는 내부 대역(10.0.0.0/8)\n  - was-sg: 8080만 오픈, 소스는 internal-alb-sg\n- 내부용 ALB 생성 (internal scheme, tf 리소스명 durelogis-ops-internal-alb)\n- 라우팅 테이블 분리 (퍼블릭/프라이빗)\n\nECS 서비스는 다음 PR에서 붙입니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/3029",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-07-25T06:38:00Z",
+    "updated_at": "2026-07-25T06:38:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "NAT 게이트웨이 1개면 가용성 때문에 두 개 쓰는 게 맞지 않나요? 운영 올라가기 전에 하나 더 추가해두시죠."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵, 비용 리뷰에서 문태호님한테도 말씀드렸는데 우선 한 개로 시작하고 트래픽 보면서 두 번째 추가하는 걸로 정리됐습니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "아까 회의에서 그렇게 결론났었네요. 그럼 서브넷은 이미 두 개 뚫어뒀으니 NAT만 추가하면 되겠네요. 확인했습니다."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "WAS 보안그룹 8080은 컨테이너 포트 기준이죠? 혹시 호스트 포트 다르게 매핑되면 ALB 헬스체크에서 못 잡을 수도 있을 것 같아서요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_3ac6787ca15995e14f7d2998dde4b3d8"
+}

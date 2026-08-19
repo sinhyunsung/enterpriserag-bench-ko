@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3023,
+    "title": "RDS 인스턴스 등급 조정 및 백업 설정 점검",
+    "body": "## 배경\n\n이번 주 배치 예정인 정산 데이터 집계 쿼리(하늘님이 준비하신 건)가 현재 db.t3.large에서 생각보다 오래 걸려서, 기존 인스턴스로는 배치 시간이 늘어날 것 같다고 준호님한테 공유받았습니다. 이번 기회에 프로덕션 RDS 등급을 한 단계 올리고, 백업 보관 기간이랑 장애 조치 설정도 다시 확인해두려고 합니다.\n\n## 변경\n\n- 프로덕션 RDS 인스턴스 클래스 db.t3.large → db.t3.xlarge로 변경\n- 자동 백업 보관 기간 7일 → 14일로 변경\n- 다중 AZ 배포 활성화 확인 (장애 조치 대비)\n- 파라미터 그룹 변경 없음, 기존 설정 유지\n\n운영 중인 인스턴스라 변경 사항은 다음 유지보수 시간(일요일 03:00 KST)에 적용 예정입니다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3023",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-01-04T02:40:00Z",
+    "updated_at": "2026-01-04T03:15:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "백업 보관 기간 14일로 늘린 거 좋네요. 비용은 얼마나 늘어나는지 확인해봤어요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "월 예상 비용은 한 12만원 정도 더 나올 걸로 봤습니다. 대신 정산 배치 시간이 줄어드는 것도 있어서 총 비용은 비슷할 것 같아요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "오, 이거 반영되면 배치 시간 많이 줄어들 것 같아요. 감사합니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "넵 알겠습니다. 유지보수 시간에 적용되면 다음날 아침에 확인 한번 해주세요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_9a8e44fb0c4d292280cdf4f10bc980ec"
+}

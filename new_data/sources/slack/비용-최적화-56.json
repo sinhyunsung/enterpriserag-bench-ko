@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "새벽에 CloudWatch에서 EC2 평균 CPU 사용률 4% 미만 인스턴스 12대 정리했습니다. 내일 출근하시는 분들 중에 혹시 모르고 띄워둔 개발 서버 있으면 말씀해주세요.",
+      "ts": "1776316320.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "혹시 staging-api-2 도 정리된 건가요? 어제 저녁에 부하 테스트 때문에 잠깐 띄워뒀는데 아직 내리기 전이었습니다.",
+      "ts": "1776316321.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, staging-api-2 포함됐습니다. 테스트 더 필요하시면 말씀해주세요. 스팟으로 다시 띄우는 게 나을 수도 있어요.",
+      "ts": "1776316322.000002"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "아이고... 아니에요. 어차피 오늘 아침에 결과 보고하고 내리려던 거라 괜찮습니다.",
+      "ts": "1776316323.000003"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "RDS 예약 인스턴스 전환은 진행된 건가요? 이번 달 비용 리포트 보니까 온디맨드로 도는 게 아직 좀 있던데.",
+      "ts": "1776316324.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "proddb-primary 와 proddb-replica 는 1년 예약 인스턴스로 전환했습니다. data-warehouse 는 워크로드가 불규칙해서 스팟으로 바꾸는 방안을 정하늘님과 상의 중입니다.",
+      "ts": "1776316325.000005"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "data-warehouse 는 배치 돌릴 때만 쓰니까 스팟으로 해도 될 것 같아요. 대신 배치 시작 전에 용량 확보 실패하는 경우가 없도록 조정 로직 하나 넣어야 합니다.",
+      "ts": "1776316326.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_ccbddc6dff017bcd067319641175ddec"
+}

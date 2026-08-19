@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "IAM 점검 돌렸는데 prod read-only로 쓸 계정 몇 개가 s3:*로 잡혀 있네. 오늘 중으로 정리할게. 키 순환도 같이 봐야 해서 작업 공유한다.",
+      "ts": "1778737020.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "이것 때문에 아까 로그 확인하다가 권한 넓다고 했던 거구나. 최소화 방향 맞고, 키 순환 일정은 주말 배포 피해서 잡아줘.",
+      "ts": "1778737021.000001"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "데이터 파이프라인에서 임시로 쓴 read-only 계정도 s3:* 들어가 있었어? 그거 지우면 오늘 자정 배치에 영향 없어?",
+      "ts": "1778737022.000002"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "아니, 데이터 파이프라인 계정은 이미 s3:GetObject, s3:ListBucket으로 좁혀져 있었어. 문제는 백업 확인용 prod-readonly 하나랑 모니터링 스크립트 계정 두 개. 자정 배치랑은 무관해.",
+      "ts": "1778737023.000003"
+    },
+    {
+      "type": "message",
+      "user": "U0733340C",
+      "user_name": "이준영",
+      "text": "모니터링 스크립트 계정은 어제 내가 배포할 때 credential 받아서 쓴 건데, 키 순환하면 나한테도 새 키 공유해줘. 로컬에 하드코딩 안 하고 vault 쪽에서 가져오게 바꿔둘게.",
+      "ts": "1778737024.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "ㅇㅋ vault 경로는 /secret/monitoring/prod로 맞춰둘게. 이따 키 순환 끝나고 갱신된 값이랑 취약점 점검 결과는 이 스레드에 요약해서 올릴게.",
+      "ts": "1778737025.000005"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "키 순환 후에 스테이징 먼저 확인하고 프로덕션은 오후 3시 이후에 해줘. 혹시 모르니 순환 직후 알람 30분 동안은 내가 같이 보고 있을게.",
+      "ts": "1778737026.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_886ce41862d5bc87e3050c743672fa5e"
+}

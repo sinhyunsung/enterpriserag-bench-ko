@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "VPC 대역 dev, prod 분리하고 서브넷 나누는 중입니다. 기존 테스트용 172.16.0.0/16은 그대로 두고 prod는 10.20.0.0/16으로 갈게요.",
+      "ts": "1784433540.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "네. prod는 RFC1918이면 뭘 써도 상관없는데 NACL이랑 라우팅 테이블은 기존 dev 따라가지 말고 새로 잡아주세요.",
+      "ts": "1784433541.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, NAT 게이트웨이 prod에 하나 붙이고 프라이빗 서브넷은 10.20.1.0/24, 10.20.2.0/24로 나눴습니다. AZ는 ap-northeast-2a, 2c요.",
+      "ts": "1784433542.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "Airflow 스케줄러가 prod 프라이빗 서브넷에서 외부 API 호출하는 것들 있는데 NAT 붙이면 바로 되는 거죠?",
+      "ts": "1784433543.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 라우팅 테이블 확인했습니다. 0.0.0.0/0이 NAT 게이트웨이로 빠지게 해뒀어요.",
+      "ts": "1784433544.000004"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "보안 그룹은 일단 최소로. 80/443만 열고 DB는 5432 포트를 백엔드 보안 그룹에서만 허용해주세요.",
+      "ts": "1784433545.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, ALB에 80/443 붙이고 백엔드 보안 그룹에 5432만 뚫었습니다.",
+      "ts": "1784433546.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_9aebd144eb33ccb5c9320f216e505c6c"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3038,
+    "title": "정산 로그 수집 및 보존 정책 정리",
+    "body": "## 배경\n정산 쪽 에러 추적하려고 로그 찾을 때마다 너무 오래 걸리고, 어디까지 남아있는지도 제각각이라 확인이 어려웠음.\n운영에서도 지난달 정산 건에 대한 문의 들어올 때 과거 로그가 없어서 답변이 늦어지는 경우가 있었음.\n\n## 변경\n- 정산 서비스 로그를 Fluent Bit 통해서 중앙 로그 저장소로 전송하도록 설정 추가\n- 정산 로그 보존 기간을 90일로 명시하고, 기존에 인스턴스 로컬에만 쌓이던 로그는 7일 이후 삭제되도록 정리\n- 로그 검색 시 사용할 수 있는 기본 쿼리 몇 개를 README에 추가\n\n## 확인한 것\n- dev 환경에서 정산 서비스 재시작 후 로그 전송되는 것 확인\n- 로컬 로그 7일 경과 파일 삭제되는 것 확인",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/3038",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-06-09T09:43:00Z",
+    "updated_at": "2026-06-09T09:43:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "이거 정산 로그에 배치 잡 실행 결과도 같이 들어가나요? 저번에 배치 로그만 따로 보고 싶었는데 필터 조건이 없어서 헤맸던 기억이 있는데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 일단 정산 서비스에서 나오는 stdout 전부 수집이라 배치 로그도 같이 들어갑니다. 태그에 `job:settlement-batch` 붙여두긴 했어요. 검색할 때 `job:settlement-batch` 이렇게 치시면 됩니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "보존 90일은 운영 문의 대응 기준으로 잡은 거죠? 비용이랑 스토리지 용량은 확인해보셨어요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 문태호 이사님한테 정산 문의 평균 들어오는 시점이 한 달 반에서 두 달 사이라서 90일이면 충분하다고 확인받았습니다. 스토리지는 현재 하루 정산 로그 양 기준으로 90일 쌓아도 기존 대비 3% 정도 증가라 문제 없을 것 같아요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_1cd409fce3294cbe4c80c9de38fab7af"
+}

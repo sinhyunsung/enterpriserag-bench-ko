@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C4602E7D4",
+  "channel_info": {
+    "id": "C4602E7D4",
+    "name": "프로젝트-바로배송"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "바로배송 쪽 Prometheus 익스포터 3종(주문/배차/정산) 지표 수집 규칙이 전부 같은 job 으로 묶여 있어서 배치 하나만 재시작해도 수집이 몇 초씩 비는 게 확인됐습니다. job 분리하고 scrape_interval 은 15초 유지하겠습니다.",
+      "ts": "1774071600.000000"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "네, 분리하는 김에 배치 서버 쪽은 honor_labels 켜두고요. 지난번에 라벨 겹쳐서 수집 누락난 적 있어서.",
+      "ts": "1774071601.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵 honor_labels 적용했습니다. 그리고 알림 임계값 중에 주문 API p99 300ms 넘으면 무조건 critical 가는 건 재고가 필요할 것 같습니다. 새벽 배치 시간대에는 300ms 넘는 게 일시적으로 나오는데 그때마다 당번 호출이 너무 자주 와서요.",
+      "ts": "1774071602.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "배치 시간대 알림 분리는 건우님이 제안한 것처럼 5분 이상 지속될 때만 critical, 그 외엔 warning 으로 낮추는 게 낫겠네요. 새벽 대응 로그 보니까 실제 장애보다 헛호출이 많았어요.",
+      "ts": "1774071603.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "맞습니다. 해당 규칙은 배치 시간대(01:00~05:00) 조건 걸어서 5분 지속 시 critical, 그 외 시간대는 기존 300ms 임계값 유지로 수정했습니다. 대시보드에는 알림 상태 패널 하나 추가해뒀고 주문/배차/정산은 기존 패널 그대로 둡니다.",
+      "ts": "1774071604.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "배차 지표 쪽에서 수집 구멍나던 것도 위에 job 분리하면서 같이 해결되나요? 어제 02시 13분쯤에 haproxy_frontend 쪽 지표가 0으로 찍혔는데 raw 로그엔 값이 있더라고요.",
+      "ts": "1774071605.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "그건 배차 서버 수집 job 분리하면서 인스턴스 라벨이 재구성돼서 그 뒤로는 안 겹칠 거예요. 다만 어제 02시 13분 건은 그 인스턴스가 이전 라벨로 스크랩된 것이라 이력 데이터는 다시 채울 수 없으니 지표 보실 때 유의해 주세요.",
+      "ts": "1774071606.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_a62e16715668d6a92e3ff51ddd084171"
+}

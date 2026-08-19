@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C3E744373",
+  "channel_info": {
+    "id": "C3E744373",
+    "name": "장애대응"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "셀러 배송조회 API 응답이 30분 넘게 2.5초 대를 오가고 있어요. 어제 배포한 carrier 연동 쪽 확인해볼게요.",
+      "ts": "1772504160.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "저도 로그 보고 있는데 pickup 예약 건에서 재시도만 계속 쌓이고 있네요.",
+      "ts": "1772504161.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "대시보드에 api.latency.p95가 2.7초, 에러율 4%대로 올라와서 알림은 이미 울렸고요. 임계값 좀 더 빨리 넘는 것 같아서 기준 조정 필요할 듯.",
+      "ts": "1772504162.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "일단 carrier 연동 롤백부터 하시죠. 건우님은 장애 대응하고, 임계값 얘기는 수습 후에.",
+      "ts": "1772504163.000003"
+    },
+    {
+      "type": "message",
+      "user": "U8AA7DB93",
+      "user_name": "문태호",
+      "text": "셀러 쪽 문의 들어오기 시작했습니다. 지금 조치 중인 것 공유드려도 될까요?",
+      "ts": "1772504164.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, carrier 연동 롤백하고 있어요. 조치 완료되면 다시 태그할게요.",
+      "ts": "1772504165.000005"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "모니터링은 계속 켜두고, 롤백 후 p95 1초 밑으로 내려오는지 10분 단위로 체크해주세요.",
+      "ts": "1772504166.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_cc46aa6c4caaeb7a214b8a9596ffab7c"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3083,
+    "title": "prod RDS 인스턴스 등급 조정 및 백업 보관 기간 변경",
+    "body": "## 배경\n- 지난주 프로모션 트래픽 대비용으로 prod-audience RDS를 일시적으로 db.r6g.xlarge로 올려뒀는데, 행사 끝나고 CPU/메모리 메트릭 확인하니 평소 수준으로 돌아옴.\n- 인스턴스 등급을 원복하고, 비용 리뷰에서 백업 보관 기간도 30일에서 14일로 조정하는 게 낫겠다고 해서 반영함.\n\n## 변경\n- prod-audience 인스턴스 등급: db.r6g.xlarge → db.r6g.large\n- 백업 보관 기간: 30일 → 14일\n- 장애 조치 테스트는 수동으로 한 번 수행 예정 (금요일 오전 중에 알림)\n\n## 테스트\n- 스테이징에서 동일 설정으로 인스턴스 재부팅 및 장애 조치 시나리오 확인 완료.\n- 프로덕션 적용 후 리전 간 복제 지연 0초로 수렴 확인.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3083",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-01-02T08:26:00Z",
+    "updated_at": "2026-01-02T09:03:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "등급 낮추는 김에 모니터링 알람 임계값도 기존 r6g.xlarge 기준으로 걸려 있는지 확인해줘요. CPU 80% 알람이면 large에서는 좀 빡빡할 수 있어요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 오늘 중으로 prod-audience CPU 알람 임계값 75%로 낮춰서 반영해두겠습니다. 메모리는 원래 85% 기준이라 그대로 둘게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "백업 보관 14일로 줄이면 저희가 쓰는 월말 집계용 스냅샷이랑 겹치지는 않나요? 지난달 것도 30일 기준으로 찾아봤던 것 같은데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "월말 스냅샷은 별도로 final-2025-12 같은 이름으로 수동 복제해둔 게 있어서 자동 백업이랑은 분리돼 있어요. 그래도 혹시 모르니 14일 안에 필요한 스냅샷 있으면 이번 주까지 공유해주세요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_3d85014058b01030b06dc791c5b491dd"
+}

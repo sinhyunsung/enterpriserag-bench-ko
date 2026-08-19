@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3011,
+    "title": "온콜 당번 순번표 추가 및 에스컬레이션 룰 문서화",
+    "body": "## 배경\n온콜 당번이 구두로만 정해져 있어서 주말마다 누가 받는지 매번 헷갈림. 지난주에 세린님한테 순번표 그냥 repo에 박아두라고 해서 올림.\n\n## 변경\n`oncall/README.md`에 10월 순번표 추가\n`oncall/escalation.md`에 호출 규칙이랑 에스컬레이션 경로 정리\n\n10월 순번\n- 1주차: junho-lee\n- 2주차: gunwoo-oh\n- 3주차: haneul-jung\n- 4주차: junyoung-lee\n\n에스컬레이션은 1차 당번 응답 없으면 2차로 세린님, 3차는 서지안 CTO님. 운영 이슈면 문태호 COO님한테 바로.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3011",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-10-03T07:43:00Z",
+    "updated_at": "2025-10-03T07:43:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "순번표 올린 거 확인. 근데 2주차가 너네 둘 다 주말에 개인 일정 있다고 해서 바꿔달라고 했던 거 아니었어? 확인 부탁."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "아 맞아요. 준호님한테 말해서 2주차는 제가 하고 1주차를 준호님이 가는 걸로 다시 올릴게요. 이 PR에 커밋 추가해서 수정했습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "데이터 파이프라인 장애는 에스컬레이션 1차가 저로 되어 있는데 1차 응답 없으면 2차로 세린님이 아니라 바로 저한테 다시 알림 가게 할 수 있나요? 새벽 배치 도는 거 때문에 그래요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "그건 온콜 봇 설정에서 라우팅 규칙 만져야 해서 이 PR 범위에선 빼고, 다음 주에 알림 설정 개선할 때 같이 볼게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_457a8f5e852218237778c72f71df1603"
+}

@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "예약 인스턴스랑 스팟 쪽 정리해서 PR 올렸습니다. 먼저 비용 탭에서 지난달 미사용 EBS 볼륨 14개랑 탄력적 IP 6개 정리 대상으로 뽑아뒀어요.",
+      "ts": "1775197440.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "PR 번호 알려주시겠어요? 이번 주 비용 회의 전에 머지되면 좋겠네요.",
+      "ts": "1775197441.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, infra/aws-cost-opt-2145 입니다. 스팟은 개발용 워커 노드만 우선 전환해뒀고, 운영성 배치는 그대로 둔 상태예요.",
+      "ts": "1775197442.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "저희 배치 작업 중에 retry 없는 것도 있어서 스팟 전환되면 실패 로그 좀 늘어날 수 있는데, 나중에 Airflow 쪽 타임아웃이랑 재시도 설정 같이 봐주실 수 있나요?",
+      "ts": "1775197443.000003"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "저도 리뷰 남겼습니다. unused EBS 태그 기준이 `createDate` 30일 이전이던데 14일로 줄여도 되지 않나 싶어요.",
+      "ts": "1775197444.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵 준호님 리뷰 반영해서 14일로 바꿔두겠습니다. 하늘님 말씀하신 Airflow 쪽은 오늘 중으로 이슈만 따로 만들어둘게요.",
+      "ts": "1775197445.000005"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "PR 머지 전에 COO님한테 예약 인스턴스 구매 예상액만 공유 부탁드려요. 운영 영향 없는 선에서 이번 주 안에 정리 끝내는 걸로 해요.",
+      "ts": "1775197446.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_4a2a532795b236e85e8dd0a3d9dc1468"
+}

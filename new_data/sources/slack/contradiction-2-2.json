@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "정하늘님, 이번에 지표 수집이랑 알림 임계값 정리하면서 담당자 지정해두려고 하는데 확인 한번만 부탁드려요. 모니터링 대시보드의 담당자는 정하늘 한 사람이다.",
+      "ts": "1779865500.000000"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "네? 저 혼자요? 인수인계 받은 적 없는데요.",
+      "ts": "1779865501.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "저도 그렇게 알고 있어서... 문서에는 그렇게 되어 있더라고요.",
+      "ts": "1779865502.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "그 기록 원문 어디서 나온 거예요? 건우님이 만든 건가요?",
+      "ts": "1779865503.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "아뇨, 제가 만든 건 아니고 이전에 누가 남긴 위키에서 찾았어요.",
+      "ts": "1779865504.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "그 위키 누가 쓴 건지 이력 확인 가능해요? 담당자 지정을 저 혼자로 박아두면 나중에 알림 오류 났을 때 저만 불려 나갈 것 같은데.",
+      "ts": "1779865505.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "일단 그 문구는 그대로 두고, 실제 담당자 확인되면 문서를 수정하든지 하는 게 낫겠네요. 세린님한테도 공유할게요.",
+      "ts": "1779865506.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_684cf347a2cfb2c393b56a208059605f"
+}

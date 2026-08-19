@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C4602E7D4",
+  "channel_info": {
+    "id": "C4602E7D4",
+    "name": "프로젝트-바로배송"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "ECS 클러스터 바로배송 쪽 용량 공급자 설정 확인했습니다. FARGATE_SPOT 비율이 60%로 잡혀 있는데 어제 배치 실패 로그 보니까 스팟 인스턴스가 순간적으로 못 받아주는 경우가 있네요.",
+      "ts": "1771832520.000000"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "저희 서비스 쪽 태스크가 좀 무거워서 그런가... 스팟 내려가고 다시 올라오는 동안 빈 자리가 없어서 대기 걸리는 거였구나",
+      "ts": "1771832521.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "맞아요 그래서 용량 공급자 가중치 조정 들어가려고요. FARGATE 30, FARGATE_SPOT 70으로 바꾸고 클러스터 오토스케일 목표 추적 정책은 평균 CPU 65% 유지로 걸어둘게요.",
+      "ts": "1771832522.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "스팟 비중 올리면 비용은 더 빠지겠네요. 근데 CPU 65%면 배치 지연 없이 괜찮을까요?",
+      "ts": "1771832523.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "태스크당 할당 CPU 여유 보고 좀 보수적으로 잡은 거라 괜찮을 겁니다. 오토스케일링 반영되는 거 지켜보면서 필요하면 60%로 낮출게요.",
+      "ts": "1771832524.000004"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "그럼 이따 배포 한 번 돌려봐도 되죠? 스팟에서 태스크 뜨는지 확인하고 싶어서요.",
+      "ts": "1771832525.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 적용은 해놨으니 바로 테스트해보세요. 용량 공급자 로그 계속 보고 있을게요.",
+      "ts": "1771832526.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_43cc6368e055a4c72f6420fe2f217673"
+}

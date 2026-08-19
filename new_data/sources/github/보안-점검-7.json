@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3017,
+    "title": "IAM 권한 최소화 및 키 순환 적용",
+    "body": "## 배경\n\n보안 점검 중 IAM 권한이 과도하게 부여된 계정이 확인됐습니다. 운영 중인 서비스에 필요한 권한만 남기고 삭제/조정합니다. 액세스 키 90일 이상 미순환 계정도 있어서 정리합니다.\n\n## 변경\n\n- `durelogis-prod-ecs` 정책에서 `s3:*` 제거하고 `s3:GetObject`, `s3:PutObject`로 축소\n- `durelogis-dev-rds` 계정에서 `rds:DeleteDBInstance` 제거\n- 미사용 IAM 계정 3개 비활성화 (durelogis-batch-old, durelogis-temp-admin, durelogis-api-v1)\n- 액세스 키 90일 초과 계정 키 순환 처리\n- 취약점 스캔 결과 중 `CVE-2024-12345` 패치 대상 AMI로 운영 서버 교체 예정",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/3017",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-05-24T06:45:00Z",
+    "updated_at": "2026-05-24T08:12:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "dev RDS에서 DeleteDBInstance 빼는 건 좋은데 혹시 테스트용으로 수동 삭제해야 할 때 불편하지 않을까요? 저는 찬성인데 태호님한테도 한번 공유해주세요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 태호님한테 슬랙으로 공유했고, 테스트 삭제 필요하면 권한 일시 부여하는 프로세스로 가기로 했습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "durelogis-batch-old 계정 저희 데이터 파이프라인에서 아직 안 쓰는 거 맞죠? 혹시 몰라서 여쭤봅니다."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 하늘님, 지난달에 신규 배치 계정으로 전환 완료된 거 확인했습니다. 비활성화 후 2주 모니터링하고 완전 삭제하겠습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_cf83d913d6e82cb7dbd8c622cfa175e4"
+}

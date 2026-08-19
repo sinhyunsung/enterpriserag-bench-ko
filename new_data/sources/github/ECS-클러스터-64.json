@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 3074,
+    "title": "ECS 클러스터 용량 공급자 및 오토스케일링 정책 적용",
+    "body": "## 배경\n- 기존 ECS 클러스터가 고정된 EC2 대수로 운영 중이라 피크 시간대에 컨테이너 배치가 밀리는 현상이 있었습니다.\n- 배치 작업과 API 서버가 같은 클러스터를 쓰고 있는데, 배치가 도는 새벽 시간대에 API 레이턴시가 튀는 문제도 같이 확인했습니다.\n- 클러스터에 capacity provider를 붙이고 EC2 오토스케일링이 Fargate 스팟처럼 동작하게 만들 필요가 있습니다.\n\n## 변경\n- `dure-infra/modules/ecs/cluster.tf`에 EC2 capacity provider 추가\n  - managed_scaling enabled, target_capacity 85%\n  - managed_termination_protection enabled\n- 오토스케일링 정책 추가\n  - EC2 스케일 아웃: ECS CapacityProviderReservation > 80% (1분 1회)\n  - EC2 스케일 인: ECS CapacityProviderReservation < 50% (1분 1회)\n- ASG desired_capacity를 2에서 1로 조정하고 최소/최대는 1~6으로 설정\n- 배치 작업용 task definition에 capacity_provider_strategy를 FARGATE_SPOT 우선으로 변경\n\n## 테스트\n- staging 클러스터에 적용 후 모의 배치 잡 300개 걸어서 스케일 아웃/인 확인했습니다.\n- 스케일 아웃 완료까지 약 4분, 스케일 인은 넉넉히 8분 정도 걸렸습니다.\n- Fargate Spot에서 EC2로 넘어가는 전환 구간에서 배치 pending 20초 내외로 확인했습니다.\n",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/3074",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "taeho-moon"
+      }
+    ],
+    "created_at": "2026-02-20T09:46:00Z",
+    "updated_at": "2026-02-20T09:46:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "target_capacity 85%면 남는 버퍼가 15%인건데, 피크 타임에 컨테이너가 순간적으로 몰릴 때 새 EC2 뜨는 시간을 버티는 게 빡빡하지 않을까요? 70% 정도로 내려서 여유를 조금 더 두는 건 어때요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 오늘 staging에서 모의 부하 걸었을 때 85%에서도 pending 거의 없었긴 했는데, 실제 트래픽은 더 뾰족하게 올 수 있으니까 70%로 낮춰서 다시 확인할게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "새벽 배치가 FARGATE_SPOT으로 빠지면 EC2 클러스터에 남는 API 컨테이너들은 기존 예약 인스턴스로만 돌아가는 거죠? 그럼 새벽엔 EC2가 남을 텐데 스케일 인은 어떤 기준으로 도는지 궁금합니다."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 맞습니다. 새벽 배치는 Fargate Spot으로 가고, API는 EC2에 남습니다. EC2는 CapacityProviderReservation 50% 밑으로 떨어지면 스케일 인 되도록 걸어놨는데, 최소 1대는 유지돼서 새벽엔 API 인스턴스 1~2대 정도 남을 것 같아요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_adb19ec0ce747c3889cbfbe79c121d7c"
+}

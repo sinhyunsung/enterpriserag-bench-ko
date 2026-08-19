@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "로그 적재 경로랑 보존 기간 정리해서 공유드립니다. 일단 ELB 액세스 로그는 S3로 바로 가고 있는데, 이게 언제부터 쌓였는지 파악이 안 돼서 버킷 확인부터 했어요.",
+      "ts": "1781670120.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "그거 정리 안 되어 있었죠. 보존은 최소 6개월은 필요할 텐데 지금 얼마나 쌓여 있어요?",
+      "ts": "1781670121.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "duretech-prod-logs 버킷에 2025년 2월 것부터 있네요. 3월 중순부터는 ELB 로그가 하루에 몇십만 건씩 들어와서 용량이 꽤 늘었어요. 지금 버킷 전체 1.8TB 정도고요.",
+      "ts": "1781670122.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "그 버킷 저도 데이터팀에서 접근해서 Athena로 쿼리할 때가 있어요. 라이프사이클 언제 걸어둘 거예요?",
+      "ts": "1781670123.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "액세스 로그는 6개월 보존, GLACIER 전환 없이 만료로 갈게요. 근데 하늘이 님 말씀대로 데이터팀에서 참조할 수 있으니 만료 전에 경로는 유지하고 객체만 지우는 걸로요.",
+      "ts": "1781670124.000004"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "검색은 어디로 하기로 했죠? 저번에 OpenSearch 세팅 얘기 있었는데.",
+      "ts": "1781670125.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, OpenSearch에 애플리케이션 로그만 넣고 있어요. ELB 로그는 너무 커서 OpenSearch까지 넣진 않고, S3 + Athena로 보고요. 애들 로그 보존 기간은 30일로 잡아두고 검색은 지금 대시보드로 보고 있는 상태예요.",
+      "ts": "1781670126.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_c8548c6ae61ba07e22a66b9b17dc9a26"
+}
