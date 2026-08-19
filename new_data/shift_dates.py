@@ -42,6 +42,8 @@ MONTH_DAY = re.compile(r"(\d{1,2})월\s*(\d{1,2})일")
 # 이 데이터의 슬래시 숫자는 거의 다 CIDR 대역(10.30.0.0/16)이고 SEV-1/2 나 최소/최대 2/6 도 있다.
 # 하나라도 밀면 네트워크 구성이 조용히 망가진다
 SLASH_RANGE = re.compile(r"(\d{1,2})/(\d{1,2})\s*~\s*(\d{1,2})/(\d{1,2})")
+# 「작년 3월」 처럼 해를 말로 적은 것. 추출기가 이것도 시점으로 읽어 근거 시점을 만든다
+LAST_YEAR = re.compile(r"(작년|재작년|지난해)(\s*\d{1,2}월)?")
 
 
 def doc_time(doc: dict) -> dt.datetime:
@@ -146,8 +148,28 @@ def pull_forward(doc: dict, at: dt.datetime) -> tuple[dict, int]:
         moved += 1
         return f"{limit.year}년 {limit.month}월"
 
+    def fix_last_year(match: re.Match) -> str:
+        # 문서가 최근인데 「작년 3월」 이라 적으면 그 시점이 문턱 밖이다. 달은 그대로 두고
+        # 해만 올해로 당긴다 — 「올해 3월」 은 문서 시각보다 앞이라 회고로 읽힌다
+        nonlocal moved
+        month = (match[2] or "").strip()
+        if month:
+            try:
+                spoken = dt.date(at.year - (1 if match[1] == "작년" else 2),
+                                 int(month.rstrip("월")), 1)
+            except ValueError:
+                return match[0]
+            if spoken >= limit.date():
+                return match[0]
+            moved += 1
+            return f"올해 {month}"
+        moved += 1
+        return "올해"
+
     def walk(text: str) -> str:
-        return YEAR_MONTH.sub(fix_year_month, ISO_DATE.sub(fix_iso, text))
+        text = ISO_DATE.sub(fix_iso, text)
+        text = YEAR_MONTH.sub(fix_year_month, text)
+        return LAST_YEAR.sub(fix_last_year, text)
 
     if doc.get("kind") == "slack_thread":
         for message in doc["messages"]:
