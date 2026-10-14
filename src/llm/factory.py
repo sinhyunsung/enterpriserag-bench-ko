@@ -30,6 +30,7 @@ def get_llm(
         ValueError: If LLM_PROVIDER is not supported.
     """
     provider = LLM_PROVIDER.lower()
+    # Bedrock 경로는 지웠다. 허락 없이 Bedrock Claude 비용이 나간 일이 있다 (2026-10-14)
 
     if provider == "openai":
         from src.llm.openai_llm import OpenAILLM
@@ -43,12 +44,6 @@ def get_llm(
         return AnthropicLLM(
             model=model, tools=tools, quiet=quiet, reasoning_level=reasoning_level
         )
-    elif provider == "bedrock":
-        from src.llm.bedrock_llm import BedrockLLM
-
-        return BedrockLLM(
-            model=model, tools=tools, quiet=quiet, reasoning_level=reasoning_level
-        )
     elif provider == "deepseek":
         from src.llm.deepseek_llm import DeepSeekLLM
 
@@ -58,7 +53,7 @@ def get_llm(
     else:
         raise ValueError(
             f"Unsupported LLM provider: {provider}. "
-            "Supported providers: openai, anthropic, bedrock, deepseek"
+            "Supported providers: openai, anthropic, deepseek"
         )
 
 
@@ -86,6 +81,7 @@ def get_cheap_llm(
         ValueError: If LLM_PROVIDER is not supported.
     """
     provider = LLM_PROVIDER.lower()
+    # Bedrock 경로는 지웠다. 허락 없이 Bedrock Claude 비용이 나간 일이 있다 (2026-10-14)
 
     if provider == "openai":
         from src.llm.openai_llm import (
@@ -111,18 +107,6 @@ def get_cheap_llm(
             quiet=quiet,
             reasoning_level=reasoning_level,
         )
-    elif provider == "bedrock":
-        from src.llm.bedrock_llm import (
-            CHEAP_LLM_MODEL_NAME as BEDROCK_CHEAP_MODEL,
-            BedrockLLM,
-        )
-
-        return BedrockLLM(
-            model=model or BEDROCK_CHEAP_MODEL,
-            tools=tools,
-            quiet=quiet,
-            reasoning_level=reasoning_level,
-        )
     elif provider == "deepseek":
         from src.llm.deepseek_llm import (
             DEEPSEEK_CHEAP_MODEL_NAME as DEEPSEEK_CHEAP_MODEL,
@@ -138,5 +122,5 @@ def get_cheap_llm(
     else:
         raise ValueError(
             f"Unsupported LLM provider: {provider}. "
-            "Supported providers: openai, anthropic, bedrock, deepseek"
+            "Supported providers: openai, anthropic, deepseek"
         )
