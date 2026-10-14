@@ -93,6 +93,9 @@ When calling {FINISH_TOOL}, provide a JSON object with this structure (without t
   "distractor_documents": ["relative path to document", "..."]
 }}}}
 ```
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 CONSTRAINED_QUERIES_USER_PROMPT = "Explore the sources directory, find a cluster of topically related documents, and propose a constrained query. Show me the query, the gold documents, the distractor documents, and explain how each qualifier filters."
@@ -144,4 +147,7 @@ Your output must follow this exact JSON format (without the ```):
     "document_ids": [document_id_1, document_id_2, ...]
 }}
 ```
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()

@@ -64,6 +64,9 @@ You can remove documents if they are invalidated for answering the question by n
 2. As you discover documents which are useful for answering the question, write down the document ids (dsid_ followed by a UUID) using the `{SELECT_DOC_TOOL_NAME}` tool. \
 3. Continue calling the `{RUN_TOOL_NAME}` tool until you have found the answer or decided that the question is unanswerable from the knowledge of the corpus.
 4. Output your final answer, keep it concise but informative.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 

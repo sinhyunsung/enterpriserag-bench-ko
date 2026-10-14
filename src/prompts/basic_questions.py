@@ -33,6 +33,9 @@ Example 4 (good): For Seaside Streetwear's demo request, what latency target did
 ```
 
 CRITICAL: Output ONLY the query, do not provide any other text or explanation.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 
@@ -79,4 +82,7 @@ Example 4 (good): Give me the estimated timeline for SOC 2 compliance as of Jan 
 ```
 
 CRITICAL: Output ONLY the query, do not provide any other text or explanation. Ensure this is a challenging semantic / loose match type query.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()

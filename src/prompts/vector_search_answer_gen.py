@@ -11,4 +11,7 @@ Be concise and only provide information directly relevant to the query.
 
 ## Answer
 Output your answer below, do not include any additional text or formatting:
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """

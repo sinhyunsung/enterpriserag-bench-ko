@@ -18,6 +18,9 @@ is better as "The auth issue might be caused by a bad API key or a bad auth head
 ```
 
 CRITICAL: You must output your response as a list of strings. Do not include any other text or formatting.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 

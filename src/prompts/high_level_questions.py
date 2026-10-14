@@ -21,6 +21,9 @@ The keys should be the query number (integers starting from 1) and the values sh
   "3": "The third query, exploring a different topic or area of interest.",
   ...
 }}
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 
@@ -45,6 +48,9 @@ Keep the character set simple, do not output special characters like emojis, mar
 ```
 
 CRITICAL: Output only the gold answer and nothing else.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 

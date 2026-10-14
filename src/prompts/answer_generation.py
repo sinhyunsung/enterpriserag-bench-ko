@@ -24,6 +24,9 @@ Note that if valid is false, the gold_answer should just say N/A.
 }}
 
 CRITICAL: Output ONLY the JSON object, do not provide any other text or explanation.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 
@@ -54,4 +57,7 @@ Note that if valid is false, the gold_answer should just say N/A.
 }}
 
 CRITICAL: Output ONLY the JSON object, do not provide any other text or explanation.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()

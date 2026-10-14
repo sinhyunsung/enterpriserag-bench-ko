@@ -44,10 +44,14 @@ Avoid these documents as they have already been used to generate other questions
 - {READ_TOOL}: Read a file and return its contents. Use to read documents and understand their details.
 
 CRITICAL: You must only call tools or output the final query. When you output the query, do not include any other text.
+
+
+CRITICAL: Write all natural-language output (questions, answers, and answer facts) in Korean (한국어), matching the language of the source documents. Keep JSON keys, document IDs (dsid_...), file paths, code, and technical identifiers exactly as they appear.
 """.strip()
 
 GOLD_ANSWER_AND_FACTS = """
 The answer must state at some point that the query is not fully answerable from available documents or caveat the provided information with why it does not fully address the query. \
 The answer may present relevant and related information to be helpful to the user however it must clearly also mention that at least some aspects are not found or answered. \
 The answer may also simply state that the query is not answerable from the documents, this is perfectly acceptable.
+
 """.strip()
