@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5032,
+    "title": "정산용 네트워크 기반 구성",
+    "body": "## 배경\n정산 서비스가 신규 계정 체계와 분리 운영되면서 기존 개발 VPC에 두기 어려운 상태가 됐습니다. 정산 흐름이 외부 가맹점 API와 직접 통신하는 구간이 생겼고, 내부 서비스끼리도 호출 경로가 늘어나다 보니 인바운드 정책을 계속 열어두는 게 부담스러웠습니다.\n\n그래서 이번에 정산 전용 네트워크를 따로 잡았습니다. 운영 VPC의 CIDR 대역은 10.40.0.0/16이다.\n\n## 변경\n- 운영 VPC `dure-settlement-prod-vpc` 생성\n- 퍼블릭 서브넷 2개, 프라이빗 서브넷 2개 구성\n- 외부 가맹점 통신용 보안 그룹 `sg-settlement-ext` 추가\n- 내부 서비스 호출용 보안 그룹 `sg-settlement-int` 추가\n- 프라이빗 서브넷 앞단에 내부 ALB `alb-settlement-int` 배치\n- 퍼블릭 서브넷에는 NAT 게이트웨이 1개만 두고 외부 아웃바운드는 전부 여기로 모았습니다.\n\n기존 개발 VPC와는 피어링 없이 두기로 했고, 정산 DB는 프라이빗 서브넷 안에서만 붙습니다.\n운영 VPC · CIDR 대역 = 10.40.0.0/16",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5032",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "junho-lee"
+      }
+    ],
+    "created_at": "2026-08-07T04:50:00Z",
+    "updated_at": "2026-08-07T04:50:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이거 가맹점 쪽에서 오는 콜백이 퍼블릭으로 바로 들어오나요? ALB 하나 더 두는 게 낫지 않나."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "콜백 전용으로 퍼블릭 ALB 하나 더 두려고요. sg-settlement-ext는 일단 그 ALB에만 붙이고, 내부는 sg-settlement-int로 분리해뒀습니다."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "NAT 게이트웨이 하나면 정산 배치 돌릴 때 대역폭 괜찮아요? 밤에 몰릴 텐데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "일단 모니터링 걸어두고 병목 생기면 하나 더 올리는 걸로 했습니다. 이번 주 운영 데이터 흐름 보면서 조정할게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_4adfb08c5584d11cacc2a6cfe9e31572"
+}

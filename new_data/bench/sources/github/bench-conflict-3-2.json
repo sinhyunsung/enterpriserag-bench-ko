@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5026,
+    "title": "로그 수집 파이프라인 Loki 전환 및 보존 정책 적용",
+    "body": "## 배경\n결제 정산 배치에서 간헐적으로 유실되는 이벤트를 추적하려고 기존 NAS 로그를 뒤졌는데, 파일이 이미 덮어써져서 못 찾았습니다. 보존 기간이 실질적으로 지켜지지 않고 있고, 여러 컨테이너에 흩어진 로그를 일일이 찾는 것도 한계가 있어서 정리합니다.\n\n## 변경\n- 로그 수집기를 Loki 기반으로 교체하고, 모든 결제/정산 컨테이너의 stdout·file 로그를 중앙 수집하도록 변경\n- 보존 기간을 30일로 명시하고, 인덱스와 청크 모두 해당 기간 이후 삭제되도록 정책 적용\n- 검색용 태그에 서비스명·환경·호스트를 기본으로 넣고, 결제 건 ID는 구조화 로그에서 직접 조회 가능하게 추가\n- 기존 NAS 적재 스크립트는 제거하지 않고 비활성화 처리 (롤백 대비)\n\n로그 검색의 도구는 Loki이다.\n로그 검색 · 도구 = Loki",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5026",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2026-07-28T02:30:00Z",
+    "updated_at": "2026-07-28T02:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "하늘: 건우님, Loki는 검색은 좋은데 청크 보존 정책을 object storage 쪽이랑 index 쪽 따로 안 맞추면 30일 지나도 청크는 남는 경우 있더라고요. 혹시 이거 table_manager 쪽이랑 같이 확인하셨나요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 하늘님, retention_deletes_enabled랑 retention_period는 index, chunks 둘 다 720h로 맞췄습니다. 그런데 object storage에 이미 쌓여 있는 기존 청크는 수동 삭제 한 번 돌려야 할 것 같아서 그건 내일 아침에 하려고요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "보존 기간 30일로 못 박은 거 맞죠? 정산 쪽은 카드사 매입 내역이랑 대사 불일치가 보통 한 달 안에 발견되는 경우가 많아서, 이거보다 짧으면 안 됩니다. 건우님이 PR에 30일이라고 명시해 둔 건 확인했어요."
+    },
+    {
+      "user": {
+        "login": "junyoung-lee"
+      },
+      "body": "저희 백엔드 쪽에서 결제 건 ID를 기존에 logger에 numeric으로만 박던데, Loki는 라벨을 문자열로 다뤄서 검색할 때 값에 문자열로 들어가 있는지 확인 한 번 해주세요. 태그에 결제 건 ID 넣는 부분에서 헷갈릴 수 있어서요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_c49b975c1e1daa8d5f154a35043af181"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5010,
+    "title": "비용 최적화 — 예약 인스턴스, 스팟, 미사용 자원 정리",
+    "body": "## 배경\n\n이번 분기 AWS 데이터 정산 보니까 개발 환경 비용이 계속 늘고 있어서 정리한다. 실서비스까지 끌고 가기엔 부담되는 항목들이 좀 보였다. 주로 세 가지다.\n\n1. 예약 인스턴스로 돌리지 않고 온디맨드로 켜져 있는 t3.large가 여러 대 있다.\n2. 배치 돌릴 때 한 번씩 피크 치고 끝나는 성격이라 스팟으로 돌려도 되는 애들이 섞여 있다.\n3. 개발용으로 띄워놓고 안 끈 인스턴스나 연결 안 된 EBS 볼륨이 꽤 있다.\n\n일단 이번 PR에서는 예약 인스턴스 전환 후보와 스팟 적용 후보를 태깅 기준으로 구분하고, 개발 환경 인스턴스 자동 종료 스케줄을 일괄 적용했다.\n\n## 변경\n\n- `terraform/aws/reserved-instances`에 예약 전환 후보 리스트 추가 (t3.large 6대)\n- `terraform/aws/ec2-spot`에 배치성 워커용 스팟 인스턴스 모듈 추가\n- `terraform/aws/ec2-scheduler` 개발 환경 자동 종료 시각을 오후 10시에서 오후 8시로 조정\n- 미사용 EBS 볼륨 12개 삭제 및 스냅샷 정리 스크립트 `scripts/cleanup_unused_ebs.sh` 추가\n\n개발 환경 인스턴스의 자동 종료 시각은 오후 8시이다.\n\n야근하는 사람 거의 없는데도 10시까지 인스턴스가 살아 있는 게 낭비라서 8시로 당겼다. 혹시 8시 이후에 개발 환경에서 작업해야 하는 분 있으면 말해줘라. 예외 태그 붙여서 제외시킨다.\n개발 환경 인스턴스 · 자동 종료 시각 = 오후 8시",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5010",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-09-17T07:20:00Z",
+    "updated_at": "2026-09-17T07:20:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "8시 이후에 가끔 개발 환경에서 테스트 돌리는데, 이거 적용되면 스케줄러에서 예외 걸 수 있는 거 맞지? 주말에 돌리는 배치 테스트는 영향 없나?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "예외 태그 `duretech:scheduled=true` + `duretech:shutdown=exempt` 붙이면 자동 종료에서 빠진다. 주말 배치 테스트는 지금도 수동으로 켜는 거니까 오히려 평일 8시 종료랑은 별개로 보면 돼."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "스팟 모듈은 갑자기 인스턴스가 내려가도 재시도 로직이 있는 거지? 배치성이라고 해도 중간에 죽으면 데이터 어긋나는 경우 있었잖아. 그것만 확인하고 머지해도 될 것 같다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "그건 저번에 스팟 종료 통지 받으면 태스크 큐에 다시 올리는 식으로 처리해 뒀어. t3.large 스팟이면 지금 온디맨드 대비 반값 아래로 떨어져서 개인적으로는 빨리 가고 싶음."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_8589515250e16a45a6069237c56958d6"
+}

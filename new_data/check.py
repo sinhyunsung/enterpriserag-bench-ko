@@ -18,7 +18,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from src.utils.connector_schema import make_validator  # noqa: E402
 
-from new_data import scenario  # noqa: E402
+from new_data import scenario  # noqa: E402  — --scenario 로 바꿀 수 있다
+import importlib  # noqa: E402
 
 BAD = {"\x00": "NUL", "﻿": "BOM", "​": "폭없는공백"}
 
@@ -26,7 +27,11 @@ BAD = {"\x00": "NUL", "﻿": "BOM", "​": "폭없는공백"}
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default="new_data/sources")
+    parser.add_argument("--scenario", default="new_data.scenario",
+                        help="각본 모듈. 벤치마크는 new_data.bench_scenario")
     args = parser.parse_args()
+    global scenario
+    scenario = importlib.import_module(args.scenario)
     root = Path(args.root)
 
     paths = sorted(root.rglob("*.json"))

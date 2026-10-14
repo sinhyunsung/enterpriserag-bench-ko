@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5050,
+    "title": "바로배송 전용 인프라 준비 — 증설 기준 반영",
+    "body": "## 배경\n바로배송 서비스가 다음 분기부터 정식 정산에 들어가면서 주문 피크 시간대 배차 처리 지연이 계속 보고되고 있어요.\n기존 공용 대기열을 그대로 쓰면 정산 배치가 도는 새벽 시간이랑 겹칠 때 컨슈머가 밀려서 재처리 걸리는 경우가 있었고, 이번에 바로배송 전용으로 빼기로 했어요.\n\n## 변경\n- settlement-worker 큐를 `dure-settlement` 내 바로배송 전용 큐로 분리\n- 피크 시간대 증설 기준 명시\n- 분기별 주문량 리뷰 시점은 운영팀 회고 주기에 맞춤\n\n바로배송 피크 시간의 증설 서버 대수는 6대이며 분기마다 주문량을 보고 조정한다. 2025년 4분기부터 적용한다.\n\n## 확인\n- dev 환경에서 피크 시뮬레이션 시 컨슈머 lag 5분 이내 유지\n- 운영 배포 시점은 2025-12-01 이후로 잡아둠\n바로배송 피크 시간 · 증설 서버 대수 = 6대",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5050",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "junho-lee"
+      }
+    ],
+    "created_at": "2025-11-06T03:30:00Z",
+    "updated_at": "2025-11-06T03:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "아 이거 PR 본문에 기준 넣은 거 좋네요. 저번에 회의 때 말로만 정리됐었잖아요. 피크 6대면 dev에서 시뮬 돌릴 때 어느 정도 부하 걸고 본 건가요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "지난주 금요일 저녁에 피크 때 5분 평균 TPS 2배 정도 올려서 돌렸어요. 6대로 lag 4분 안쪽, 메시지 재처리 없었어요. 시뮬 로그는 슬랙 devops 채널에 올려뒀어요."
+    },
+    {
+      "user": {
+        "login": "jian-seo"
+      },
+      "body": "이 부분 정산 감사 자료에도 남아야 하니까 PR 머지되면 바로 노션 운영규정에도 같은 문장으로 넣어두세요. 바꾸지 말고."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님 이번 주 금요일 운영팀이랑 검토하는 자리에서 분기 조정 리뷰 때 볼 지표도 공유 부탁드려요. 주문량이랑 컨슈머 lag 같이 봐요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_c472d4183baa5507af2b93050ced2043"
+}

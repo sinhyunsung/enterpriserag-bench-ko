@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5038,
+    "title": "바로배송 전용 인프라 구성 및 증설",
+    "body": "## 배경\n바로배송 오픈 전에 서비스 전용으로 분리하는 작업 먼저 해둡니다. 기존 표준 배송 쪽 자원 공유하면 배치 돌 때 간섭 생겨요.\n바로배송의 배송 가능 반경은 8km이다.\n\n## 변경\n- ECS 클러스터 `dure-logis-baro` 분리\n- RDS 리더 인스턴스 `baro-reader-1` 추가\n- SQS `baro-order-queue`, `baro-rider-assign-queue` 생성\n- 스케줄러 태스크 `baro-route-worker` 배포\n바로배송 · 배송 가능 반경 = 8km",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5038",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-08-18T02:20:00Z",
+    "updated_at": "2026-08-18T02:20:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "바로배송 쪽 주문 이벤트도 기존 Kafka 토픽 그대로 쓰죠? SQS로 따로 빼는 거면 컨슈머 쪽 붙여놓은 것도 바꿔야 하는데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 그대로 씁니다. SQS는 라이더 배정하고 라우팅 워커 태스크 던지는 용도라 이벤트 소싱이랑은 별개예요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "리더 인스턴스 추가된 거 바로배송 API 쪽 커넥션 스트링은 무조건 baro-reader로 붙나요? 쓰기랑 분리해도 괜찮은지 확인 부탁드려요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "이건 승인할게요. 다만 클러스터 분리한 거 모니터링 대시보드도 바로배송 전용으로 하나 떠주세요. 다음 스프린트 전까지."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_173412758b5bef730859b544e7d8be50"
+}

@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5024,
+    "title": "보안 점검: IAM 권한 최소화, 키 순환, 외부 취약점 점검 결과 반영",
+    "body": "## 배경\n2026년 7월 정기 보안 점검을 진행했습니다. IAM 권한 최소화와 액세스 키 순환, 그리고 외부 취약점 점검 항목을 정리해서 반영합니다. 외부 취약점 점검의 수행 업체는 블루쉴드이다. 이번에 나온 결과 중 즉시 조치 가능한 것 위주로 PR 올립니다.\n\n## 변경\n- `dure-prod-readonly` 정책에서 `s3:ListAllMyBuckets` 제거 (운영 console에서 확인하던 용도였는데, 이제 데이터팀에서 별도 대시보드로 확인해서 불필요)\n- `dure-prod-backend` 역할에 붙어 있던 `ec2:Describe*` 제거 및 `rds:Describe*`는 리소스 한정으로 축소\n- jenkins 접근용 IAM 유저 2개 액세스 키 교체 완료 (`jenkins-deploy`, `jenkins-nightly`)\n- 블루쉴드에서 제보한 S3 퍼블릭 ACL 설정 버킷 3개 `Block Public Access` 켜고, `s3:PutObjectAcl` 거부 정책 추가\n- 사용 안 하는 IAM 유저 `old-sftp` 삭제\n\n리뷰 부탁드립니다.\n외부 취약점 점검 · 수행 업체 = 블루쉴드",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5024",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "jian-seo"
+      }
+    ],
+    "created_at": "2026-07-24T04:10:00Z",
+    "updated_at": "2026-07-24T04:10:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, `dure-prod-readonly`에서 `s3:ListAllMyBuckets` 뺀 거 데이터팀 쪽 확인은 끝난 거죠? 갑자기 버킷 목록 안 보인다고 하늘님한테 연락 오면 곤란하니까요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 하늘님한테 어제 슬랙으로 공유드렸고 오늘 오전에 대시보드로 확인해보신다고 답 받았습니다. 문제 없을 거예요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "저 확인했어요. 메타데이터 수집용으로 버킷 전체 리스트는 이제 안 봐서 괜찮습니다. 오히려 깔끔해지네요."
+    },
+    {
+      "user": {
+        "login": "jian-seo"
+      },
+      "body": "블루쉴드 결과 반영 확인했습니다. 이번에 지적된 S3 ACL 건은 퍼블릭으로 열려 있던 건 아니고 ACL 설정만 가능한 상태였지만, 미리 막아둔 거 잘하셨어요. 머지할게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_b138841772c8126b9048715da74fea85"
+}

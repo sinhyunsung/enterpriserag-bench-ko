@@ -25,7 +25,8 @@ import json
 import re
 from pathlib import Path
 
-from new_data import scenario
+from new_data import scenario  # noqa: E402  — --scenario 로 바꿀 수 있다
+import importlib  # noqa: E402
 
 # 모델이 지어내 같은 자리를 차지하는 값들. (파일 조각, 지울 정규식, 바꿔 넣을 말)
 NOISE = [
@@ -93,8 +94,12 @@ def scrub(root: Path, dry: bool) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default="new_data/sources")
+    parser.add_argument("--scenario", default="new_data.scenario",
+                        help="각본 모듈. 벤치마크는 new_data.bench_scenario")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    global scenario
+    scenario = importlib.import_module(args.scenario)
     root = Path(args.root)
 
     planted = 0

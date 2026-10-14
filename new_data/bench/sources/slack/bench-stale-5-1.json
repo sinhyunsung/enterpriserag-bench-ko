@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "정산 DB 인스턴스 등급이랑 백업, 장애 조치 설정 정리해서 공유합니다. 정산 데이터베이스 인스턴스의 등급은 db.r6g.large이며 분기마다 사용량을 보고 조정한다. 2025년 4분기부터 적용한다.\n정산 데이터베이스 인스턴스 · 등급 = db.r6g.large",
+      "ts": "1760936400.000000"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "r6g.large면 지금 정산 배치 돌릴 때 CPU는 좀 남는 편이에요. 메모리도 아직 넉넉하고요. 분기 조정 기준은 어디 정리해두신 거예요?",
+      "ts": "1760936401.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "인프라 위키에 RDS 운영 항목으로 넣어뒀어요. CloudWatch에서 CPU 70%를 2주 이상 넘기거나 FreeableMemory가 15% 아래로 떨어지면 한 단계 올리는 걸 기본으로 잡았습니다.",
+      "ts": "1760936402.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "백업이랑 장애 조치는 그대로 유지하는 거죠? 정산 데이터는 금융 감사 때문에 보관 기간이 길어서 스냅샷 비용 신경써야 할 텐데.",
+      "ts": "1760936403.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 자동 백업은 기존처럼 30일 보관이고 스냅샷은 월 1회 수동으로 떠서 1년 보관합니다. 장애 조치는 Multi-AZ 유지하고 강제 장애 조치 테스트는 분기 첫째 주 수요일에 돌려요. 2025년 4분기부터 적용하니까 10월 둘째 주에 한 번 확인하겠습니다.",
+      "ts": "1760936404.000004"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "백엔드에서 정산 DB 커넥션 풀은 r6g.large 기준으로 그대로 두면 되죠? 바뀌면 슬로우 쿼리부터 다시 봐야 해서요.",
+      "ts": "1760936405.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 이번 분기엔 등급 변경 없어요. 커넥션 풀 설정도 그대로 두시면 됩니다. 나중에 등급 올리게 되면 그때 max_connections 값이랑 같이 맞추는 걸로 하죠.",
+      "ts": "1760936406.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_6e9cd8495a66465a05c1d90c563a0a08"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5006,
+    "title": "settlement-api ECS 서비스 최소 태스크 2 → 4 상향",
+    "body": "## 배경\n주문 API 서비스가 피크 시간대 태스크 부족으로 스케일 아웃이 잦아지고, 오토스케일 지연 동안 503이 간헐적으로 발생했다. 주문 API 서비스의 최소 태스크 수는 4개이다.\n\n## 변경\n- settlement-api 서비스의 `min_capacity` 2 → 4\n- capacity provider `target_capacity_percent`는 80 유지\n- 배포 시점에만 반영되도록 desired_count는 4로 맞춤\n주문 API 서비스 · 최소 태스크 수 = 4개",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5006",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-09-11T05:30:00Z",
+    "updated_at": "2026-09-11T05:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "PR 확인했어요. 최소 4개로 올리면 개발계정 비용은 괜찮나요? 운영이랑 같은 설정 가져가는 거죠?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 일단 운영이랑 동일하게 가져가려고요. 개발계정은 피크가 없어서 낮에 4개 떠 있는 게 좀 과할 수 있는데, 그건 다음 주에 타임 스케줄 걸어서 2개로 내리는 걸로 정리할게요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이거 머지되면 settlement-api 배포 순서는 문제없죠? 태스크 4개 뜰 때까지 주문 API에서 조회 실패나는 건 아니고?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "문제없어요. 태스크가 순차적으로 뜨고 헬스체크 통과한 컨테이너만 대상 그룹에 붙어요. 기존 2개는 그대로 살아 있고 새로운 2개가 붙는 구조라 조회 실패 없어요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_368cd86f7369d2b3382aebab4d71cc36"
+}

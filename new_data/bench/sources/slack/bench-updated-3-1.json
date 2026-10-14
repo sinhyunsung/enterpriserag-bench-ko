@@ -1,0 +1,51 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "ECS 용량 공급자랑 스케일링 정책 정리해서 공유드립니다. 주문 API 서비스는 평소 트래픽이 들쭉날쭉해서 최소 태스크는 넉넉히 잡아뒀어요.",
+      "ts": "1778824800.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "네, 값은 저번에 회의에서 얘기한 거랑 같죠? 컨테이너 오케스트레이션 설정이 헷갈리니까 기록으로 남겨주세요.",
+      "ts": "1778824801.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 주문 API 서비스의 최소 태스크 수는 2개이다.\n주문 API 서비스 · 최소 태스크 수 = 2개",
+      "ts": "1778824802.000002"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "오토스케일은 CPU 기준으로 60퍼 넘으면 늘어나는 걸로 되어 있죠? 최소 두 개면 하나 죽어도 버틸 수 있어서 안심되네요.",
+      "ts": "1778824803.000003"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "용량 공급자는 스팟 비중 높여뒀다고 들었는데 나중에 비용 확인 한번 해봐요. 주문 쪽은 안정성이 우선이니까 너무 공격적으로 섞진 말고.",
+      "ts": "1778824804.000004"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_2d53d5080fc220c862efdbb0ab214af7"
+}

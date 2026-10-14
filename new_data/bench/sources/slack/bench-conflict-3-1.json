@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "로그 적재 지금 테스트로 돌려봤는데 Filebeat가 물류센터 쪽 서버 두 대에서 컨테이너 stdout을 제대로 못 물고 있네요. autodiscover 힌트가 compose 파일에 빠져 있었어요. 어제 올린 PR에 그 부분만 추가해서 다시 올릴게요.",
+      "ts": "1783558800.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "넵, PR 올라오면 바로 보겠습니다. 그리고 보존 기간은 지난주에 말씀드린 것처럼 핫은 14일, 웜은 60일 유지하고 그 뒤에는 삭제 정책 태우는 걸로 하시죠.",
+      "ts": "1783558801.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네, 그 정책으로 ISM 돌려놓겠습니다. 어제 데이터팀이랑 얘기할 때 90일 보관 얘기도 나왔는데, 60일 넘어가면 cold로 빼는 게 아니라 삭제가 맞다는 쪽으로 정리됐어요.",
+      "ts": "1783558802.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "저도 60일이면 충분합니다. 그 이상은 어차피 S3에 내려놓은 원시 로그를 보면 되니까요. 삭제 정책 태울 때 인덱스가 이상한 스냅샷에 묶여 있지 않게만 해주세요.",
+      "ts": "1783558803.000003"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "S3 스냅샷이랑은 분리해놓을게요. 검색은 일단 지금 클러스터 그대로라고 가정하고 작업하겠습니다. 로그 검색의 도구는 OpenSearch이다. 이거 전제로 Filebeat output이랑 대시보드도 맞춰놓을게요.\n로그 검색 · 도구 = OpenSearch",
+      "ts": "1783558804.000004"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "좋아요. 그 전제로 가고, 나중에 데이터팀에서 다른 걸 검토할 일 있으면 그때 다시 논의하죠. PR 올라오면 저도 리뷰할게요.",
+      "ts": "1783558805.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵, 오늘 중으로 정리해서 올리겠습니다. 테스트 통과하면 내일 아침에 물류센터 두 대만 먼저 반영하고요.",
+      "ts": "1783558806.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_812792c73beb5ad546aa22aeefcf1e9a"
+}

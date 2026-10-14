@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5060,
+    "title": "바로배송 전용 인프라 구성 및 초기 증설",
+    "body": "## 배경\n바로배송은 기존 택배/풀필먼트 인프라와 분리해서 별도로 가져가기로 했던 건이 있었는데, 이번에 물리 장비 반입 일정이 확정되면서 그 구성을 정리해서 PR로 올립니다.\n바로배송의 서비스 지역은 서울 강남 3구이며 분기마다 확장을 검토한다. 2025년 4분기부터 적용한다.\n\n## 변경\n- live, staging EKS 클러스터 분리\n- 라이더용 API는 별도 ALB로 분리\n- 주문/배차 DB와 실시간 위치 Redis 분리\n- 클러스터 오토스케일러 최소 노드 3대, 최대 8대로 시작\n- Terraform 워크스페이스 `baro-live`, `baro-stage` 추가\n- 모니터링은 기존 Prometheus 스택 공유하되 네임스페이스만 분리\n바로배송 · 서비스 지역 = 서울 강남 3구",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5060",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "jian-seo"
+      }
+    ],
+    "created_at": "2025-12-08T04:00:00Z",
+    "updated_at": "2025-12-08T04:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "클러스터 분리까지는 좋은데, 라이더용 ALB랑 일반 고객용 ALB를 나누는 기준이 트래픽 때문이야? 아니면 보안그룹 설정이 따로 가는 거야?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "둘 다요. 라이더 앱은 토큰 갱신 주기도 짧고 위치 전송이 계속 붙어 있어서 커넥션 유지 패턴이 달라요. WAF 룰도 고객용이랑 다르게 가져가야 해서요."
+    },
+    {
+      "user": {
+        "login": "jian-seo"
+      },
+      "body": "네, 이 구성이면 분기 확장 검토할 때 노드만 늘리면 되겠네요. 다음 분기 전에 로드 테스트 한 번은 꼭 돌리고요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "머지할게요. 스테이징에 반영하고 다음 주 화요일쯤 운영 교차 확인 한 번 하시죠."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_bec9096926e71b3de33d76f8a2303cad"
+}

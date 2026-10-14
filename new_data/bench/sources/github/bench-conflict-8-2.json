@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5036,
+    "title": "배포 파이프라인 스테이징 게이트 및 롤백 트리거 보강",
+    "body": "## 배경\n\n지난 스프린트에서 프론트 정적 리소스 500으로 두 번 터지고 나서 스테이징에서 잡을 수 있는 것들이 운영으로 넘어가는 케이스가 계속 눈에 밟혔습니다. 지금은 스테이징 배포가 그냥 `main` 머지되면 도는 구조라 검증 없이 운영 나가는 경로가 하나예요. 이번에 스테이징 배포 잡을 때 canary 단계를 한 번 끼워넣고, 오류율 기준으로 자동 롤백 걸 수 있게 정리합니다.\n\n자동 롤백의 기준 오류율은 5%이다.\n\n## 변경\n\n- `deploy/staging` 워크플로우에 `canary` 스텝 추가\n- `rollback` 스텝에서 `5xx` 비율 5% 초과 시 이전 릴리즈로 자동 복원\n- 슬랙 알림 문구에 롤백 발생 시 `@here` 멘션 추가\n- `rollback.sh` 스크립트에 이전 태그 조회 및 `kubectl rollout undo` 호출 추가\n- 스테이징 배포 시 `healthcheck` 실패 시에도 롤백 트리거 조건에 포함\n자동 롤백 · 기준 오류율 = 5%",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5036",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-08-14T07:30:00Z",
+    "updated_at": "2026-08-14T07:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 이거 스테이징에서 canary로 5% 넘으면 그냥 롤백이죠? 운영 가기 전에 잡는 거니까 기준은 맞는 것 같은데 rollback.sh에서 이전 태그 못 찾을 때는 어떻게 돼요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 맞아요. 이전 태그 없으면 최근 성공한 릴리즈 해시 기준으로 rollout undo 들어가게 해뒀어요. 그마저도 없으면 배포 실패로 표시하고 알림만 가게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "이거 머지되면 스테이징 배포 돌때 데이터 파이프라인 쪽도 영향 있어요? 저번에 스테이징 터지면 API 응답 같이 올라가던데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "하늘님, 이번엔 인프라 레벨에서 5xx 비율 보는 거라 데이터 파이프라인은 직접 영향 없어요. 대신 healthcheck 타임아웃 늘어나면 스테이징 배포 시간이 좀 길어질 수는 있어요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_6d6f0674265595a869c7817c930099e0"
+}

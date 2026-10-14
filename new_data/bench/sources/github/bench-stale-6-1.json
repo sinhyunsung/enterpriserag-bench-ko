@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5046,
+    "title": "[infra] 모니터링 지표 수집 임계값 정리 및 주간 보고 담당 명시",
+    "body": "## 배경\n\n그동안 지표 수집은 Prometheus 룰이랑 알림 임계값이 여기저기 흩어져 있었고, 누가 주간 보고를 올리는지도 구두로만 정해져 있었습니다. 이번에 대시보드 정리하면서 기본 임계값을 코드로 고정하고 보고 담당도 문서에 남깁니다.\n\n## 변경\n\n- alert-rules.yml: CPU·메모리·디스크 사용률, 레이턴시 p95 임계값을 현재 운영 기준으로 맞춤\n- grafana/provisioning/dashboards: WMS 대시보드 패널 중 안 쓰는 패널 3개 제거\n- docs/monitoring.md: 지표 수집 주기 및 알림 기준 표 추가\n\n운영 정책은 아래 문장으로 확정합니다.\n\n주간 지표 보고의 담당자는 이준영이며 분기마다 교대한다. 2025년 4분기부터 적용한다.\n\n이후 담당 변경이 있으면 이 문서를 먼저 갱신하고 슬랙으로 공유해주세요.\n주간 지표 보고 · 담당자 = 이준영",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5046",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-10-23T01:40:00Z",
+    "updated_at": "2025-10-23T01:40:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "임계값 표는 좋은데, 디스크 85%는 너무 늦는 거 아니야? 지난번에 물류센터 한 곳 92% 찍고 알림 오기 전에 장애 났잖아. 80%로 낮추는 게 어떨까."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "그때는 수집 주기가 5분이라 그랬던 것도 있어요. 지금은 1분으로 바꿔서 85%여도 여유 있을 거예요. 그래도 80%가 운영팀에서 받아들이기 편하면 바꿀게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "일단 85%로 두고, 다음 분기 지표 보고 때 디스크 알림 빈도 보자. 잦으면 80%로 내리는 걸로."
+    },
+    {
+      "user": {
+        "login": "junyoung-lee"
+      },
+      "body": "저 담당 확정된 거 이제 문서로 남는군요. 확인했습니다. 4분기 보고는 제가 올릴게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_3904017afe4899ebbbdd53dbecc45754"
+}

@@ -1,0 +1,1396 @@
+{
+  "target": {
+    "name": "오건우",
+    "email": "gunwoo.oh@duretech.co.kr",
+    "github": "gunwoo-oh",
+    "department": "개발팀",
+    "title": "인프라 엔지니어 (DevOps)",
+    "manager": "박세린"
+  },
+  "works": [
+    "온콜 대응 체계",
+    "배포 파이프라인",
+    "RDS 운영",
+    "ECS 클러스터",
+    "모니터링 대시보드",
+    "비용 최적화",
+    "보안 점검",
+    "로그 수집",
+    "네트워크 구성",
+    "바로배송 인프라"
+  ],
+  "planted": [
+    {
+      "id": "bench-updated-1",
+      "kind": "contradiction",
+      "work": "배포 파이프라인",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "스테이징 자동 배포의 실행 주기는 하루 1회이다.",
+        "스테이징 자동 배포의 실행 주기는 하루 3회이다."
+      ],
+      "category": "updated",
+      "question": "스테이징 자동 배포는 하루에 몇 번 돌아?",
+      "expect": {
+        "latest": "하루 3회",
+        "outdated": "하루 1회"
+      },
+      "documents": [
+        {
+          "at": "2026-05-07T02:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-02T03:10:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "스테이징 자동 배포 · 실행 주기 = 하루 1회",
+        "스테이징 자동 배포 · 실행 주기 = 하루 3회"
+      ]
+    },
+    {
+      "id": "bench-updated-2",
+      "kind": "contradiction",
+      "work": "로그 수집",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "애플리케이션 로그의 보존 기간은 30일이다.",
+        "애플리케이션 로그의 보존 기간은 90일이다."
+      ],
+      "category": "updated",
+      "question": "애플리케이션 로그는 며칠 보관해?",
+      "expect": {
+        "latest": "90일",
+        "outdated": "30일"
+      },
+      "documents": [
+        {
+          "at": "2026-05-12T04:20:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-08T01:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "애플리케이션 로그 · 보존 기간 = 30일",
+        "애플리케이션 로그 · 보존 기간 = 90일"
+      ]
+    },
+    {
+      "id": "bench-updated-3",
+      "kind": "contradiction",
+      "work": "ECS 클러스터",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "주문 API 서비스의 최소 태스크 수는 2개이다.",
+        "주문 API 서비스의 최소 태스크 수는 4개이다."
+      ],
+      "category": "updated",
+      "question": "주문 API 서비스의 최소 태스크는 몇 개야?",
+      "expect": {
+        "latest": "4개",
+        "outdated": "2개"
+      },
+      "documents": [
+        {
+          "at": "2026-05-15T06:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-11T05:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "주문 API 서비스 · 최소 태스크 수 = 2개",
+        "주문 API 서비스 · 최소 태스크 수 = 4개"
+      ]
+    },
+    {
+      "id": "bench-updated-4",
+      "kind": "contradiction",
+      "work": "모니터링 대시보드",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "결제 지연 알림의 임계값은 3초이다.",
+        "결제 지연 알림의 임계값은 1.5초이다."
+      ],
+      "category": "updated",
+      "question": "결제 지연 알림은 몇 초부터 울려?",
+      "expect": {
+        "latest": "1.5초",
+        "outdated": "3초"
+      },
+      "documents": [
+        {
+          "at": "2026-05-20T01:15:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-15T02:45:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "결제 지연 알림 · 임계값 = 3초",
+        "결제 지연 알림 · 임계값 = 1.5초"
+      ]
+    },
+    {
+      "id": "bench-updated-5",
+      "kind": "contradiction",
+      "work": "비용 최적화",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "개발 환경 인스턴스의 자동 종료 시각은 오후 10시이다.",
+        "개발 환경 인스턴스의 자동 종료 시각은 오후 8시이다."
+      ],
+      "category": "updated",
+      "question": "개발 환경 인스턴스는 몇 시에 자동으로 꺼져?",
+      "expect": {
+        "latest": "오후 8시",
+        "outdated": "오후 10시"
+      },
+      "documents": [
+        {
+          "at": "2026-05-22T08:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-17T07:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "개발 환경 인스턴스 · 자동 종료 시각 = 오후 10시",
+        "개발 환경 인스턴스 · 자동 종료 시각 = 오후 8시"
+      ]
+    },
+    {
+      "id": "bench-updated-6",
+      "kind": "contradiction",
+      "work": "보안 점검",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "운영 IAM 액세스 키의 순환 주기는 180일이다.",
+        "운영 IAM 액세스 키의 순환 주기는 90일이다."
+      ],
+      "category": "updated",
+      "question": "운영 IAM 액세스 키는 얼마마다 바꿔?",
+      "expect": {
+        "latest": "90일",
+        "outdated": "180일"
+      },
+      "documents": [
+        {
+          "at": "2026-05-27T03:30:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-21T04:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "운영 IAM 액세스 키 · 순환 주기 = 180일",
+        "운영 IAM 액세스 키 · 순환 주기 = 90일"
+      ]
+    },
+    {
+      "id": "bench-updated-7",
+      "kind": "contradiction",
+      "work": "네트워크 구성",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "내부 로드밸런서의 유휴 연결 제한 시간은 60초이다.",
+        "내부 로드밸런서의 유휴 연결 제한 시간은 120초이다."
+      ],
+      "category": "updated",
+      "question": "내부 로드밸런서의 유휴 연결 제한 시간은?",
+      "expect": {
+        "latest": "120초",
+        "outdated": "60초"
+      },
+      "documents": [
+        {
+          "at": "2026-06-02T05:10:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-24T06:15:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "내부 로드밸런서 · 유휴 연결 제한 시간 = 60초",
+        "내부 로드밸런서 · 유휴 연결 제한 시간 = 120초"
+      ]
+    },
+    {
+      "id": "bench-updated-8",
+      "kind": "contradiction",
+      "work": "RDS 운영",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "주문 데이터베이스의 자동 백업 보존 기간은 7일이다.",
+        "주문 데이터베이스의 자동 백업 보존 기간은 14일이다."
+      ],
+      "category": "updated",
+      "question": "주문 데이터베이스 자동 백업은 며칠 보관해?",
+      "expect": {
+        "latest": "14일",
+        "outdated": "7일"
+      },
+      "documents": [
+        {
+          "at": "2026-06-05T02:40:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-28T03:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "주문 데이터베이스 · 자동 백업 보존 기간 = 7일",
+        "주문 데이터베이스 · 자동 백업 보존 기간 = 14일"
+      ]
+    },
+    {
+      "id": "bench-updated-9",
+      "kind": "contradiction",
+      "work": "바로배송 인프라",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "바로배송 당일 주문의 접수 마감 시각은 오후 1시이다.",
+        "바로배송 당일 주문의 접수 마감 시각은 오후 2시이다."
+      ],
+      "category": "updated",
+      "question": "바로배송 당일 주문은 몇 시까지 받아?",
+      "expect": {
+        "latest": "오후 2시",
+        "outdated": "오후 1시"
+      },
+      "documents": [
+        {
+          "at": "2026-06-09T00:50:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-01T01:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "바로배송 당일 주문 · 접수 마감 시각 = 오후 1시",
+        "바로배송 당일 주문 · 접수 마감 시각 = 오후 2시"
+      ]
+    },
+    {
+      "id": "bench-updated-10",
+      "kind": "contradiction",
+      "work": "온콜 대응 체계",
+      "why": "옛 문서가 적은 값을 새 문서가 바꿨다. 맞는 답은 최신 값이다.",
+      "facts": [
+        "장애 회고 문서의 작성 기한은 장애 후 3영업일이다.",
+        "장애 회고 문서의 작성 기한은 장애 후 2영업일이다."
+      ],
+      "category": "updated",
+      "question": "장애 회고 문서는 언제까지 써야 해?",
+      "expect": {
+        "latest": "장애 후 2영업일",
+        "outdated": "장애 후 3영업일"
+      },
+      "documents": [
+        {
+          "at": "2026-06-12T07:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-05T06:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "장애 회고 문서 · 작성 기한 = 장애 후 3영업일",
+        "장애 회고 문서 · 작성 기한 = 장애 후 2영업일"
+      ]
+    },
+    {
+      "id": "bench-conflict-1",
+      "kind": "contradiction",
+      "work": "비용 최적화",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "월 클라우드 예산의 상한은 4,000만 원이다.",
+        "월 클라우드 예산의 상한은 5,000만 원이다."
+      ],
+      "category": "conflict",
+      "question": "월 클라우드 예산 상한이 얼마야?",
+      "expect": {
+        "both": [
+          "4,000만 원",
+          "5,000만 원"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-03T02:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-07-21T05:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "월 클라우드 예산 · 상한 = 4,000만 원",
+        "월 클라우드 예산 · 상한 = 5,000만 원"
+      ]
+    },
+    {
+      "id": "bench-conflict-2",
+      "kind": "contradiction",
+      "work": "보안 점검",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "외부 취약점 점검의 수행 업체는 시큐어랩이다.",
+        "외부 취약점 점검의 수행 업체는 블루쉴드이다."
+      ],
+      "category": "conflict",
+      "question": "외부 취약점 점검은 어느 업체가 해?",
+      "expect": {
+        "both": [
+          "시큐어랩",
+          "블루쉴드"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-06T03:20:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-07-24T04:10:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "외부 취약점 점검 · 수행 업체 = 시큐어랩",
+        "외부 취약점 점검 · 수행 업체 = 블루쉴드"
+      ]
+    },
+    {
+      "id": "bench-conflict-3",
+      "kind": "contradiction",
+      "work": "로그 수집",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "로그 검색의 도구는 OpenSearch이다.",
+        "로그 검색의 도구는 Loki이다."
+      ],
+      "category": "conflict",
+      "question": "로그 검색은 무슨 도구로 해?",
+      "expect": {
+        "both": [
+          "OpenSearch",
+          "Loki"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-09T01:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-07-28T02:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "로그 검색 · 도구 = OpenSearch",
+        "로그 검색 · 도구 = Loki"
+      ]
+    },
+    {
+      "id": "bench-conflict-4",
+      "kind": "contradiction",
+      "work": "ECS 클러스터",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "오토스케일의 CPU 목표값은 60%이다.",
+        "오토스케일의 CPU 목표값은 75%이다."
+      ],
+      "category": "conflict",
+      "question": "오토스케일 CPU 목표값이 몇 퍼센트야?",
+      "expect": {
+        "both": [
+          "60%",
+          "75%"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-13T06:40:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-07-31T07:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "오토스케일 · CPU 목표값 = 60%",
+        "오토스케일 · CPU 목표값 = 75%"
+      ]
+    },
+    {
+      "id": "bench-conflict-5",
+      "kind": "contradiction",
+      "work": "모니터링 대시보드",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "운영 대시보드의 갱신 주기는 1분이다.",
+        "운영 대시보드의 갱신 주기는 5분이다."
+      ],
+      "category": "conflict",
+      "question": "운영 대시보드는 몇 분마다 갱신돼?",
+      "expect": {
+        "both": [
+          "1분",
+          "5분"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-16T02:10:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-04T03:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "운영 대시보드 · 갱신 주기 = 1분",
+        "운영 대시보드 · 갱신 주기 = 5분"
+      ]
+    },
+    {
+      "id": "bench-conflict-6",
+      "kind": "contradiction",
+      "work": "네트워크 구성",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "운영 VPC의 CIDR 대역은 10.20.0.0/16이다.",
+        "운영 VPC의 CIDR 대역은 10.40.0.0/16이다."
+      ],
+      "category": "conflict",
+      "question": "운영 VPC 의 CIDR 대역은?",
+      "expect": {
+        "both": [
+          "10.20.0.0/16",
+          "10.40.0.0/16"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-20T05:30:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-07T04:50:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "운영 VPC · CIDR 대역 = 10.20.0.0/16",
+        "운영 VPC · CIDR 대역 = 10.40.0.0/16"
+      ]
+    },
+    {
+      "id": "bench-conflict-7",
+      "kind": "contradiction",
+      "work": "RDS 운영",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "주문 데이터베이스의 읽기 복제본 수는 1대이다.",
+        "주문 데이터베이스의 읽기 복제본 수는 2대이다."
+      ],
+      "category": "conflict",
+      "question": "주문 데이터베이스 읽기 복제본은 몇 대야?",
+      "expect": {
+        "both": [
+          "1대",
+          "2대"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-23T00:40:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-11T01:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "주문 데이터베이스 · 읽기 복제본 수 = 1대",
+        "주문 데이터베이스 · 읽기 복제본 수 = 2대"
+      ]
+    },
+    {
+      "id": "bench-conflict-8",
+      "kind": "contradiction",
+      "work": "배포 파이프라인",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "자동 롤백의 기준 오류율은 1%이다.",
+        "자동 롤백의 기준 오류율은 5%이다."
+      ],
+      "category": "conflict",
+      "question": "자동 롤백은 오류율 몇 퍼센트에서 일어나?",
+      "expect": {
+        "both": [
+          "1%",
+          "5%"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-27T08:10:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-14T07:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "자동 롤백 · 기준 오류율 = 1%",
+        "자동 롤백 · 기준 오류율 = 5%"
+      ]
+    },
+    {
+      "id": "bench-conflict-9",
+      "kind": "contradiction",
+      "work": "바로배송 인프라",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "바로배송의 배송 가능 반경은 5km이다.",
+        "바로배송의 배송 가능 반경은 8km이다."
+      ],
+      "category": "conflict",
+      "question": "바로배송 배송 가능 반경은 몇 km야?",
+      "expect": {
+        "both": [
+          "5km",
+          "8km"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-07-30T03:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-18T02:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "바로배송 · 배송 가능 반경 = 5km",
+        "바로배송 · 배송 가능 반경 = 8km"
+      ]
+    },
+    {
+      "id": "bench-conflict-10",
+      "kind": "contradiction",
+      "work": "온콜 대응 체계",
+      "why": "비슷한 시기의 두 문서가 다른 값을 적고 어느 쪽이 맞는지 어디에도 없다.",
+      "facts": [
+        "온콜 대기 수당의 금액은 1일 3만 원이다.",
+        "온콜 대기 수당의 금액은 1일 5만 원이다."
+      ],
+      "category": "conflict",
+      "question": "온콜 대기 수당은 하루 얼마야?",
+      "expect": {
+        "both": [
+          "1일 3만 원",
+          "1일 5만 원"
+        ]
+      },
+      "documents": [
+        {
+          "at": "2026-08-03T06:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-08-21T05:10:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "온콜 대기 수당 · 금액 = 1일 3만 원",
+        "온콜 대기 수당 · 금액 = 1일 5만 원"
+      ]
+    },
+    {
+      "id": "bench-stale-1",
+      "kind": "stale",
+      "work": "온콜 대응 체계",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "장애 대응 2차의 담당자는 이준호이며 분기마다 교대한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "장애 대응 2차 담당자는 누구야?",
+      "expect": {
+        "value": "이준호",
+        "as_of": "2025-10-02"
+      },
+      "documents": [
+        {
+          "at": "2025-10-02T01:00:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "장애 대응 2차 · 담당자 = 이준호"
+      ]
+    },
+    {
+      "id": "bench-stale-2",
+      "kind": "stale",
+      "work": "비용 최적화",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "예약 인스턴스의 적용률 목표는 70%이며 분기마다 재검토한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "예약 인스턴스 적용률 목표는?",
+      "expect": {
+        "value": "70%",
+        "as_of": "2025-10-08"
+      },
+      "documents": [
+        {
+          "at": "2025-10-08T02:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "예약 인스턴스 · 적용률 목표 = 70%"
+      ]
+    },
+    {
+      "id": "bench-stale-3",
+      "kind": "stale",
+      "work": "보안 점검",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "방화벽 허용 IP 목록의 검토 담당자는 정하늘이며 반기마다 교대한다. 2025년 하반기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "방화벽 허용 IP 목록은 누가 검토해?",
+      "expect": {
+        "value": "정하늘",
+        "as_of": "2025-09-15"
+      },
+      "documents": [
+        {
+          "at": "2025-09-15T04:00:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "방화벽 허용 IP 목록 · 검토 담당자 = 정하늘"
+      ]
+    },
+    {
+      "id": "bench-stale-4",
+      "kind": "stale",
+      "work": "ECS 클러스터",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "결제 서비스의 메모리 할당은 2GB이며 분기마다 사용량을 보고 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "결제 서비스 메모리는 얼마나 할당돼 있어?",
+      "expect": {
+        "value": "2GB",
+        "as_of": "2025-10-14"
+      },
+      "documents": [
+        {
+          "at": "2025-10-14T03:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "결제 서비스 · 메모리 할당 = 2GB"
+      ]
+    },
+    {
+      "id": "bench-stale-5",
+      "kind": "stale",
+      "work": "RDS 운영",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "정산 데이터베이스 인스턴스의 등급은 db.r6g.large이며 분기마다 사용량을 보고 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "정산 데이터베이스 인스턴스 등급은?",
+      "expect": {
+        "value": "db.r6g.large",
+        "as_of": "2025-10-20"
+      },
+      "documents": [
+        {
+          "at": "2025-10-20T05:00:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "정산 데이터베이스 인스턴스 · 등급 = db.r6g.large"
+      ]
+    },
+    {
+      "id": "bench-stale-6",
+      "kind": "stale",
+      "work": "모니터링 대시보드",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "주간 지표 보고의 담당자는 이준영이며 분기마다 교대한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "주간 지표 보고는 누가 맡아?",
+      "expect": {
+        "value": "이준영",
+        "as_of": "2025-10-23"
+      },
+      "documents": [
+        {
+          "at": "2025-10-23T01:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "주간 지표 보고 · 담당자 = 이준영"
+      ]
+    },
+    {
+      "id": "bench-stale-7",
+      "kind": "stale",
+      "work": "로그 수집",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "일일 로그 적재량의 한도는 200GB이며 분기마다 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "하루 로그 적재 한도는 몇 GB야?",
+      "expect": {
+        "value": "200GB",
+        "as_of": "2025-10-28"
+      },
+      "documents": [
+        {
+          "at": "2025-10-28T06:10:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "일일 로그 적재량 · 한도 = 200GB"
+      ]
+    },
+    {
+      "id": "bench-stale-8",
+      "kind": "stale",
+      "work": "네트워크 구성",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "NAT 게이트웨이의 대수는 2대이며 분기마다 트래픽을 보고 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "NAT 게이트웨이는 몇 대야?",
+      "expect": {
+        "value": "2대",
+        "as_of": "2025-11-03"
+      },
+      "documents": [
+        {
+          "at": "2025-11-03T02:50:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "NAT 게이트웨이 · 대수 = 2대"
+      ]
+    },
+    {
+      "id": "bench-stale-9",
+      "kind": "stale",
+      "work": "배포 파이프라인",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "배포 금지 기간의 기준은 매월 마지막 주 금요일이며 반기마다 다시 정한다. 2025년 하반기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "배포 금지 기간은 언제야?",
+      "expect": {
+        "value": "매월 마지막 주 금요일",
+        "as_of": "2025-09-22"
+      },
+      "documents": [
+        {
+          "at": "2025-09-22T07:00:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "배포 금지 기간 · 기준 = 매월 마지막 주 금요일"
+      ]
+    },
+    {
+      "id": "bench-stale-10",
+      "kind": "stale",
+      "work": "바로배송 인프라",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "바로배송 피크 시간의 증설 서버 대수는 6대이며 분기마다 주문량을 보고 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "바로배송 피크 시간에 서버를 몇 대 늘려?",
+      "expect": {
+        "value": "6대",
+        "as_of": "2025-11-06"
+      },
+      "documents": [
+        {
+          "at": "2025-11-06T03:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "바로배송 피크 시간 · 증설 서버 대수 = 6대"
+      ]
+    },
+    {
+      "id": "bench-stale-11",
+      "kind": "stale",
+      "work": "보안 점검",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "보안 교육 이수 관리의 담당자는 문태호이며 분기마다 교대한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "보안 교육 이수 관리는 누가 해?",
+      "expect": {
+        "value": "문태호",
+        "as_of": "2025-11-10"
+      },
+      "documents": [
+        {
+          "at": "2025-11-10T00:30:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "보안 교육 이수 관리 · 담당자 = 문태호"
+      ]
+    },
+    {
+      "id": "bench-stale-12",
+      "kind": "stale",
+      "work": "비용 최적화",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "스팟 인스턴스의 비중은 40%이며 분기마다 재검토한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "스팟 인스턴스 비중은 얼마야?",
+      "expect": {
+        "value": "40%",
+        "as_of": "2025-11-13"
+      },
+      "documents": [
+        {
+          "at": "2025-11-13T04:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "스팟 인스턴스 · 비중 = 40%"
+      ]
+    },
+    {
+      "id": "bench-stale-13",
+      "kind": "stale",
+      "work": "온콜 대응 체계",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "온콜 호출 도구의 제품은 PagerDuty이며 반기마다 계약을 재검토한다. 2025년 하반기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "온콜 호출은 무슨 도구로 해?",
+      "expect": {
+        "value": "PagerDuty",
+        "as_of": "2025-09-26"
+      },
+      "documents": [
+        {
+          "at": "2025-09-26T05:20:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "온콜 호출 도구 · 제품 = PagerDuty"
+      ]
+    },
+    {
+      "id": "bench-stale-14",
+      "kind": "stale",
+      "work": "RDS 운영",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "주문 데이터베이스의 최대 연결 수는 500이며 분기마다 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "주문 데이터베이스 최대 연결 수는?",
+      "expect": {
+        "value": "500",
+        "as_of": "2025-11-18"
+      },
+      "documents": [
+        {
+          "at": "2025-11-18T02:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "주문 데이터베이스 · 최대 연결 수 = 500"
+      ]
+    },
+    {
+      "id": "bench-stale-15",
+      "kind": "stale",
+      "work": "ECS 클러스터",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "배치 작업의 FARGATE_SPOT 비중은 50%이며 분기마다 조정한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "배치 작업의 FARGATE_SPOT 비중은?",
+      "expect": {
+        "value": "50%",
+        "as_of": "2025-11-21"
+      },
+      "documents": [
+        {
+          "at": "2025-11-21T06:30:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "배치 작업 · FARGATE_SPOT 비중 = 50%"
+      ]
+    },
+    {
+      "id": "bench-stale-16",
+      "kind": "stale",
+      "work": "모니터링 대시보드",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "디스크 사용률 경고의 임계값은 80%이며 분기마다 재검토한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "디스크 사용률 경고는 몇 퍼센트에서 울려?",
+      "expect": {
+        "value": "80%",
+        "as_of": "2025-11-25"
+      },
+      "documents": [
+        {
+          "at": "2025-11-25T03:10:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "디스크 사용률 경고 · 임계값 = 80%"
+      ]
+    },
+    {
+      "id": "bench-stale-17",
+      "kind": "stale",
+      "work": "로그 수집",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "감사 로그의 보관 버킷은 dure-audit-2025이며 반기마다 새 버킷으로 바꾼다. 2025년 하반기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "감사 로그는 어느 버킷에 보관해?",
+      "expect": {
+        "value": "dure-audit-2025",
+        "as_of": "2025-09-29"
+      },
+      "documents": [
+        {
+          "at": "2025-09-29T01:50:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "감사 로그 · 보관 버킷 = dure-audit-2025"
+      ]
+    },
+    {
+      "id": "bench-stale-18",
+      "kind": "stale",
+      "work": "네트워크 구성",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "외부 API 연동의 허용 대역폭은 1Gbps이며 분기마다 재검토한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "외부 API 연동 허용 대역폭은?",
+      "expect": {
+        "value": "1Gbps",
+        "as_of": "2025-12-01"
+      },
+      "documents": [
+        {
+          "at": "2025-12-01T05:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "외부 API 연동 · 허용 대역폭 = 1Gbps"
+      ]
+    },
+    {
+      "id": "bench-stale-19",
+      "kind": "stale",
+      "work": "배포 파이프라인",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "릴리스의 담당자는 이준영이며 분기마다 교대한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "릴리스 담당자는 누구야?",
+      "expect": {
+        "value": "이준영",
+        "as_of": "2025-12-04"
+      },
+      "documents": [
+        {
+          "at": "2025-12-04T02:20:00Z",
+          "source": "slack"
+        }
+      ],
+      "triples": [
+        "릴리스 · 담당자 = 이준영"
+      ]
+    },
+    {
+      "id": "bench-stale-20",
+      "kind": "stale",
+      "work": "바로배송 인프라",
+      "why": "주기마다 바뀌는 값인데 마지막 기록이 그 주기를 넘겼다.",
+      "facts": [
+        "바로배송의 서비스 지역은 서울 강남 3구이며 분기마다 확장을 검토한다. 2025년 4분기부터 적용한다."
+      ],
+      "category": "stale",
+      "question": "바로배송은 어느 지역에서 돼?",
+      "expect": {
+        "value": "서울 강남 3구",
+        "as_of": "2025-12-08"
+      },
+      "documents": [
+        {
+          "at": "2025-12-08T04:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": [
+        "바로배송 · 서비스 지역 = 서울 강남 3구"
+      ]
+    },
+    {
+      "id": "bench-gap-1",
+      "kind": "gap",
+      "work": "배포 파이프라인",
+      "why": "「핫픽스 기준」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "이번 수정은 핫픽스 기준에 해당해서 바로 배포했다.",
+        "핫픽스 기준에 걸리는 건이라 리뷰를 한 명만 받았다."
+      ],
+      "category": "unanswerable",
+      "question": "핫픽스 기준이 뭐야?",
+      "expect": {
+        "abstain": true,
+        "term": "핫픽스 기준"
+      },
+      "documents": [
+        {
+          "at": "2026-08-25T02:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-09-30T03:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-2",
+      "kind": "gap",
+      "work": "온콜 대응 체계",
+      "why": "「SEV-2 판정 기준」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "이번 건은 SEV-2 판정 기준에 따라 2차까지만 호출했다.",
+        "SEV-2 판정 기준에 맞아 공지 채널에는 올리지 않았다."
+      ],
+      "category": "unanswerable",
+      "question": "SEV-2 는 어떤 기준으로 판정해?",
+      "expect": {
+        "abstain": true,
+        "term": "SEV-2 판정 기준"
+      },
+      "documents": [
+        {
+          "at": "2026-08-27T04:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-02T05:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-3",
+      "kind": "gap",
+      "work": "비용 최적화",
+      "why": "「비용 이상 경보 금액」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "비용 이상 경보 금액을 넘어서 팀장에게 보고했다.",
+        "이번 달도 비용 이상 경보 금액 근처라 지켜보는 중이다."
+      ],
+      "category": "unanswerable",
+      "question": "비용 이상 경보는 얼마부터 울려?",
+      "expect": {
+        "abstain": true,
+        "term": "비용 이상 경보 금액"
+      },
+      "documents": [
+        {
+          "at": "2026-08-29T01:30:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-03T02:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-4",
+      "kind": "gap",
+      "work": "보안 점검",
+      "why": "「고위험 취약점 처리 기한」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "고위험 취약점 처리 기한 안에 패치를 끝냈다.",
+        "이 건은 고위험 취약점 처리 기한을 넘기지 않게 먼저 처리한다."
+      ],
+      "category": "unanswerable",
+      "question": "고위험 취약점은 며칠 안에 처리해야 해?",
+      "expect": {
+        "abstain": true,
+        "term": "고위험 취약점 처리 기한"
+      },
+      "documents": [
+        {
+          "at": "2026-09-01T06:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-06T07:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-5",
+      "kind": "gap",
+      "work": "RDS 운영",
+      "why": "「복구 목표 시간」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "이번 장애 조치는 복구 목표 시간 안에 끝났다.",
+        "복구 목표 시간을 지키려고 대기 인스턴스를 미리 띄워 둔다."
+      ],
+      "category": "unanswerable",
+      "question": "데이터베이스 복구 목표 시간은 얼마야?",
+      "expect": {
+        "abstain": true,
+        "term": "복구 목표 시간"
+      },
+      "documents": [
+        {
+          "at": "2026-09-03T03:10:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-07T04:10:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-6",
+      "kind": "gap",
+      "work": "ECS 클러스터",
+      "why": "「배포 동결 예외 승인」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "배포 동결 예외 승인을 받아 이번 주에 배포했다.",
+        "배포 동결 예외 승인이 나야 컨테이너 이미지를 올릴 수 있다."
+      ],
+      "category": "unanswerable",
+      "question": "배포 동결 예외는 누가 승인해?",
+      "expect": {
+        "abstain": true,
+        "term": "배포 동결 예외 승인"
+      },
+      "documents": [
+        {
+          "at": "2026-09-07T05:20:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-08T06:20:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-7",
+      "kind": "gap",
+      "work": "모니터링 대시보드",
+      "why": "「핵심 지표 목록」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "핵심 지표 목록에 있는 것만 대시보드 첫 화면에 둔다.",
+        "핵심 지표 목록이 바뀌면 알림 규칙도 같이 바꾼다."
+      ],
+      "category": "unanswerable",
+      "question": "핵심 지표 목록에는 뭐가 들어 있어?",
+      "expect": {
+        "abstain": true,
+        "term": "핵심 지표 목록"
+      },
+      "documents": [
+        {
+          "at": "2026-09-09T02:40:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-09T03:40:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-8",
+      "kind": "gap",
+      "work": "로그 수집",
+      "why": "「개인정보 마스킹 대상 필드」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "개인정보 마스킹 대상 필드는 적재 전에 가린다.",
+        "새 로그도 개인정보 마스킹 대상 필드를 확인하고 받았다."
+      ],
+      "category": "unanswerable",
+      "question": "개인정보 마스킹 대상 필드는 뭐야?",
+      "expect": {
+        "abstain": true,
+        "term": "개인정보 마스킹 대상 필드"
+      },
+      "documents": [
+        {
+          "at": "2026-09-14T01:00:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-10T02:00:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-9",
+      "kind": "gap",
+      "work": "네트워크 구성",
+      "why": "「외부 접속 허용 국가」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "외부 접속 허용 국가가 아니라서 이 요청은 막았다.",
+        "외부 접속 허용 국가 목록에 따라 보안 그룹을 정리했다."
+      ],
+      "category": "unanswerable",
+      "question": "외부 접속이 허용된 나라는 어디야?",
+      "expect": {
+        "abstain": true,
+        "term": "외부 접속 허용 국가"
+      },
+      "documents": [
+        {
+          "at": "2026-09-16T07:30:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-11T00:30:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    },
+    {
+      "id": "bench-gap-10",
+      "kind": "gap",
+      "work": "바로배송 인프라",
+      "why": "「증설 결정 기준 주문량」을 여러 문서가 가리키는데 무엇인지 정의한 곳이 없다.",
+      "facts": [
+        "증설 결정 기준 주문량을 넘어서 서버를 늘렸다.",
+        "다음 주는 증설 결정 기준 주문량에 못 미칠 것 같다."
+      ],
+      "category": "unanswerable",
+      "question": "서버 증설은 주문량이 얼마일 때 결정해?",
+      "expect": {
+        "abstain": true,
+        "term": "증설 결정 기준 주문량"
+      },
+      "documents": [
+        {
+          "at": "2026-09-18T04:50:00Z",
+          "source": "slack"
+        },
+        {
+          "at": "2026-10-12T05:50:00Z",
+          "source": "github"
+        }
+      ],
+      "triples": []
+    }
+  ],
+  "documents": 80,
+  "failed": []
+}

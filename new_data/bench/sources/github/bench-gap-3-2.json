@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5066,
+    "title": "비용 최적화 1차: EC2 예약 인스턴스 전환, EKS 스팟 혼합, 미사용 EBS/ALB 정리",
+    "body": "## 배경\n\n10월 초 기준 AWS 월간 예상 비용이 작년 동기 대비 34% 올라 있었다.\n그중 EC2 온디맨드 사용량이 가장 컸고, 개발/스테이징 EKS 노드가 주말에도 그대로 돌고 있는 것과, 한동안 안 쓰는 EBS 볼륨이 여러 개 남아 있는 게 같이 보였다.\n\n## 변경\n\n- EC2 온디맨드 12대 중 5대를 `all-standard` 예약 인스턴스 1년 약정으로 전환 (`m6i.xlarge` 3, `m6i.2xlarge` 2)\n- EKS 개발/스테이징 노드그룹에 스팟 인스턴스 65% 혼합 비율 적용\n- 미사용 EBS 11개 스냅샷 생성 후 삭제\n- 태깅 안 된 ALB 3개 중 2개 삭제, 1개는 태깅 보강\n- S3 수명 주기 정책 추가: 로그 버킷 90일 후 `STANDARD_IA`, 180일 후 `GLACIER`\n\n## 리뷰 포인트\n\n- 스팟 비율 65%는 개발/스테이징에만 적용. 운영(prod)은 기존 온디맨드 유지\n- 예약 인스턴스는 `serin-park`님 결재 후 구매 완료\n- EBS 삭제 전 스냅샷 ID는 슬랙에 공유해 둠\n\n이번 달도 비용 이상 경보 금액 근처라 지켜보는 중이다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5066",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "jian-seo"
+      }
+    ],
+    "created_at": "2026-10-03T02:30:00Z",
+    "updated_at": "2026-10-03T02:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "예약 인스턴스 전환 5대라는 건 작게 시작한 거긴 한데, 우선 이렇게 가보자. 다음 달에 실사용률 보고 추가 전환 검토하는 게 낫겠다."
+    },
+    {
+      "user": {
+        "login": "jian-seo"
+      },
+      "body": "스팟 65%는 개발/스테이징이니까 괜찮다고 본다. 다만 노드가 자주 빠지면 오토스케일링 알람이 시끄러워질 수 있는데 그건 다음 주 모니터링 같이 보자."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "S3 수명 주기 정책은 로그 버킷 전체에 적용한 거지? Airflow가 읽는 로그는 120일 지난 게 가끔 있어서 STANDARD_IA 구간이면 읽기 요금이 좀 붙을 수 있다. 일단 두고 보고, 이상하면 로그 버킷 분리"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "맞습니다. 90일 STANDARD_IA는 말씀하신 것처럼 접근 패턴 보고 한 달 뒤에 다시 볼게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_112374df82572064ce9aa6402a10ca40"
+}

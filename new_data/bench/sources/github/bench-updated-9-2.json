@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5018,
+    "title": "바로배송 인프라 준비 및 당일 접수 마감 시각 조정",
+    "body": "## 배경\n바로배송 서비스 전용 인프라를 준비하면서 주문 처리 흐름을 다시 점검했습니다. 기존에는 오후 1시를 기준으로 당일 주문을 마감하고 있었는데, 운영팀에서 배송 기사님들 동선이 너무 촉박하다는 피드백을 계속 주셨어요. 그래서 이번 인프라 증설 작업에 맞춰 마감 시각을 조정하기로 했습니다.\n\n## 변경\n바로배송 당일 주문의 접수 마감 시각은 오후 2시이다.\n\n기존 오후 1시 마감에서 한 시간 늦춘 이유는 주문 피크 시간대에 몰리는 요청을 분산하고, 상품 준비 시간을 조금 더 확보하기 위해서입니다.\n바로배송 당일 주문 · 접수 마감 시각 = 오후 2시",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5018",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-10-01T01:30:00Z",
+    "updated_at": "2026-10-01T01:30:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "바로배송 전용 인프라 증설은 이번 PR에 포함 안 됐고 마감 시각만 바뀐 건가요? 인프라 쪽 변경이 따로 올라오는 거죠?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 인프라 Terraform 변경은 이 PR이 아니라 `duretech/durelogis-infra` 레포에 따로 올렸어요. 이건 서비스 설정 쪽이라 여기 넣었습니다."
+    },
+    {
+      "user": {
+        "login": "taeho-moon"
+      },
+      "body": "오후 2시로 바뀐 거 운영팀이랑 배송기사분들한테 공지는 제가 돌릴게요. 이번 주 금요일부터 적용되는 거 맞죠?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 금요일 새벽 배포부터 적용됩니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_0dc8b6e7d0d5ce3fea3910cd12e2d355"
+}

@@ -1,0 +1,59 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5070,
+    "title": "RDS 운영 정리: 인스턴스 등급, 백업, 장애 조치 기준",
+    "body": "## 배경\n오늘 새벽에 RDS 장애 대응하면서 인스턴스 등급이랑 백업 설정, 장애 조치 흐름이 문서화가 안 돼 있어서 정리합니다. 지난주부터 세린님, 하늘님, 준호님이랑 슬랙으로 주고받은 내용도 같이 정리했어요.\n\n## 변경\n- 운영 RDS 인스턴스 등급과 용도 정리 (durelogis-prod, durelogis-data)\n- 백업 보관 기간과 스냅샷 시각 명시\n- 장애 조치 절차와 대기 인스턴스 운용 기준 추가\n- Multi-AZ 설정 여부와 점검 포인트 작성\n- 복구 시나리오별 역할 분담 추가",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5070",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-10-07T04:10:00Z",
+    "updated_at": "2026-10-07T04:10:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "우선 정리해줘서 고마워요. 장애 조치 절차 부분에 대기 인스턴스 관련 문장이 빠진 것 같은데 확인해줄래요? 실제로 어제 새벽에 복구하면서 이 얘기 했었잖아요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "아 맞다. 그 부분 본문에 넣으려다가 빠졌네요. 장애 조치 절차 마지막에 추가하겠습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "백업 보관 기간 쪽은 데이터 파이프라인 돌리는 시각이랑도 겹치니까, 스냅샷 시각을 새벽 4시로 고정한 건 좋은 것 같아요. durelogis-data는 분석용이라 복구할 때 지연돼도 되는 편인데, prod는 진짜 빡빡하게 봐야 하니까요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 그래서 durelogis-prod만 RTO 10분으로 잡고 있는데, 복구 목표 시간을 지키려고 대기 인스턴스를 미리 띄워 둔다. 이 기준을 문서에 명시했습니다. durelogis-data는 RTO 1시간이라 스냅샷에서 복구해도 무방해요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "확인했어요. 이대로 머지해도 될 것 같고, 준호님 쪽에서도 한 번 봐주세요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_bedce6b1c76b456985f6475a6a06333e"
+}

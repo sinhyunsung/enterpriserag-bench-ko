@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5072,
+    "title": "ECS 용량 공급자 오토스케일링 임계값 조정 및 이미지 업로드 예외 반영",
+    "body": "## 배경\n\n지난주 심야 시간대 주문 피크 때 `durelogis-api` 서비스의 ECS 태스크가 모자라서 대기열이 40분까지 밀렸다. 오전에 세린 님과 같이 클러스터 지표 확인해 보니 용량 공급자의 타깃 캐퍼시티가 80%로 잡혀 있는데 실제 스케일 아웃은 92% 근처에서 한 번씩 일어나고 있었다. 목표치를 70%로 낮추고, 스케일 인 쿨다운은 300초에서 600초로 늘리면 간헐적인 스파이크에 인스턴스가 바로 빠지지 않을 것 같다.\n\n한 가지 더, 이번 주 수요일부터 배포 동결이라 이미지 반영을 못 하고 있는데 오늘 오후에 COO 쪽에서 재고 집계 배치 오류 때문에 긴급 수정 올려야 한다고 했다. 배포 동결 예외 승인이 나야 컨테이너 이미지를 올릴 수 있다. 그래서 이번 PR에는 ECS 태스크 정의에 새 이미지 태그(`v1.4.3`) 반영까지 같이 포함했다. 예외 승인 메일은 세린 님이 따로 공유해 주실 예정.\n\n## 변경\n\n- `environments/prod/ecs/capacity-provider.tf`\n  - `target_capacity` 80 -> 70\n  - `scale_in_cooldown` 300 -> 600\n- `environments/prod/ecs/service/durelogis-api.json`\n  - 컨테이너 이미지 태그 `v1.4.2` -> `v1.4.3` (재고 집계 배치 오류 수정 포함)\n- `environments/prod/ecs/service/autoscaling.tf`\n  - 태스크 기준 스케일 아웃 임계값 `CPUUtilization >= 70` 유지, `ScaleInCooldown` 300 -> 600\n\n테라폼 플랜은 로컬에서 돌려봤고, `durelogis` 클러스터 대상으로 드리프트 없이 나온다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5072",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-10-08T06:20:00Z",
+    "updated_at": "2026-10-08T06:20:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우 님, 용량 공급자 쪽 70%로 낮추면 평시에도 인스턴스 한 대 더 떠 있을 텐데 비용은 괜찮아요? 오토스케일링 그룹 최대 대수 확인하고 머지할게요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 최대 6대라서 평시 3대에서 4대로 올라가는 정도예요. 심야 스파이크 대비하면 감당할 만합니다. 플랜에 인스턴스 추가 1대 예상 비용도 뽑아 두었어요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이미지 태그 v1.4.3은 저희 백엔드 쪽에서 오늘 아침에 푸시한 거 맞습니다. 재고 집계 배치에서 날짜 경계값 계산 잘못돼서 재고 수량 마이너스로 잡히던 거 수정했어요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "확인했어요. 예외 승인 공유는 조금 있다 메일로 드릴게요. 머지할게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_2df602899048b9b6d8f7eaebfdc9f2de"
+}

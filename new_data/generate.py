@@ -31,7 +31,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.llm import Message, get_llm  # noqa: E402
 from src.utils.connector_schema import make_validator  # noqa: E402
 
-from new_data import scenario  # noqa: E402
+import importlib  # noqa: E402
+
+from new_data import scenario  # noqa: E402  — --scenario 로 바꿀 수 있다
 
 TEAM_ID = "T0DURETECH"
 DIRECTORY = "generated_data/employee_directory.yaml"
@@ -186,7 +188,8 @@ def plan_jobs(limit: int | None) -> list[dict]:
     """심은 것을 먼저 넣고 나머지를 업무별로 고르게 채운다."""
     rng = random.Random(20260819)
     jobs: list[dict] = []
-    number = 3000
+    # 각본마다 번호대를 나눈다. 같은 번호면 같은 깃허브 PR 로 보고 덮어쓴다
+    number = getattr(scenario, "NUMBER_BASE", 3000)
 
     for planted in scenario.PLANTED:
         work = next(w for w in scenario.WORKS if w["key"] == planted["work"])
@@ -204,7 +207,9 @@ def plan_jobs(limit: int | None) -> list[dict]:
                 "repo": rng.choice(scenario.REPOS), "number": number,
             })
 
-    filler = (limit or scenario.TOTAL_DOCS) - len(jobs)
+    # 심은 것만 만드는 각본(TOTAL_DOCS = 0)도 있다. 심은 문서는 잘리면 안 된다
+    total = limit or max(scenario.TOTAL_DOCS, len(jobs))
+    filler = total - len(jobs)
     months = ["2025-10", "2025-12", "2026-01", "2026-02", "2026-03",
               "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"]
     for index in range(max(0, filler)):
@@ -222,7 +227,7 @@ def plan_jobs(limit: int | None) -> list[dict]:
             "channel": channel, "channel_id": channel_id(channel),
             "repo": rng.choice(scenario.REPOS), "number": number,
         })
-    return jobs[: limit or scenario.TOTAL_DOCS]
+    return jobs[:total]
 
 
 def main() -> None:
@@ -230,7 +235,14 @@ def main() -> None:
     parser.add_argument("--out", default="new_data/sources")
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--parallelism", type=int, default=6)
+    parser.add_argument("--scenario", default="new_data.scenario",
+                        help="각본 모듈. 벤치마크는 new_data.bench_scenario")
+    parser.add_argument("--manifest", default=None,
+                        help="매니페스트 경로. 기본은 --out 옆의 manifest.json — 각본마다 따로 둔다")
     args = parser.parse_args()
+
+    global scenario
+    scenario = importlib.import_module(args.scenario)
 
     people = load_people()
     for person in [scenario.TARGET] + scenario.CAST:
@@ -269,13 +281,18 @@ def main() -> None:
                      # 문장과 함께 삼단 줄도 남긴다. 린트가 짝을 찾는 열쇠가 주어·속성이라
                      # 무슨 문장을 넣었는지만으로는 왜 잡히는지 되짚을 수 없다
                      "facts": [d["fact"] for d in p["docs"]],
+                     # 벤치 각본은 채점에 쓸 질문과 정답을 같이 둔다
+                     **({"category": p["category"], "question": p["question"], "expect": p["expect"],
+                         "documents": [{"at": d["at"], "source": d["source"]} for d in p["docs"]]}
+                        if "question" in p else {}),
                      "triples": [scenario.triple_line(d["triple"])
                                  for d in p["docs"] if "triple" in d]}
                     for p in scenario.PLANTED],
         "documents": done,
         "failed": failed,
     }
-    (out.parent / "manifest.json").write_text(
+    manifest_path = Path(args.manifest) if args.manifest else out.parent / "manifest.json"
+    manifest_path.write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\n  만든 문서 {done}개 · 실패 {len(failed)}개")
     if failed:

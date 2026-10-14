@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "이번 주 보안 점검 리스트 공유합니다. IAM 권한 최소화는 prod/analytics 위주로 먼저 봤고, 액세스 키 순환은 인프라 계정부터 도는 중이에요. 취약점 스캔 결과는 오후에 정리해서 다시 올릴게요.",
+      "ts": "1788242400.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "네 목요일까지는 IAM부터 끝내고, 개발팀에서 수동으로 돌리는 키 있는 분들은 미리 정리 부탁드려요. 건우님 수고 많아요.",
+      "ts": "1788242401.000001"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "analytics 계열 IAM 정리하면서 레드시프트 임시 권한 하나 정리 안 된 거 확인했는데 이거 제가 쓰던 거라 반영해도 되냐고 물어보려고요. 지금은 안 써요.",
+      "ts": "1788242402.000002"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네 말씀하신 거 확인했습니다. 네 그거 analytics-prod에서 안 쓰는 걸로 조회돼서 오늘 중으로 권한 뺄게요.",
+      "ts": "1788242403.000003"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "백엔드 쪽에서도 오래된 키 하나 있는데 이거 순환 대상에 넣어주세요. 제 데스크톱에 메모로만 남아 있어서 이번에 정리하려고요.",
+      "ts": "1788242404.000004"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "넵 추가할게요. 그리고 오늘 스캔 결과 중에 고위험 건 하나 있었는데 다행히 고위험 취약점 처리 기한 안에 패치를 끝냈다. 내일 아침에 영향 받은 인스턴스 재확인만 하면 마무리될 것 같습니다.",
+      "ts": "1788242405.000005"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "확인했어요. 이번 주는 여기까지만 하고 다음 주 월요일에 전체 공유 부탁드려요.",
+      "ts": "1788242406.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_3c26be4e0ef726a3d9bb090c779d488e"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5016,
+    "title": "[RDS] 주문 DB 자동 백업 보존 기간 14일로 변경",
+    "body": "## 배경\n운영팀에서 주문 데이터 최소 2주 보존 요청이 있었고, 감사 대응 시 1주 전 시점 복원 요청이 들어온 이력이 있음. 현재 7일 보존이라 장애 발생 시 복원 가능 시점이 너무 짧다는 판단.\n\n## 변경\n- order-db 인스턴스 자동 백업 보존 기간 7일 -> 14일\n- 변경은 콘솔이 아니라 Terraform `rds_backup_retention_period` 값 수정으로 적용\n- 스냅샷 추가 비용은 운영비에서 감당 가능한 수준인지 태호님 확인 완료\n\n주문 데이터베이스의 자동 백업 보존 기간은 14일이다.\n주문 데이터베이스 · 자동 백업 보존 기간 = 14일",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5016",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-09-28T03:00:00Z",
+    "updated_at": "2026-09-28T03:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "이거 혹시 order-db 스냅샷 비용 계산해둔 거 있어? 14일이면 스토리지 요금 좀 늘어날 텐데."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "어제 태호님한테 공유했어. 현재 order-db 일평균 변경분 기준 14일 더 쌓아도 월 2~3만원 수준이라 예산 안에서 처리 가능하다고 하시더라."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "감사 로그 때문에 2주는 맞춰야 한다고 나도 공감해요. 확인했고 머지될 때 terraform apply 바로 돌리나요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 머지되면 다음 배포 윈도우 말고 바로 apply 돌릴게요. 다운타임 없이 파라미터만 바뀌는 거라 운영시간에 해도 무방합니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_86a48a8b3fda45f81706b2048a522444"
+}

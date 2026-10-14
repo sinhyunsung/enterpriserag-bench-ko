@@ -1,0 +1,58 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "지난주 정리한 예약 인스턴스랑 미사용 EBS 스냅샷 반영했습니다. 이번 달 청구 예상치는 좀 떨어질 거예요. 다만 오늘 아침에 스팟 풀에서 eviction이 연달아 터져서 데이터 파이프라인 쪽 확인이 필요합니다.",
+      "ts": "1787967000.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "스팟 eviction은 어느 배치에서 났어요?",
+      "ts": "1787967001.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "정하늘님 쪽 새벽 적재 배치 2개 잡혔고, 재시도로 살아나긴 했는데 인스턴스 교체 로그가 좀 많이 쌓여서요. 예약 비율 조정하면서 스팟 가중치도 다시 보고 있어요.",
+      "ts": "1787967002.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "조금 전 재실행된 배치 둘 다 정상 완료 확인했습니다. eviction 되는 순간 태스크 재시도 때문에 지연만 좀 있었어요. 스팟 풀 섞으실 때 시간대 가중치 알려주시면 배치 스케줄이랑 맞춰볼게요.",
+      "ts": "1787967003.000003"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "비용 이상 경보 금액을 넘어서 팀장에게 보고했다.",
+      "ts": "1787967004.000004"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "네, 그 부분은 회의 때 다시 볼게요.",
+      "ts": "1787967005.000005"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_0030665c0c1c206afce152761d596549"
+}

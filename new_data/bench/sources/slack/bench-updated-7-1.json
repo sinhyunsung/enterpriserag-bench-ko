@@ -1,0 +1,65 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C876C28E3",
+  "channel_info": {
+    "id": "C876C28E3",
+    "name": "인프라"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "VPC랑 보안 그룹은 어제 정리한 구조 그대로 갔고, 로드밸런서는 내부로 붙였습니다. 일단 문제 없이 물려서 API 서버 두 대 다 헬스체크 통과했어요.",
+      "ts": "1780377000.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "오케이. LB 붙이면서 타임아웃 값은 어떻게 잡았어요?",
+      "ts": "1780377001.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "내부 로드밸런서의 유휴 연결 제한 시간은 60초이다.\n내부 로드밸런서 · 유휴 연결 제한 시간 = 60초",
+      "ts": "1780377002.000002"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "넵. 백엔드 쪽 keepalive랑 맞는 값이라 그대로 두면 되겠네요.",
+      "ts": "1780377003.000003"
+    },
+    {
+      "type": "message",
+      "user": "U0733340C",
+      "user_name": "이준영",
+      "text": "저희 서버 keepalive_timeout 65로 잡혀 있어서 60초면 적당합니다.",
+      "ts": "1780377004.000004"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "혹시 데이터 파이프라인 내부 통신도 이 LB 타나요?",
+      "ts": "1780377005.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "아뇨, 파이프라인은 별도 서브넷이라 이번 LB 안 거칩니다. 다음에 붙일 일 있으면 그때 따로 정리할게요.",
+      "ts": "1780377006.000006"
+    }
+  ],
+  "title_field_name": "channel_info",
+  "content_field_names": [
+    "messages"
+  ],
+  "dataset_doc_uuid": "dsid_054300f57739a58a303a20c48181a3e6"
+}

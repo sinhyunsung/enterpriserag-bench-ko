@@ -1,0 +1,56 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5056,
+    "title": "모니터링 알림 임계값 정책 반영 (디스크 사용률)",
+    "body": "## 배경\n\n운영 중인 물류 창고 허브 서버 몇 대에서 디스크 사용률이 조용히 올라가고 있는 걸 지난주에 확인했습니다. 기존엔 호스트별로 임계값이 제각각이거나 아예 알림이 안 붙어 있는 경우도 있어서, 이번에 공통 기준을 코드로 박아두려고 합니다.\n\n## 변경\n\n- `infra/monitoring/alert_rules.yml`에 디스크 사용률 경고 룰 추가\n- 기존 호스트별 개별 설정 제거\n- 디스크 사용률 경고의 임계값은 80%이며 분기마다 재검토한다. 2025년 4분기부터 적용한다.\n\n## 테스트\n\n- 스테이징에서 디스크 사용률 80% 초과 시뮬레이션하여 알림 발생 확인\n- 80% 미만에서는 알림 미발생 확인\n디스크 사용률 경고 · 임계값 = 80%",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/durelogis/pull/5056",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      },
+      {
+        "login": "haneul-jung"
+      }
+    ],
+    "created_at": "2025-11-25T03:10:00Z",
+    "updated_at": "2025-11-25T03:10:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, 알림 룰을 한 파일에서 관리하는 거 좋네요. 80% 기준은 운영 쪽이랑도 얘기된 거죠? 분기마다 재검토한다고 하니까 일단 이대로 가시죠."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "데이터 파이프라인 서버도 이 룰에 걸리나요? 로그 적재 때문에 디스크가 순간적으로 80 넘는 경우가 있어서요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "널럴하게 1분 지속 시간 조건 넣어뒀습니다. 순간 튀는 건 알림 안 가도록요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "아 네, 그럼 문제없겠네요. 확인했습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_f9c8b7ed03c58c002620bcf2eac84dff"
+}

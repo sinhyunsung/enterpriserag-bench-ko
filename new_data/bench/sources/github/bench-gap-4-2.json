@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5068,
+    "title": "보안 점검: IAM 권한 최소화 및 키 순환, 취약점 점검",
+    "body": "## 배경\n\n정기 보안 점검 범위가 너무 넓게 잡혀 있어서 쪼개서 올립니다. 이번 PR은 다음 세 가지에 집중합니다.\n\n- AWS IAM 사용자/역할 권한 중 광범위하게 열려 있는 것 최소화\n- 90일 이상 지난 액세스 키 순환 및 사용하지 않는 키 비활성화\n- 스캐너에서 나온 고위험 취약점 중 인프라 쪽에서 바로 처리 가능한 항목 반영\n\n이 건은 고위험 취약점 처리 기한을 넘기지 않게 먼저 처리한다.\n\n## 변경\n\n- `dure-settlement` 워크로드용 IAM 정책에서 `s3:*` → 버킷 단위 `GetObject`, `PutObject`로 축소\n- CI/CD 배포 역할에서 불필요하게 붙어 있던 `iam:PassRole` 제거\n- `junho-lee`, `junyoung-lee` 로컬 개발용 사용자 키 2건 순환 처리\n- 사용하지 않는 `serin-park` 이전 키 1건 비활성화\n- ECR 스캔 결과 중 `HIGH` 등급 2건 패치 버전 고정\n\n## 확인 항목\n\n- [x] `terraform plan` diff 확인\n- [x] 개발/스테이징 배포 테스트 통과\n- [x] 점검 시트에 키 순환 일자 갱신\n\n관련 시트: 2026년 10월 보안 점검\n",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5068",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "jian-seo"
+      }
+    ],
+    "created_at": "2026-10-06T07:00:00Z",
+    "updated_at": "2026-10-06T07:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "jian-seo"
+      },
+      "body": "키 순환은 오늘 중으로 다 끝내둬. terraform apply 는 저녁 배포 시간 피해서."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 오후 5시쯤 스테이징 먼저 돌리고 개발 쪽은 그 다음에 할게요."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "저 자격 증명 하나는 원래 안 쓰던 거라 비활성화하는 게 맞아요. 확인했습니다."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "키 바뀌면 로컬 세팅 다시 해야죠? 공지 부탁드려요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_47791fb5146f0c44311ad205e612e5ee"
+}

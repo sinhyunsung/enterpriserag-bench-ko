@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5074,
+    "title": "모니터링 알림 규칙에서 임계값 변수 분리 및 대시보드 쿼리 정리",
+    "body": "## 배경\n\n이번 주 배치 시간대에 같은 알림이 반복해서 울리는 건이 두 번 있었어요. 확인해 보니 알림 규칙에 임계값이 하드코딩돼 있고, 대시보드 패널 일부는 지표 이름이 옛날 이름 그대로 남아 있어서 실제 수집 중인 시계열이랑 매핑이 어긋나 있었어요. 핵심 지표 목록이 바뀌면 알림 규칙도 같이 바꾼다.\n\n## 변경\n\n- `dure-infra/alerts/rules.yaml`에서 임계값을 `values.yaml` 기반 변수로 치환\n- WMS 출고 지연 알림 임계값을 기존 120초 유지하되, 새벽 배치 시간대에는 별도 규칙으로 분리\n- 그라파나 대시보드 JSON에서 `legacy_picking_latency` 참조를 `picking_latency_p95`로 교체\n- 사일로별로 흩어져 있던 알림 규칙 주석을 한글로 통일하고, 담당자 표기를 `# owner: infra`로 정리\n- 알림 재시도 간격 5분 → 10분으로 조정 (중복 호출 방지)\n\n## 테스트\n\n- 스테이징에서 출고 지연 유도 후 임계값 초과 알림 수신 확인\n- 그라파나 대시보드 패널 12개 중 깨진 쿼리 2개 수정 후 데이터 출력 확인\n- 알림 변수 치환된 `rules.yaml` 렌더링 결과 diff 검토\n\n연관 슬랙 스레드: `#monitoring` 10월 8일자",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5074",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-10-09T03:40:00Z",
+    "updated_at": "2026-10-09T03:40:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "알림 재시도 간격 10분으로 늘린 건 좋은데, 새벽 배치 시간대 분리한 규칙은 코멘트로 어떤 배치가 해당인지 적어줘. 나중에 운영팀이 배치 시간 바꾸면 여기만 보고 수정할 수 있게."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵 반영했어요. `03:00-05:00` 재고 동기화 배치 기준으로 분리해뒀고, 파일 상단 주석에 운영팀 문의 채널도 적어놨습니다."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "`picking_latency_p95`로 바꾼 거 확인했어요. 저희 데이터 파이프라인에서도 이 이름으로 맞춰서 보내고 있으니 이제 안 어긋날 거예요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이거 머지되고 나서 스테이징에서 알림 한 번 테스트해봤는데, 새벽 배치 시간대가 아니면 120초 룰 그대로 타는 거 확인했어요. 감사합니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_f59ffe4d146ed6ce596789f47e14bbd1"
+}

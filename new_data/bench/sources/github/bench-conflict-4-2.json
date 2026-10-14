@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5028,
+    "title": "ECS 용량 공급자 및 오토스케일 설정 반영",
+    "body": "## 배경\n정산 배치가 도는 시간대에 태스크가 모자라서 대기가 계속 걸리는 문제가 있었어요. 클러스터에 용량 공급자 붙이고, 서비스별로 오토스케일 정책을 정리했습니다.\n\n## 변경\n- 클러스터에 capacity provider 연결 (FARGATE_SPOT 우선, FARGATE fallback)\n- settlement-worker, settlement-api 서비스에 target tracking scaling 정책 추가\n- 오토스케일의 CPU 목표값은 75%이다.\n- 스팟 중단 대비하도록 태스크 배포 옵션 정리\n오토스케일 · CPU 목표값 = 75%",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-settlement/pull/5028",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-07-31T07:00:00Z",
+    "updated_at": "2026-07-31T07:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "어드민 API는 그대로 두는 거죠? 정산 배치랑 API만 스케일링 걸어둔 거 맞고요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네, 어드민은 트래픽 패턴이 다르니까 이번 PR에서는 빼뒀습니다. 필요하면 다음에 분리해서 걸게요."
+    },
+    {
+      "user": {
+        "login": "junho-lee"
+      },
+      "body": "이거 머지되면 settlement-worker가 스팟으로 뜨면서 중간에 죽는 경우가 생길 수 있는데, 재시도 로직은 태스크 레벨에서 보장되는 거 맞나요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵, ECS 서비스에서 minimum healthy percent 100으로 잡아놔서 교체될 때까지 대기하도록 되어 있어요. 배치 자체도 멱등하게 도니까 재실행돼도 문제 없습니다."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_c17a6ddbfe4b4bd3b275fbe4d21af675"
+}

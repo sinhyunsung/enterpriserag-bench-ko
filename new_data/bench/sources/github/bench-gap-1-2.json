@@ -1,0 +1,59 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5062,
+    "title": "배포 파이프라인 스테이징 배포 및 롤백 스크립트 개선",
+    "body": "## 배경\n기존 스테이징 배포가 수동으로 ec2 들어가서 도는 경우가 있어서 실수할 여지가 컸습니다.\n지난주에 스테이징에 잘못 올라간 빌드 때문에 하늘이型 데이터 검증 잡이 한 시간 정도 밀린 일도 있었고요.\n그래서 이번에 CI/CD 파이프라인에서 스테이징 배포까지 자동으로 붙이고, 배포 실패하거나 검증 실패하면 이전 릴리스로 자동 롤백되게 정리했습니다.\n\n## 변경\n- `deploy/staging.sh` 추가: 빌드 아티팩트 받아서 스테이징 인스턴스에 배포\n- `rollback-staging.sh` 추가: 마지막으로 성공한 릴리스 태그 기준으로 롤백\n- GitHub Actions 워크플로우 `deploy-staging.yml` 수정: main 푸시 시 자동 배포, 배포 후 health check 실패하면 롤백 호출\n- 롤백 트리거 로그를 CloudWatch에 남기도록 `logger.py`에 `rollback_event` 함수 추가\n\n참고: 핫픽스 기준에 걸리는 건이라 리뷰를 한 명만 받았다.",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5062",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2026-09-30T03:00:00Z",
+    "updated_at": "2026-09-30T03:00:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "건우님, `rollback-staging.sh`에서 태그 정렬할 때 `sort -V` 쓰신 거 맞죠? 릴리스 태그가 `v2026.09.28-1` 이런 식이라 버전 소트 잘 되는지 확인 한번만 부탁드려요. 그리고 롤백 로그에 누가 트리거했는지 남기는 필드는 넣어두신 거예요?"
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "네 `sort -V` 맞고요. 태그 컨벤션이 `vYYYY.MM.DD-<seq>`라 알파벳 v 떼고 버전 소트 돌게 해뒀습니다. 로그에는 `triggered_by` 랑 `previous_release`, `target_release` 남기게 해놨어요. 근데 오토 스케일링 걸린 인스턴스에서는 태그 소트가 아니라 AMI 기준으로 바꿔야 할 수도 있어요. 그건 다음 주에 보고 따로 PR 올릴게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "아 스테이징 자동 배포 붙는 거 진짜 좋네요. 지난주에 제 에어플로우 태스크가 스테이징 디비 보고 돌던 거라 배포 꼬이면 바로 티 났었는데... 이제 좀 편해지겠다."
+    },
+    {
+      "user": {
+        "login": "junyoung-lee"
+      },
+      "body": "어 이거 머지되면 스테이징 배포 알림 슬랙으로 오는 것도 붙는 건가요? 저희 백엔드쪽은 스테이징 배포됐는지 모르고 테스트 돌리다가 API 스펙 안 맞아서 삽질한 적 있어서."
+    },
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "슬랙 알림은 다음 PR에서 붙이기로 했어요. 지금은 배포 결과를 GitHub Actions 로그에서 봐야 하니 참고하고, 그 전까지는 배포되면 제가 팀 채널에 공유할게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_48db433f72ca360a27461c865e83dda8"
+}

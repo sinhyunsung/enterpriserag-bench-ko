@@ -1,0 +1,53 @@
+{
+  "kind": "pull_request",
+  "issue": {
+    "number": 5058,
+    "title": "네트워크 구성 정리 — 외부 API 연동 대역폭 기준 반영",
+    "body": "## 배경\n\n외부 API 연동 구간이 점점 늘어나면서 VPC 내부 트래픽이랑 외부 호출 경로를 분리해서 볼 필요가 생겼다. 지금은 로드밸런서 하나에 몰려 있어서 장애가 나면 추적이 어렵고, 보안 그룹도 기본 룰 그대로 쓰는 리소스가 있어서 정리가 시급했다.\n\n이번 PR에서는 다음 항목을 다룬다.\n\n## 변경\n\n- 외부 API 연동 전용 로드밸런서 신설 (internal → external 분리)\n- 보안 그룹 룰 정리: 외부 API 대상 CIDR만 허용, 기본 전체 허용 제거\n- VPC 서브넷 태그 체계 보강 (용도 구분 태그 추가)\n- 외부 API 연동의 허용 대역폭은 1Gbps이며 분기마다 재검토한다. 2025년 4분기부터 적용한다.\n\n리뷰 부탁드립니다.\n외부 API 연동 · 허용 대역폭 = 1Gbps",
+    "state": "merged",
+    "html_url": "https://github.com/duretech/dure-infra/pull/5058",
+    "user": {
+      "login": "gunwoo-oh"
+    },
+    "assignees": [
+      {
+        "login": "gunwoo-oh"
+      }
+    ],
+    "requested_reviewers": [
+      {
+        "login": "serin-park"
+      }
+    ],
+    "created_at": "2025-12-01T05:40:00Z",
+    "updated_at": "2025-12-01T05:40:00Z"
+  },
+  "comments": [
+    {
+      "user": {
+        "login": "serin-park"
+      },
+      "body": "보안그룹 정리한 거 확인했어요. 외부 API 대상 CIDR은 어디 기준이에요? 벤더별로 다른 거 같은데 다 반영된 건지 한 번만 체크 부탁해요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "넵, 이번에 연동된 벤더 4곳 전부 반영했습니다. 빠진 데 있으면 바로 추가할게요."
+    },
+    {
+      "user": {
+        "login": "haneul-jung"
+      },
+      "body": "저쪽 호출 많은 배치가 하나 있는데 대역폭 1Gbps면 넉넉하죠? 보고 계신 것 같아서 확인차 남겨요."
+    },
+    {
+      "user": {
+        "login": "gunwoo-oh"
+      },
+      "body": "그 배치 시간대에 피크 찍어봤는데 아직 여유 있어요. 분기마다 다시 보기로 했으니 그때 데이터 붙여서 공유할게요."
+    }
+  ],
+  "review_comments": [],
+  "dataset_doc_uuid": "dsid_9e029ffd23b4582af3a03b924c7ef4d3"
+}

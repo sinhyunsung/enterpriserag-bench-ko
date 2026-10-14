@@ -1,0 +1,61 @@
+{
+  "kind": "slack_thread",
+  "team_id": "T0DURETECH",
+  "channel": "C18B4182E",
+  "channel_info": {
+    "id": "C18B4182E",
+    "name": "개발"
+  },
+  "messages": [
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "바로배송 쪽 증설 진행했습니다. 증설 결정 기준 주문량을 넘어서 서버를 늘렸다.",
+      "ts": "1789707000.000000"
+    },
+    {
+      "type": "message",
+      "user": "U90B96611",
+      "user_name": "박세린",
+      "text": "오케이. 이번엔 오토스케일링 말고 수동으로 잡은 거지?",
+      "ts": "1789707001.000001"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 일단 지표 보면서 수동으로 빼놨어요. 기준 넘어간 뒤에 알림 온 거 기준으로요.",
+      "ts": "1789707002.000002"
+    },
+    {
+      "type": "message",
+      "user": "U8C86A147",
+      "user_name": "정하늘",
+      "text": "주문량 로그는 저쪽 파이프라인에서 계속 쌓이고 있으니까 증설 전후 비교는 내일 아침에 뽑아볼게요.",
+      "ts": "1789707003.000003"
+    },
+    {
+      "type": "message",
+      "user": "U94E3FF87",
+      "user_name": "이준호",
+      "text": "바로배송 API 타임아웃은 지금 안 보이네요. 그대로 두고 지켜볼게요.",
+      "ts": "1789707004.000004"
+    },
+    {
+      "type": "message",
+      "user": "U1AAA9220",
+      "user_name": "서지안",
+      "text": "증설 인스턴스 비용은 예산 안이죠?",
+      "ts": "1789707005.000005"
+    },
+    {
+      "type": "message",
+      "user": "UF46A1E3E",
+      "user_name": "오건우",
+      "text": "네. 예약 인스턴스 범위 안에서 조정했습니다.",
+      "ts": "1789707006.000006"
+    }
+  ],
+  "dataset_doc_uuid": "dsid_e66e8a8afc667b384b07b358be9939ee"
+}
