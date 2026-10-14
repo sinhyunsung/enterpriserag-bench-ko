@@ -17,3 +17,7 @@ generated_data/
 # 로컬 실행 산출물
 *.log
 generated_data_en_original/
+
+# baton_bench 실행 산출물
+baton_bench_cache/
+bench_runs/
